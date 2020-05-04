@@ -9,6 +9,7 @@
 /*   Updated: 2020/05/04 13:02:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
 void *memchr(const void *s, int c, size_t n)
 {
@@ -24,7 +25,7 @@ void *memchr(const void *s, int c, size_t n)
             ++i;
             continue;
         }
-        p = s[i];
+        p = &((unsigned char *)s)[i];
         break;
     }
     return p;

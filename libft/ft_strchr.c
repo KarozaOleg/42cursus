@@ -9,23 +9,23 @@
 /*   Updated: 2020/05/04 14:23:33 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
 char *ft_strchr(const char *s, int c)
 {
-    char *p;
+    char *str;
     size_t i;
 
-    p = 0;
+    str = (char *)s;
     i = 0;
-    while(s[i] != '\0')
+    while(str[i] != '\0')
     {
-        if(s[i] != (unsigned char)c)
+        if(str[i] != (unsigned char)c)
         {
             ++i;
             continue;
         }
-        p = &s[i];
-        break;
+        return &str[i];
     }
-    return p;
+    return 0;
 }
