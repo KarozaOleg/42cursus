@@ -1,0 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/04 13:46:58 by mgaston           #+#    #+#             */
+/*   Updated: 2020/05/04 13:46:58 by mgaston          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+int ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+    int answer;
+    size_t i;
+
+    answer = 0;
+    i = 0;
+    while(i < n)
+    {
+        answer = ((unsigned char *)s1)[i] - ((unsigned char *)s2)[i];
+        if(answer != 0)
+            break;
+        ++i;
+    }
+    return answer;
+}
