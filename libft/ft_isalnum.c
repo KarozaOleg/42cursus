@@ -13,6 +13,6 @@
 
 int ft_isalnum(int c)
 {
-    return  (ft_isalpha(c) ||
-            ft_isdigit(c));
+    return  (((c >= 65 && c <= 90) && (c >= 97 && c <= 122)) ||
+            (c >= 48 && c <= 57));
 }
