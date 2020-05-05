@@ -36,13 +36,6 @@ void print_ft_answer(unsigned char *arr, size_t len)
     print_answer_base("ft_answer", arr, len);
 }
 
-void launcher(void (*f)(void))
-{
-    printf("--- start test: \"memset\"---\n"); 
-    f();
-    printf("--- end test: \"memset\"---\n\n");
-}
-
 void test_memset()
 {    
     void *test(void *(*f)(void *s, int c, size_t n))
@@ -142,11 +135,18 @@ void test_memccpy()
     free(src);
 }
 
+void launcher(void (*f)(void))
+{
+    printf("--- start test: \"memset\"---\n"); 
+    f();
+    printf("--- end test: \"memset\"---\n\n");
+}
+
 int main()
 {
     //launcher(test_memset);
     //launcher(test_bzero);
-    launcher(test_memcpy);
-    //launcher(test_memccpy);
+    //launcher(test_memcpy);
+    launcher(test_memccpy);
     return 0;
 }
