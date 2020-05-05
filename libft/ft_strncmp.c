@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/04 10:18:55 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/04 10:18:55 by mgaston          ###   ########.fr       */
+/*   Created: 2020/05/05 15:00:03 by mgaston           #+#    #+#             */
+/*   Updated: 2020/05/05 15:00:03 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-void *ft_memccpy(void *dest, const void *src, int c, size_t n)
+int strncmp(const char *s1, const char *s2, size_t n)
 {
+    int answer;
     size_t i;
-    unsigned char *p;
 
-    p = 0;
-    i = 0;
-    while (i < n)
+    answer = 0;
+     i = 0;
+    while(i < n && s1[i] != '\0' && s2[i] != '\0')
     {
-        ((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
-        if(((unsigned char *)src)[i] == (unsigned char)c)
-        {
-            if(i < n - 1)            
-                p = &((unsigned char *)dest)[i + 1];             
+        answer = s1[i] - s2[i];
+        if(answer != 0)
             break;
-        }     
         ++i;
     }
-    return (void *)p;
+    return (answer);
 }
-
