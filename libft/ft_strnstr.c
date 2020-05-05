@@ -30,7 +30,7 @@ char *ft_strnstr(const char *big, const char *little, size_t len)
         else 
         {
             if (p == NULL)
-                p = &big[iBig];
+                p = (char *)&big[iBig];
             ++iLittle;
         }
         ++iBig;
