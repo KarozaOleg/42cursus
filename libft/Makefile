@@ -31,6 +31,10 @@ $(NAME): $(SRCS) libft.h
 	@ar rc $(NAME) $(OBJECTS)
 	@ranlib $(NAME)
 
+so:	
+	@gcc -Wall -Wextra -Werror -I$(INCLUDES) -c $(SRCS)
+	@gcc -shared -o libft.so $(OBJECTS)
+
 clean:
 	@/bin/rm -f $(OBJECTS)
 
