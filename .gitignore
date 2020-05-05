@@ -2,6 +2,6 @@ a.out
 *.gch
 .vscode
 libft-unit-test-master
-.o
-.a
-.so
+*.o
+*.a
+*.so
