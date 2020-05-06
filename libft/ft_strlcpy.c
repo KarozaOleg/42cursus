@@ -29,14 +29,3 @@ size_t ft_strlcpy(char *dst, const char *src, size_t size)
         ++i;
     return (i);
 }
-
-#include <stdio.h>
-#include <stdlib.h>
-int main()
-{
-    printf("Hello is here\n");
-    char *dest = malloc(15 * sizeof(char));
-    size_t answer = ft_strlcpy(dest, "lorem ipsum dolor sit amet", 0);
-    printf("answer: %d\n", answer);
-    return 0;
-}
