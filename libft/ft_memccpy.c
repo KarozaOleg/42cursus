@@ -26,7 +26,7 @@ void *ft_memccpy(void *dest, const void *src, int c, size_t n)
         if (*p == (unsigned char)c)
         {
             if(i < n)
-                return ((void *)p++); 
+                return ((void *)(p++)); 
             break;
         }
     }
