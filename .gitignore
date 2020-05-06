@@ -5,3 +5,4 @@ libft-unit-test-master
 *.o
 *.a
 *.so
+*.exe
