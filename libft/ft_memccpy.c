@@ -23,12 +23,8 @@ void *ft_memccpy(void *dest, const void *src, int c, size_t n)
         p = &((unsigned char *)dest)[i];
         *p = ((unsigned char *)src)[i];  
         ++i;
-        if (*p == (unsigned char)c)
-        {
-            if(i < n)
-                return (++p); 
-            break;
-        }
+        if (*p == (unsigned char)c)        
+            return (++p); 
     }
     return (NULL);
 }
