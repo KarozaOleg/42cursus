@@ -15,9 +15,12 @@ char *ft_strnstr(const char *big, const char *little, size_t len)
 {
     char    *p;
     size_t  iBig;
-    size_t  iLittle;
+    size_t  iLittle;    
 
     p = (void *)big;
+    if(little == NULL || len < 1)
+        return (p);
+
     iBig = 0;
     iLittle = 0;
     while (iBig < len && big[iBig] != '\0' && little[iLittle] != '\0')
