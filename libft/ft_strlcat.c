@@ -13,16 +13,15 @@
 
 size_t ft_strlcat(char *dst, const char *src, size_t size)
 {
-    size_t i;
+   size_t i;
 
-    i = 0;
+  i = 0;
 	while (dst[i] != '\0' && size > 0)
-      {
-	--size;
-	++i;
-      
-      }
-    return (i + ft_strlcpy(&dst[i], src, size));
+  {
+	  --size;
+	  ++i;      
+  }
+  return (i + ft_strlcpy(&dst[i], src, size));
 }
 /*
 #include <bsd/string.h>

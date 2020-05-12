@@ -9,35 +9,22 @@
 /*   Updated: 2020/05/05 14:13:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
-char *ft_strnstr(const char *big, const char *little, size_t len)
+char *ft_strjoin(const char *s1, const char *s2)
 {
-    char    *p;
-    size_t  iBig;
-    size_t  iLittle;    
+    char *dest;
+    int len_s1;
+    int len_s2;
 
-    p = (void *)big;
-    if(little == NULL || len < 1)
-        return (p);
-    iBig = 0;
-    iLittle = 0;
-    while (iBig < len && big[iBig] != '\0' && little[iLittle] != '\0')
-    {        
-        if (big[iBig] != little[iLittle])   
-        {     
-            p = NULL;    
-            iLittle = 0;
-        }     
-        else 
-        {
-            if (p == NULL)
-                p = (char *)&big[iBig];
-            ++iLittle;
-        }
-        ++iBig;
+    len_s1 = ft_strlen(s1);
+    len_s2 = ft_strlen(s2);
+    dest = malloc((len_s1 + len_s2 + 1) * sizeof(char));
+    if(dest != NULL)
+    {
+        ft_memmove(dest, s1, len_s1);
+        ft_strlcpy(&dest[len_s1], s2, len_s2 + 1);
     }
-    if (big[iBig] == '\0' && little[iLittle] != '\0')
-        p = NULL;
-    return (p);
+    return (dest);
 }

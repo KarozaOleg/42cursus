@@ -9,35 +9,48 @@
 /*   Updated: 2020/05/05 14:13:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
+#include <stdio.h>
 
-char *ft_strnstr(const char *big, const char *little, size_t len)
+char *ft_strtrim(const char *s1, const char *set)
 {
-    char    *p;
-    size_t  iBig;
-    size_t  iLittle;    
+    char *dest;
+    char *s1_start;
+    int len_s1;
+    int len_set;
+    int len_dest;
 
-    p = (void *)big;
-    if(little == NULL || len < 1)
-        return (p);
-    iBig = 0;
-    iLittle = 0;
-    while (iBig < len && big[iBig] != '\0' && little[iLittle] != '\0')
-    {        
-        if (big[iBig] != little[iLittle])   
-        {     
-            p = NULL;    
-            iLittle = 0;
-        }     
-        else 
-        {
-            if (p == NULL)
-                p = (char *)&big[iBig];
-            ++iLittle;
-        }
-        ++iBig;
+    len_s1 = ft_strlen(s1);
+    len_dest = len_s1;
+    len_set = ft_strlen(set);
+
+    printf("set_len:%d\n", len_set);
+
+    s1_start = ft_strnstr(s1, set, len_set);
+    printf("s1_start:%s\n", s1_start);
+    if(s1_start != NULL)
+    {
+        len_dest -= len_set;
+        s1_start += len_set;
     }
-    if (big[iBig] == '\0' && little[iLittle] != '\0')
-        p = NULL;
-    return (p);
+    else
+        s1_start = (char*)s1;
+
+    if(ft_strnstr(&s1[len_s1 - len_set], set, len_set) != NULL)
+        len_dest -= len_set;
+
+    dest = malloc((len_dest + 1) * sizeof(char));
+    if(dest != NULL)
+        ft_strlcpy(dest, s1_start, len_dest + 1);
+    return (dest);
+}
+
+int main()
+{
+    char str[] = " TEST ";
+
+    char *copy = ft_strtrim(str, " ");
+    printf("%s\n", copy);
+    return 0;
 }

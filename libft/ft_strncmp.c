@@ -21,13 +21,13 @@ int ft_strncmp(const char *s1, const char *s2, size_t n)
     while (i < n)
     {
       answer = (unsigned char)s1[i] - (unsigned char)s2[i];
-        if (answer != 0)
-            break;
-	if(i == n - 1)
-	  break;
-	if(s1[i] == '\0' || s2[i] == '\0')
-	  break;
-        ++i;
+      if (answer != 0)
+        break;
+      if(i == n - 1)
+        break;
+      if(s1[i] == '\0' || s2[i] == '\0')
+        break;
+      ++i;
     }
     return (answer);
 }
