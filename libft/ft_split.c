@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 15:00:03 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/05 15:00:03 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/13 17:34:14 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int return_amount(const char *s, char c)
+static int	return_amount(const char *s, char c)
 {
-	int isSymbol;
+	int is_symbol;
 	int amount;
 
-	isSymbol = 1;
+	is_symbol = 1;
 	amount = 0;
-	while(*s)
+	while (*s)
 	{
-		if(*s == c)
-			isSymbol = 1;
+		if (*s == c)
+			is_symbol = 1;
 		else
 		{
-			if(isSymbol)
+			if (is_symbol)
 			{
 				++amount;
-				isSymbol = 0;
+				is_symbol = 0;
 			}
 		}
 		++s;
@@ -36,32 +36,32 @@ static int return_amount(const char *s, char c)
 	return (amount);
 }
 
-char **ft_split(const char *s, char c)
+char		**ft_split(const char *s, char c)
 {
-    char **arr;
-	int iArr;
-	int i;
-	int len;
-	
-	if(s == NULL)
-		return NULL;
+	char	**arr;
+	int		i_arr;
+	int		i;
+	int		len;
+
+	if (s == NULL)
+		return (NULL);
 	arr = malloc((return_amount(s, c) + 1) * sizeof(char*));
-	if(arr == NULL)
+	if (arr == NULL)
 		return (arr);
-	iArr = 0;
+	i_arr = 0;
 	i = 0;
 	len = 0;
-	while(1)
+	while (1)
 	{
-		if(s[i] == c || s[i] == 0)
+		if (s[i] == c || s[i] == 0)
 		{
-			if(len > 0)
+			if (len > 0)
 			{
-				arr[iArr++] = ft_substr(s, i - len, len);
-				if(arr[iArr - 1] == NULL)
+				arr[i_arr++] = ft_substr(s, i - len, len);
+				if (arr[i_arr - 1] == NULL)
 				{
-					while(--iArr >= 0)
-						free(arr[iArr]);
+					while (--i_arr >= 0)
+						free(arr[i_arr]);
 					return (NULL);
 				}
 			}
@@ -69,9 +69,9 @@ char **ft_split(const char *s, char c)
 		}
 		else
 			++len;
-		if(s[i++] == 0)
-			break;
-	}	
-	arr[iArr] = 0;
+		if (s[i++] == 0)
+			break ;
+	}
+	arr[i_arr] = 0;
 	return (arr);
 }
