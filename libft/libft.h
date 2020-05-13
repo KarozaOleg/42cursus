@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 14:26:30 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/13 14:24:13 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/13 15:16:32 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char    *ft_strchr(const char *s, int c);
 char    *ft_strrchr(const char *s, int c);
 char    *ft_strnstr(const char *big, const char *little, size_t len);
 int     ft_strncmp(const char *s1, const char *s2, size_t n);
-//atoi must here
+int		ft_atoi(const char *str);
 int     ft_isalpha(int c);
 int     ft_isdigit(int c);
 int     ft_isalnum(int c);
