@@ -18,6 +18,8 @@ char *ft_strjoin(const char *s1, const char *s2)
     int len_s1;
     int len_s2;
 
+	if(s1 == NULL || s2 == NULL)
+		return (NULL);
     len_s1 = ft_strlen(s1);
     len_s2 = ft_strlen(s2);
     dest = malloc((len_s1 + len_s2 + 1) * sizeof(char));
