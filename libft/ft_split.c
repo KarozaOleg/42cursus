@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 15:00:03 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/13 17:34:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/13 18:53:15 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ static int	return_amount(const char *s, char c)
 	return (amount);
 }
 
+static int	is_error_substr(char **arr, int i_arr)
+{
+	if (arr[i_arr - 1] != NULL)
+		return (0);
+	while (--i_arr >= 0)
+		free(arr[i_arr]);
+	arr[i_arr] = 0;
+	return (1);
+}
+
+static int	is_error_prelaunch(const char *s, char c, char ***p_arr)
+{
+	if (s == NULL)
+		return (1);
+	*p_arr = malloc((return_amount(s, c) + 1) * sizeof(char*));
+	if (*p_arr == NULL)
+		return (1);
+	return (0);
+}
+
 char		**ft_split(const char *s, char c)
 {
 	char	**arr;
@@ -43,35 +63,24 @@ char		**ft_split(const char *s, char c)
 	int		i;
 	int		len;
 
-	if (s == NULL)
+	if (is_error_prelaunch(s, c, &arr))
 		return (NULL);
-	arr = malloc((return_amount(s, c) + 1) * sizeof(char*));
-	if (arr == NULL)
-		return (arr);
 	i_arr = 0;
 	i = 0;
 	len = 0;
-	while (1)
+	while (i < 1 || s[i - 1] != 0)
 	{
 		if (s[i] == c || s[i] == 0)
 		{
 			if (len > 0)
-			{
 				arr[i_arr++] = ft_substr(s, i - len, len);
-				if (arr[i_arr - 1] == NULL)
-				{
-					while (--i_arr >= 0)
-						free(arr[i_arr]);
-					return (NULL);
-				}
-			}
+			if (is_error_substr(arr, i_arr))
+				return (NULL);
 			len = 0;
 		}
 		else
 			++len;
-		if (s[i++] == 0)
-			break ;
+		++i;
 	}
-	arr[i_arr] = 0;
 	return (arr);
 }
