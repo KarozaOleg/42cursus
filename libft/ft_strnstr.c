@@ -18,7 +18,7 @@ char *ft_strnstr(const char *big, const char *little, size_t len)
     size_t  iLittle;    
 
     p = (void *)big;
-    if(little == NULL || len < 1)
+    if(little == NULL)
         return (p);
     iBig = 0;
     iLittle = 0;
@@ -37,7 +37,7 @@ char *ft_strnstr(const char *big, const char *little, size_t len)
         }
         ++iBig;
     }
-    if (big[iBig] == '\0' && little[iLittle] != '\0')
-        p = NULL;
+	if(little[iLittle] != '\0')
+		p = NULL;
     return (p);
 }
