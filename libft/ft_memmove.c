@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 10:23:20 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 11:36:04 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 12:06:02 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	size_t	shift;
 	size_t	i;
 
+	if (dest == NULL && src == NULL)
+		return (NULL);
 	shift = 0;
 	if (dest > src && dest < (void*)(((unsigned char *)src) + n))
 		shift = n - 1;

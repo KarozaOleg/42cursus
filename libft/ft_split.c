@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 15:00:03 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 11:46:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 14:02:54 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ static int	return_amount(const char *s, char c)
 static int	is_error_substr(char **arr, int i_arr)
 {
 	if (arr[i_arr - 1] != NULL)
+	{
+		arr[i_arr] = 0;
 		return (0);
+	}
 	while (--i_arr >= 0)
 		free(arr[i_arr]);
 	return (1);
