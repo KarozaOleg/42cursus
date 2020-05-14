@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:36:37 by mgaston           #+#    #+#              #
-#    Updated: 2020/05/14 16:51:28 by mgaston          ###   ########.fr        #
+#    Updated: 2020/05/14 21:46:21 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ bonus: $(OBJECTS) $(OBJECTS_BONUS)
 
 %.o: %.c libft.h
 	@gcc -Wall -Wextra -Werror -c $< -o $@
+
+so:	$(OBJECTS) $(OBJECTS_BONUS)
+	@gcc -shared -o libft.so $(OBJECTS) $(OBJECTS_BONUS)
 
 clean:
 	@/bin/rm -f $(OBJECTS) $(OBJECTS_BONUS)

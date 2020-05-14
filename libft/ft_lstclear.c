@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 15:32:17 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 17:55:15 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 21:59:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	if (lst == NULL || del == NULL || *lst == NULL)
 		return ;
-	ft_lstclear(&((*lst)->next), del);
-	(*lst)->next = NULL;
-	ft_lstdelone((*lst), del);
-	free(lst);
-	lst = NULL;
+	ft_lstclear(&(*lst)->next, del);
+	ft_lstdelone(*lst, del);
+	*lst = NULL;
 }
