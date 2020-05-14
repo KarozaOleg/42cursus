@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:36:37 by mgaston           #+#    #+#              #
-#    Updated: 2020/05/14 14:52:04 by mgaston          ###   ########.fr        #
+#    Updated: 2020/05/14 16:51:28 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRCS=	ft_atoi.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_memchr.c ft_memcpy.c \
 
 OBJECTS=$(SRCS:.c=.o)
 
-SRCS_BONUS = ft_lstnew.c
+SRCS_BONUS = 	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c \
+				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
 
@@ -30,11 +31,14 @@ all: $(NAME)
 $(NAME): $(OBJECTS) libft.h
 	@ar rc $(NAME) $(OBJECTS)
 
+bonus: $(OBJECTS) $(OBJECTS_BONUS)
+	@ar rc $(NAME) $(OBJECTS) $(OBJECTS_BONUS)
+
 %.o: %.c libft.h
 	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
-	@/bin/rm -f $(OBJECTS)
+	@/bin/rm -f $(OBJECTS) $(OBJECTS_BONUS)
 
 fclean: clean
 	@/bin/rm -f $(NAME)

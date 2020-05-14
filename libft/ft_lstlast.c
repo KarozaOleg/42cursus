@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 15:19:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 15:28:19 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 17:16:58 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	if(lst != NULL)
-		while ((*lst).next != NULL)
-			lst = (*lst).next;
-	return (lst);
+	if(lst == NULL)
+		return (NULL);
+	if(lst->next == NULL)
+		return (lst);
+	return ft_lstlast(lst->next);
 }
