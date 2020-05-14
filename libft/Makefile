@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:36:37 by mgaston           #+#    #+#              #
-#    Updated: 2020/05/14 14:03:24 by mgaston          ###   ########.fr        #
+#    Updated: 2020/05/14 14:52:04 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,24 +19,19 @@ SRCS=	ft_atoi.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_memchr.c ft_memcpy.c \
 		ft_substr.c ft_strjoin.c ft_strtrim.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c \
 		ft_putendl_fd.c ft_split.c ft_itoa.c ft_putnbr_fd.c
 
-OBJECTS=ft_atoi.o ft_isalnum.o ft_isascii.o ft_isprint.o ft_memchr.o ft_memcpy.o \
-		ft_memset.o ft_strlcat.o ft_strlen.o ft_strnstr.o ft_tolower.o ft_bzero.o \
-		ft_isalpha.o ft_isdigit.o ft_memccpy.o ft_memcmp.o ft_memmove.o ft_strchr.o \
-		ft_strlcpy.o ft_strncmp.o ft_strrchr.o ft_toupper.o ft_strdup.o ft_calloc.o \
-		ft_substr.o ft_strjoin.o ft_strtrim.o ft_strmapi.o ft_putchar_fd.o ft_putstr_fd.o \
-		ft_putendl_fd.o ft_split.o ft_itoa.o ft_putnbr_fd.o
+OBJECTS=$(SRCS:.c=.o)
 
-INCLUDES=./
+SRCS_BONUS = ft_lstnew.c
+
+OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(SRCS) libft.h
-	@gcc -Wall -Wextra -Werror -I$(INCLUDES) -c $(SRCS)
+$(NAME): $(OBJECTS) libft.h
 	@ar rc $(NAME) $(OBJECTS)
 
-so:	
-	@gcc -Wall -Wextra -Werror -I$(INCLUDES) -c $(SRCS)
-	@gcc -shared -o libft.so $(OBJECTS)
+%.o: %.c libft.h
+	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
 	@/bin/rm -f $(OBJECTS)
