@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/04 14:26:30 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/13 18:10:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 11:18:10 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+//void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(const char *s, char c);
 char	*ft_itoa(int n);
 
