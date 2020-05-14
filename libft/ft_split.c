@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 15:00:03 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 10:53:22 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/14 11:46:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_error_prelaunch(const char *s, char c, char ***p_arr)
 	return (0);
 }
 
-char		**ft_split(const char *s, char c)
+char		**ft_split(char const *s, char c)
 {
 	char	**arr;
 	int		i_arr;
