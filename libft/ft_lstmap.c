@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 15:45:43 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/14 22:28:43 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/15 10:37:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	t_list *current;
 
 	if (lst == NULL || f == NULL || *f == NULL || del == NULL)
-		return (NULL);	
+		return (NULL);
 	lst_new = NULL;
 	current = NULL;
 	while (lst)
@@ -28,7 +28,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		if (elem == NULL)
 		{
 			ft_lstclear(&lst_new, del);
-			break;
+			break ;
 		}
 		if (lst_new == NULL)
 			lst_new = elem;
