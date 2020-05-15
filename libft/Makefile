@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:36:37 by mgaston           #+#    #+#              #
-#    Updated: 2020/05/15 10:57:43 by mgaston          ###   ########.fr        #
+#    Updated: 2020/05/15 16:57:01 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRCS_BONUS = 	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_
 				ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
+
+.PHONY: all $(NAME) bonus so clean fclean re
 
 all: $(NAME)
 
