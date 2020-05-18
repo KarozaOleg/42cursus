@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/05 18:36:37 by mgaston           #+#    #+#              #
-#    Updated: 2020/05/18 17:19:13 by mgaston          ###   ########.fr        #
+#    Updated: 2020/05/18 19:11:23 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ bonus: $(OBJECTS) $(OBJECTS_BONUS)
 	@ar rc $(NAME) $(OBJECTS) $(OBJECTS_BONUS)
 
 %.o: %.c libft.h
-	@gcc -fPIC -Wall -Wextra -Werror -c $< -o $@
+	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 so:	$(OBJECTS) $(OBJECTS_BONUS)
 	@gcc -shared -o libft.so $(OBJECTS) $(OBJECTS_BONUS)
