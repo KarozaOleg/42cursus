@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:13:07 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/18 17:40:05 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/18 18:52:47 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	if(little_len < 1)
 		return ((char*)big);
 	i = 0;
-	while (big[i] != '\0')
+	while (big[i] != '\0' && i < len)
 	{
-		if(i >= len)
-			break;
 		if (little_len > (len - i))
 			break ;
 		if (ft_strncmp(&big[i], little, little_len) == 0)
