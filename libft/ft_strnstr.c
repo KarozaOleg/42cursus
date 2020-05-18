@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 14:13:07 by mgaston           #+#    #+#             */
-/*   Updated: 2020/05/13 18:04:17 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/05/18 17:40:05 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,22 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	char	*p;
-	size_t	i_big;
-	size_t	i_little;
+	size_t	little_len;
+	size_t	i;
 
-	p = (void *)big;
-	i_big = 0;
-	i_little = 0;
-	while (i_big < len && big[i_big] != '\0' && little[i_little] != '\0')
+	little_len = ft_strlen(little);
+	if(little_len < 1)
+		return ((char*)big);
+	i = 0;
+	while (big[i] != '\0')
 	{
-		if (big[i_big] != little[i_little])
-		{
-			p = NULL;
-			i_little = 0;
-		}
-		else
-		{
-			if (p == NULL)
-				p = (char *)&big[i_big];
-			++i_little;
-		}
-		++i_big;
+		if(i >= len)
+			break;
+		if (little_len > (len - i))
+			break ;
+		if (ft_strncmp(&big[i], little, little_len) == 0)
+			return ((char*)&big[i]);
+		++i;
 	}
-	if (little[i_little] != '\0')
-		p = NULL;
-	return (p);
+	return (NULL);
 }
