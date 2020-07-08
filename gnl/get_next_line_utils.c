@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 15:07:51 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/05 14:16:23 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/08 17:49:36 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ int		return_line_len(char *str)
 	int len;
 
 	len = 0;
-	while (*str != '\n' && *str != '\0')
+	if (str != NULL)
 	{
-		++len;
-		++str;
+		while (*str != '\n' && *str != '\0')
+		{
+			++len;
+			++str;
+		}
 	}
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 17:50:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/05 14:18:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/08 18:29:21 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 int		is_newline_char_exist(char *str)
 {
-	while (*str != '\0')
+	if (str != NULL)
 	{
-		if (*str == '\n')
-			return (1);
-		str++;
+		while (*str != '\0')
+		{
+			if (*str == '\n')
+				return (1);
+			str++;
+		}
 	}
 	return (0);
 }
@@ -39,25 +42,28 @@ int		cut_str(char **str, int len)
 {
 	char	*temp;
 	int		bytes_to_copy;
+	int		str_len;
+	int		answer;
 
-	if (*str == NULL)
-		return (-1);
-	temp = copy_str_and_close(*str, return_str_len(*str));
+	answer = is_newline_char_exist(*str);
+	str_len = return_str_len(*str);
+	temp = copy_str_and_close(*str, str_len);
 	if (temp == NULL)
 		return (-1);
-	bytes_to_copy = return_str_len(*str);
+	bytes_to_copy = str_len - len;
 	free(*str);
-	if (bytes_to_copy < 1)
-	{
-		*str = NULL;
-		return (0);
-	}
 	*str = malloc(sizeof(char) * (bytes_to_copy + 1));
 	if (*str == NULL)
 		return (-1);
 	mem_copy_ss(*str, temp, len, bytes_to_copy);
 	(*str)[bytes_to_copy] = '\0';
 	free(temp);
+	if (answer == 0 && (*str) != NULL)
+	{
+		free(*str);
+		*str = NULL;
+		return (0);
+	}
 	return (1);
 }
 
@@ -68,10 +74,9 @@ int		get_next_line(int fd, char **line)
 	int			bytes_readed;
 	int			line_len;
 
-	if (fd < 0 || line == NULL || fd >= MAXIMUM_FD)
+	if (fd < 0 || line == NULL || fd >= MAXIMUM_FD || read(fd, temp, 0) < 0)
 		return (-1);
-	*line = copy_str_and_close("", 0);
-	line_len = 0;
+	*line = NULL;
 	while ((bytes_readed = read(fd, temp, BUFFER_SIZE)) > 0)
 	{
 		temp[bytes_readed] = '\0';
@@ -83,7 +88,5 @@ int		get_next_line(int fd, char **line)
 	line_len = return_line_len(buff[fd]);
 	if (append_str_and_close(line, buff[fd], line_len) < 0)
 		return (-1);
-	if (buff[fd] == NULL)
-		return (0);
 	return (cut_str(&buff[fd], line_len + is_newline_char_exist(buff[fd])));
 }
