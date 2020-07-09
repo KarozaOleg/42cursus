@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/28 17:50:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/08 18:29:21 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/09 18:24:00 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int		get_next_line(int fd, char **line)
 	int			bytes_readed;
 	int			line_len;
 
-	if (fd < 0 || line == NULL || fd >= MAXIMUM_FD || read(fd, temp, 0) < 0)
+	if (fd < 0 || line == NULL || fd >= MAXIMUM_FD || read(fd, temp, 0) < 0 \
+		|| BUFFER_SIZE < 1)
 		return (-1);
 	*line = NULL;
 	while ((bytes_readed = read(fd, temp, BUFFER_SIZE)) > 0)
