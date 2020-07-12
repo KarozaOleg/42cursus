@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/08 21:15:57 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/08 21:19:40 by mgaston          ###   ########.fr       */
+/*   Created: 2020/05/13 13:16:06 by mgaston           #+#    #+#             */
+/*   Updated: 2020/05/13 17:31:10 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int ft_printf(const char *str, ...)
+void	ft_putstr_fd(char *s, int fd)
 {
-	va_list argptr;
+	int len;
 
-	va_start(argptr, str);
-
-	int value = va_arg(argptr, int);
-	
-	va_end(argptr);
-	return (0);
+	if (s == NULL)
+		return ;
+	len = ft_strlen(s);
+	write(fd, s, len);
 }
