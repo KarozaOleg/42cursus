@@ -6,16 +6,11 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 13:12:33 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/12 22:03:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/13 22:49:24 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-
-void wrapper_ft_putnbr(void *value, int len_to_print)
-{
-	ft_putnbr_fd(*((int*)value), 0);
-}
 
 int	lenght_of_int(int nb)
 {
@@ -40,10 +35,20 @@ int wrapper_return_lenght_of_int(void *value)
 	return (return_length_of_int(*((int*)value)));
 }
 
-void	handler_d_i(char flag, int precision, va_list argptr)
+void wrapper_ft_putnbr(void *value, int len_to_print)
 {
+	len_to_print = len_to_print;
+	ft_putnbr_fd(*((int*)value), 1);
+}
+
+int	handler_d_i(t_list *patterns, va_list argptr)
+{
+	t_printer_head t_printer_head;
 	int value;
 
 	value = va_arg(argptr, int);
-	printer(flag, precision, (void*)&value, wrapper_return_lenght_of_int, wrapper_ft_putnbr);
+	t_printer_head.ink = &value;
+	t_printer_head.tape_measure = wrapper_return_lenght_of_int;
+	t_printer_head.extruder = wrapper_ft_putnbr;	
+	return (printer(patterns, &t_printer_head));
 }

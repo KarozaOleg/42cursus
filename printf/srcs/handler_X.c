@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handler_p.c                                        :+:      :+:    :+:   */
+/*   handler_X.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/12 16:50:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/13 22:27:42 by mgaston          ###   ########.fr       */
+/*   Created: 2020/07/12 16:47:52 by mgaston           #+#    #+#             */
+/*   Updated: 2020/07/13 22:32:31 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	print_hexadecimal_ul(unsigned long int nb)
+void	wrapper_print_hexadecimal_X(void *value, int len_to_print)
 {
-	char *base;
-
-	base = "0123456789abcdef";
-	if (nb >= 16)	
-		print_hexadecimal_ul(nb / 16);		
-	ft_putchar_fd(base[nb % 16], 1);
+	print_hexadecimal(*((int*)value), len_to_print, 1);
 }
 
-void	wrapper_print_hexadecimal_ul(void *value, int len_to_print)
+int		handler_X(t_list *patterns, va_list argptr)
 {
-	len_to_print = len_to_print;
-	print_hexadecimal_ul(*((unsigned long int*)value));
-}
-
-int		handler_p(t_list *patterns, va_list argptr)
-{
-	t_printer_head printer_head;
-	unsigned long int value;
-
-	value = va_arg(argptr, unsigned long int);
+	t_printer_head printer_head;	
+	int value;
+	
+	value = va_arg(argptr, int);
 	printer_head.ink = &value;
 	printer_head.tape_measure = wrapper_return_lenght_of_int;
-	printer_head.extruder = wrapper_print_hexadecimal_ul;	
+	printer_head.extruder = wrapper_print_hexadecimal_X;	
 	return (printer(patterns, &printer_head));
 }

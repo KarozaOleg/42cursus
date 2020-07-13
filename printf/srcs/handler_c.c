@@ -6,18 +6,13 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:24:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/12 22:03:44 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/13 22:35:08 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	wrapper_ft_putchar_fd(void *value, int len_to_print)
-{
-	ft_putchar_fd(*((int *)value), 0);
-}
-
-int		wrapper_return_len_c(void *value)
+int		wrapper_return_lenght_of_char(void *value)
 {
 	void *hello_moulinette;
 
@@ -26,10 +21,20 @@ int		wrapper_return_len_c(void *value)
 	return (1);
 }
 
-void	handler_c(char flag, int precision, va_list argptr)
+void	wrapper_ft_putchar_fd(void *value, int len_to_print)
 {
+	len_to_print = len_to_print;
+	ft_putchar_fd(*((int *)value), 1);
+}
+
+int		handler_c(t_list *patterns, va_list argptr)
+{
+	t_printer_head printer_head;
 	int value;
 
 	value = va_arg(argptr, int);
-	printer(flag, precision, (void*)&value, wrapper_return_len_c, wrapper_ft_putchar_fd);
+	printer_head.ink = &value;
+	printer_head.tape_measure = wrapper_return_lenght_of_char;
+	printer_head.extruder = wrapper_ft_putchar_fd;	
+	return (printer(patterns, &printer_head));
 }

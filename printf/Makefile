@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/12 17:39:25 by mgaston           #+#    #+#              #
-#    Updated: 2020/07/12 17:55:20 by mgaston          ###   ########.fr        #
+#    Updated: 2020/07/13 22:43:56 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,17 +20,23 @@ SRCS_LIBFT =	libft/ft_atoi.c libft/ft_isalnum.c libft/ft_isascii.c libft/ft_ispr
 				libft/ft_strrchr.c libft/ft_toupper.c libft/ft_strdup.c libft/ft_calloc.c \
 				libft/ft_substr.c libft/ft_strjoin.c libft/ft_strtrim.c libft/ft_strmapi.c \
 				libft/ft_putchar_fd.c libft/ft_putstr_fd.c libft/ft_putendl_fd.c \
-				libft/ft_split.c libft/ft_itoa.c libft/ft_putnbr_fd.c
+				libft/ft_split.c libft/ft_itoa.c libft/ft_putnbr_fd.c \
+				libft/ft_lstnew.c libft/ft_lstadd_front.c libft/ft_lstsize.c \
+				libft/ft_lstlast.c libft/ft_lstadd_back.c libft/ft_lstdelone.c \
+				libft/ft_lstclear.c libft/ft_lstiter.c libft/ft_lstmap.c
 
 OBJECTS_LIBFT = $(SRCS_LIBFT:.c=.o)
 
-SRCS_PRINTF = 	srcs/ft_printf.c \
+SRCS_PRINTF = 	srcs/printer.c \
+				srcs/ft_printf.c \
 				srcs/handler_c.c \
 				srcs/handler_d_i.c \
 				srcs/handler_p.c \
 				srcs/handler_s.c \
 				srcs/handler_u.c \
-				srcs/handler_x.c
+				srcs/handler_x.c \
+				srcs/handler_X.c \
+				srcs/print_hexadecimal.c
 
 OBJECTS_PRINTF=$(SRCS_PRINTF:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:16:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/12 22:07:11 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/13 22:28:13 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,25 @@ void	wrapper_ft_putstr(void *value, int len_to_print)
 	i = 0;
 	while(i < len_to_print && i < str_len)
 	{
-		ft_putchar_fd(((char *)value)[i], 0);
+		ft_putchar_fd(((char *)value)[i], 1);
 		++i;
 	}
 }
 
-void	handler_s(char flag, int precision, va_list argptr)
+int		handler_s(t_list *patterns, va_list argptr)
 {
-	char *value;
+	t_printer_head printer_head;
+	char *value;	
 
 	value = va_arg(argptr, char *);
 	if (value == NULL)
-		ft_putstr_fd("(null)", 0);
-	else
-		printer(flag, precision, (void*)value, return_str_len, wrapper_ft_putstr);
+	{
+		ft_putstr_fd("(null)", 1);
+		return (return_str_len("(null)"));
+	}
+	printer_head.ink = (void*)value;
+	printer_head.tape_measure = return_str_len;
+	printer_head.extruder = wrapper_ft_putstr;	
+	return (printer(patterns, &printer_head));
 }
 		
