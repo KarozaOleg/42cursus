@@ -1,1 +1,11 @@
 pft_2019/
+*.o
+a.out
+*.a
+42TESTERS-PRINTF/
+pft_2019/pft_2019/
+pft_2019/
+.DS_Store
+main.cpft/
+main.c
+pft/pft_2019/

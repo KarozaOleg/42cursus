@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 18:36:48 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/13 22:35:01 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/23 13:51:19 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-
-//TODO check includes
-#include <stdarg.h>
-#include <stdio.h>
-
-#include "../libft/libft.h"
+#ifndef FT_LIBFTPRINTF_H
+# define FT_LIBFTPRINTF_H
+# include <stdarg.h>
+# include "../libft/libft.h"
 
 typedef struct	s_pattern
 {
@@ -25,28 +21,40 @@ typedef struct	s_pattern
 	int	precision;
 }				t_pattern;
 
-typedef struct	s_printer_head
-{
-	void	*ink;
-	int		(*tape_measure)(void *value);
-	void	(*extruder)(void *value, int len);
-}				t_printer_head;
+int				ft_printf(const char *str, ...);
+int				printer(char conversation, t_list *patterns, va_list argptr);
 
-int		ft_printf(const char *, ...);
+char			return_if_flag(char c);
+char			return_if_conversion(char c);
 
-void	print_hexadecimal(int nb, int len_to_print, int is_upper_case);
-int		return_length_of_int(int nb);
-int		wrapper_return_lenght_of_int(void *value);
-int		wrapper_return_lenght_of_char(void *value);
-void	wrapper_ft_putchar_fd(void *value, int len_to_print);
+int				free_patterns(t_list **patterns);
+int				parse_patterns(int *i, const char *s, t_list **pat, va_list ar);
 
-int		handler_c(t_list *patterns, va_list argptr);
-int		handler_s(t_list *patterns, va_list argptr);
-int		handler_p(t_list *patterns, va_list argptr);
-int		handler_d_i(t_list *patterns, va_list argptr);
-int		handler_u(t_list *patterns, va_list argptr);
-int		handler_x(t_list *patterns, va_list argptr);
-int		handler_X(t_list *patterns, va_list argptr);
+int				lenght_of_int(int nb);
+int				length_of_x(unsigned int value);
+int				length_of_uint(unsigned int value);
+int				length_of_ulint(unsigned long int value);
 
-int		printer(t_list *patterns, t_printer_head *printer_head);
+int				printer_c(t_list *patterns, va_list argptr);
+int				printer_s(t_list *patterns, va_list argptr);
+int				printer_p(t_list *patterns, va_list argptr);
+int				printer_d_i(t_list *patterns, va_list argptr);
+int				printer_u(t_list *patterns, va_list argptr);
+int				printer_x(t_list *patterns, va_list argptr, int is_upper_case);
+int				printer_single_char(t_list *patterns, char c);
+
+void			handle_default_flag_empty(t_list *pat, int *printed_len_of_tot);
+void			handle_default_flag_minus(t_list *pat, int *printed_len_of_tot);
+void			handle_default_flag_zero(t_list *pat, int *printed_len_of_tot);
+void			handle_d_i_u_x_flag_zero(t_list *pat, int *printed_len_of_tot);
+
+int				return_is_exist_flag_zero(t_list *patterns);
+int				return_is_exist_flag_p(t_list *patterns);
+int				return_is_exist_flag_zero_and_p(t_list *patterns);
+int				return_is_exist_flag_empty_and_negative(t_list *patterns);
+int				return_is_exist_flag_zero_and_negative(t_list *patterns);
+int				return_is_exist_flag_p_and_negative(t_list *patterns);
+int				return_is_exist_flag_p_precision(t_list *patterns);
+
+void			extruder_default(char symbol_to_print, int amount);
 #endif

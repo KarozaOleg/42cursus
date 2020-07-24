@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/12 17:39:25 by mgaston           #+#    #+#              #
-#    Updated: 2020/07/13 22:43:56 by mgaston          ###   ########.fr        #
+#    Updated: 2020/07/22 22:47:11 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,16 +27,25 @@ SRCS_LIBFT =	libft/ft_atoi.c libft/ft_isalnum.c libft/ft_isascii.c libft/ft_ispr
 
 OBJECTS_LIBFT = $(SRCS_LIBFT:.c=.o)
 
-SRCS_PRINTF = 	srcs/printer.c \
-				srcs/ft_printf.c \
-				srcs/handler_c.c \
-				srcs/handler_d_i.c \
-				srcs/handler_p.c \
-				srcs/handler_s.c \
-				srcs/handler_u.c \
-				srcs/handler_x.c \
-				srcs/handler_X.c \
-				srcs/print_hexadecimal.c
+SRCS_PRINTF = 	srcs/ft_printf.c \
+				srcs/printer.c \
+				srcs/return_if.c \
+				srcs/parse_patterns.c \
+				srcs/printer_c.c \
+				srcs/printer_d_i.c \
+				srcs/printer_p.c \
+				srcs/printer_s.c \
+				srcs/printer_u.c \
+				srcs/printer_x.c \
+				srcs/printer_single_char.c \
+				srcs/lenght_of.c \
+				srcs/extruder_default.c \
+				srcs/handle_default_flag_empty.c \
+				srcs/handle_default_flag_minus.c \
+				srcs/handle_default_flag_zero.c \
+				srcs/is_exist_flag.c \
+				srcs/is_exist_flag2.c \
+				srcs/handle_d_i_u_x_flag_zero.c
 
 OBJECTS_PRINTF=$(SRCS_PRINTF:.c=.o)
 
