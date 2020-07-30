@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/08 21:15:57 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/24 14:28:27 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 20:53:59 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
-
-void	skip_all_spaces(int *i, int *printed, t_list *patterns, const char *str)
-{
-	++(*i);
-	while (str[*i] == ' ')
-	{
-		*printed += printer_single_char(patterns, str[*i]);
-		++(*i);
-		while (str[*i] == ' ')
-			++(*i);
-	}
-}
 
 void	hello_norminette(t_list **patterns, int *printed, int *i)
 {
@@ -62,12 +50,12 @@ int		ft_printf(const char *str, ...)
 	{
 		if (str[i] == '%')
 		{
-			skip_all_spaces(&i, &printed, patterns, str);
 			if (parse_patterns(&i, str, &patterns, argptr) < 0)
 			{
 				printed = -1;
 				break ;
 			}
+			handle_multiply_patterns(patterns);
 			if ((convers = print_case(str[i], &printed, patterns, argptr)) > 0)
 				++i;
 		}

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 18:36:48 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/23 13:51:19 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 20:08:36 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int				ft_printf(const char *str, ...);
 int				printer(char conversation, t_list *patterns, va_list argptr);
 
 char			return_if_flag(char c);
+char			handle_flag(int *i, const char *str);
 char			return_if_conversion(char c);
 
 int				free_patterns(t_list **patterns);
 int				parse_patterns(int *i, const char *s, t_list **pat, va_list ar);
+void			handle_multiply_patterns(t_list *patterns);
 
 int				lenght_of_int(int nb);
 int				length_of_x(unsigned int value);
@@ -50,6 +52,7 @@ void			handle_d_i_u_x_flag_zero(t_list *pat, int *printed_len_of_tot);
 
 int				return_is_exist_flag_zero(t_list *patterns);
 int				return_is_exist_flag_p(t_list *patterns);
+int				return_is_exist_flag_zero_and_minus(t_list *patterns);
 int				return_is_exist_flag_zero_and_p(t_list *patterns);
 int				return_is_exist_flag_empty_and_negative(t_list *patterns);
 int				return_is_exist_flag_zero_and_negative(t_list *patterns);

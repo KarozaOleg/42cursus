@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 19:27:06 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/22 21:06:10 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 18:01:29 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,11 @@ int	return_is_exist_flag_zero_and_p(t_list *patterns)
 	return (1);
 }
 
-int	return_is_exist_flag_empty_and_negative(t_list *patterns)
+int	return_is_exist_flag_zero_and_minus(t_list *patterns)
 {
-	t_pattern *pattern;
-
-	while (patterns != NULL && (pattern = patterns->content) != NULL)
-	{
-		patterns = patterns->next;
-		if (pattern->flag != 0)
-			continue;
-		if (pattern->precision < 0)
-			return (1);
-		break ;
-	}
-	return (0);
+	if (return_is_exist_flag_zero(patterns) < 1)
+		return (0);
+	if (return_is_exist_flag(patterns, '-') < 1)
+		return (0);
+	return (1);
 }

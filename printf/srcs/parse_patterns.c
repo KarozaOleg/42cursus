@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_patterns.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 21:47:05 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/24 14:28:21 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 21:24:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int		parse_patterns(int *i, const char *str, t_list **patter, va_list argptr)
 {
 	t_pattern *pattern;
 
+	(*i)++;
 	while (str[*i] != '%' && str[*i] != '\0')
 	{
 		if (initialize_pattern_to_zero(&pattern) < 0)
 			return (-1);
-		pattern->flag = return_if_flag(str[*i]);
-		if (pattern->flag > 0)
-			++(*i);
+		pattern->flag = handle_flag(i, str);
 		if (str[*i] == '*')
 		{
 			pattern->precision = va_arg(argptr, int);

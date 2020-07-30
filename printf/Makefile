@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/12 17:39:25 by mgaston           #+#    #+#              #
-#    Updated: 2020/07/22 22:47:11 by mgaston          ###   ########.fr        #
+#    Updated: 2020/07/25 18:02:40 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS_PRINTF = 	srcs/ft_printf.c \
 				srcs/printer.c \
 				srcs/return_if.c \
 				srcs/parse_patterns.c \
+				srcs/handle_multiply_patterns.c \
 				srcs/printer_c.c \
 				srcs/printer_d_i.c \
 				srcs/printer_p.c \

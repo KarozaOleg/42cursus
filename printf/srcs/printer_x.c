@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:51:50 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/22 21:44:36 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 20:11:49 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,17 @@ int		printer_x(t_list *patterns, va_list argptr, int is_upper_case)
 	value = va_arg(argptr, unsigned int);
 	printed_length_of_value = return_printed_length_of_x(patterns, value);
 	printed_lenght_of_total = printed_length_of_value;
-	handle_default_flag_empty(patterns, &printed_lenght_of_total);
-	handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 0)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_zero_and_negative(patterns) == 0)
+		handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
 	handle_x_flag_p(patterns, value);
 	if (printed_length_of_value > 0)
 		print_hexadecimal(value, is_upper_case);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 1)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_zero_and_negative(patterns) == 1)
+		handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
 	handle_default_flag_minus(patterns, &printed_lenght_of_total);
 	return (printed_lenght_of_total);
 }

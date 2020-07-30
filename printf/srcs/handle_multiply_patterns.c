@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_default_flag_empty.c                        :+:      :+:    :+:   */
+/*   handle_multiply_patterns.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/19 17:26:43 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/25 19:16:22 by mgaston          ###   ########.fr       */
+/*   Created: 2020/07/25 18:02:12 by mgaston           #+#    #+#             */
+/*   Updated: 2020/07/25 20:52:30 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libftprintf.h"
 
-void	handle_default_flag_empty(t_list *patterns, int *printed_lenght_of_tot)
+void	handle_multiply_patterns(t_list *patterns)
 {
 	t_pattern *pattern;
 
-	while (patterns != NULL && (pattern = patterns->content) != NULL)
+	if (return_is_exist_flag_zero_and_minus(patterns))
 	{
-		patterns = patterns->next;
-		if (pattern->flag != 0)
-			continue;
-		if (pattern->precision < 0)
-			pattern->precision *= -1;
-		if (pattern->precision > *printed_lenght_of_tot)
+		while (patterns != NULL && (pattern = patterns->content) != NULL)
 		{
-			pattern->precision -= *printed_lenght_of_tot;
-			*printed_lenght_of_tot += pattern->precision;
-			extruder_default(' ', pattern->precision);
+			patterns = patterns->next;
+			if (pattern->flag != '0')
+				continue;
+			pattern->flag = -1;
+			pattern->precision = 0;
 		}
 	}
 }

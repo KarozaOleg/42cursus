@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:51:50 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/23 15:37:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 19:20:10 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ int		printer_p(t_list *patterns, va_list argptr)
 	value = va_arg(argptr, unsigned long int);
 	printed_length_of_value = return_printed_length_of_ulint(patterns, value);
 	printed_lenght_of_total = printed_length_of_value + 2;
-	handle_default_flag_empty(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 0)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
 	ft_putstr_fd("0x", 1);
 	handle_p_flag_p(patterns, value);
 	if (printed_length_of_value > 0)
 		print_hexadecimal_uli(value);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 1)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
 	handle_default_flag_minus(patterns, &printed_lenght_of_total);
 	return (printed_lenght_of_total);
 }

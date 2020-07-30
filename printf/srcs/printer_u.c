@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/19 16:52:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/07/22 21:38:18 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/07/25 19:19:06 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,17 @@ int		printer_u(t_list *patterns, va_list argptr)
 	value = va_arg(argptr, unsigned int);
 	printed_length_of_value = return_printed_length_of_uint(patterns, value);
 	printed_lenght_of_total = printed_length_of_value;
-	handle_default_flag_empty(patterns, &printed_lenght_of_total);
-	handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 0)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_zero_and_negative(patterns) == 0)
+		handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
 	handle_u_flag_p(patterns, value);
 	if (printed_length_of_value > 0)
 		ft_putunbr_fd(value);
+	if (return_is_exist_flag_empty_and_negative(patterns) == 1)
+		handle_default_flag_empty(patterns, &printed_lenght_of_total);
+	if (return_is_exist_flag_zero_and_negative(patterns) == 1)
+		handle_d_i_u_x_flag_zero(patterns, &printed_lenght_of_total);
 	handle_default_flag_minus(patterns, &printed_lenght_of_total);
 	return (printed_lenght_of_total);
 }
