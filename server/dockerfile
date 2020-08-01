@@ -1,0 +1,48 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/07/30 15:27:53 by mgaston           #+#    #+#              #
+#    Updated: 2020/07/30 15:42:13 by mgaston          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#apt-get -qq -> --quite(high level)
+#mkdir -p -> if not exist
+#tar --strip-components 1 -> do not create folder, just unzip in dir
+#cp -r -> mean copy recursive
+
+FROM debian:buster
+
+RUN apt-get update -qq 
+RUN apt-get upgrade -qq 
+RUN apt-get install -qq nginx
+RUN apt-get install -qq php php-fpm php-mbstring php-gd php-mysql php7.3-gmp php7.3-curl php7.3-intl php7.3-xmlrpc php7.3-xml php7.3-zip php7.3-common
+RUN apt-get install -qq default-mysql-server
+RUN apt-get install -qq wordpress
+RUN apt-get install -qq openssl
+
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/localhost.key \
+	-out  /etc/ssl/certs/localhost.crt -subj "/C=RU/ST=Moscow/L=Moscow/O=School 21/CN=mgaston"
+
+RUN mkdir -p /var/www/html/phpmyadmin
+ADD https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz phpMyAdmin.tar.gz
+RUN tar xvf phpMyAdmin.tar.gz -C /var/www/html/phpmyadmin --strip-components 1
+RUN	cp -r /usr/share/wordpress /var/www/html/
+RUN rm /var/www/html/wordpress/wp-config.php
+RUN	chown -R www-data:www-data /var/www/html
+
+WORKDIR /srcs
+COPY srcs/init.sql srcs/autoindex.sh srcs/start.sh ./
+RUN chmod +x *.sh
+COPY srcs/config.inc.php /var/www/html/phpmyadmin/
+COPY srcs/wp-config.php /var/www/html/wordpress/
+COPY srcs/localhost.conf /etc/nginx/sites-available/localhost
+RUN	 ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/localhost
+RUN rm /etc/nginx/sites-enabled/default
+
+CMD ["bash", "start.sh"]
+EXPOSE 80 443
