@@ -7,3 +7,5 @@ libft-unit-test-master
 *.so
 *.exe
 42FileChecker
+.DS_Store
+.gitignore~
