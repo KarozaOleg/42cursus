@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/30 15:27:53 by mgaston           #+#    #+#              #
-#    Updated: 2020/07/30 15:42:13 by mgaston          ###   ########.fr        #
+#    Updated: 2020/08/08 14:24:27 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 #mkdir -p -> if not exist
 #tar --strip-components 1 -> do not create folder, just unzip in dir
 #cp -r -> mean copy recursive
+#sudo /etc/init.d/apache2 stop
 
 FROM debian:buster
 
