@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   global.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/09 16:28:52 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/10 18:14:39 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
+/*   Updated: 2020/08/22 17:43:30 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef GLOBAL_H
+# define GLOBAL_H
 
-# include "../gnl/get_next_line.h"
 # include "../libft/libft.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 
-//TODO remove
-#include <stdio.h>
+typedef enum	s_answer
+{
+	SUCCESS,
+	ERROR
+}				t_answer;
 
-
-int	return_map(char *file_name, int ***map);
+void	ft_putstr(char *str);
 
 #endif

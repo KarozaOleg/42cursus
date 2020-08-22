@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/08/10 17:32:35 by mgaston          ###   ########.fr        #
+#    Updated: 2020/08/22 18:10:30 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,15 @@ OBJECTS_LIBFT = $(SRCS_LIBFT:.c=.o)
 
 SRCS_CUB3D = 	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
-				src/map/parser.c \
+				src/global.c \
+				src/parse/parser_base.c \
+				src/parse/map/parser.c \
+				src/parse/settings/parser.c src/parse/settings/parse_resolution.c src/parse/settings/parse_texture.c src/parse/settings/parse_colors.c
 
-INCLUDES = libft/libft.h gnl/get_next_line.h include/map.h
-
+INCLUDES =	libft/libft.h \
+			gnl/get_next_line.h \
+			include/global.h \
+			include/parse/map.h include/parse/parse.h include/parse/settings.h
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 

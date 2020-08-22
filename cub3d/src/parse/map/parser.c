@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/10 18:33:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/22 17:32:53 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/map.h"
+#include "../../../include/parse/map.h"
 
 int	return_integer_arr_from_line(char *line, int **arr)
 {	
@@ -48,7 +48,7 @@ int return_map_from_lines(t_list *lines, int lines_amount, int ***map)
 		lines = lines->next;		
 
 		arr = NULL;
-		if(return_integer_arr_from_line(line, &arr) < 0)					
+		if(return_integer_arr_from_line(line, &arr) < 0)
 			return (-1);
 
 		(*map)[i_line++] = arr;
@@ -69,15 +69,17 @@ int	return_lines_from_file(char *file_name, t_list **lines)
 	
 	while((answer = get_next_line(fd, &line)) > 0)
 	{		
-		ft_lstadd_back(lines, ft_lstnew(ft_substr(line, 0, ft_strlen(line))));
+		ft_lstadd_back(lines, ft_lstnew(ft_strdup(line)));
 		free(line);
 	}
 
 	if(line != NULL)
 	{
-		ft_lstadd_back(lines, ft_lstnew(ft_substr(line, 0, ft_strlen(line))));
+		ft_lstadd_back(lines, ft_lstnew(ft_strdup(line)));
 		free(line);
 	}
+	line = NULL;
+	
 	if (answer == -1)
 		return (-1);
 			
@@ -89,7 +91,7 @@ int	return_map(char *file_name, int ***map)
 {
 	t_list	*lines;
 
-	lines = NULL;	
+	lines = NULL;
 	if (return_lines_from_file(file_name, &lines) < 0)
 	{
 		ft_lstclear(&lines, free);
@@ -104,4 +106,17 @@ int	return_map(char *file_name, int ***map)
 	}
 	ft_lstclear(&lines, free);
 	return (0);
+}
+
+void	free_map(int** map)
+{
+	int i;
+
+	if(map == NULL)
+		return ;
+		
+	i = 0;
+	while(map[i] != NULL)
+		free(map[i++]);
+	free(map);	
 }
