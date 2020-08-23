@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 18:04:52 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/22 18:16:29 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/23 11:44:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_answer	parser_color(char *line, void **value)
 	rgb = malloc(sizeof(t_rgb));
 	if(rgb == NULL)
 		return (ERROR);
-	
+		
 	if (ft_isdigit(*line) == 0)
 		return (ERROR);
 	rgb->red = ft_atoi(line);
@@ -40,11 +40,11 @@ t_answer	parser_color(char *line, void **value)
 
 t_parse_answer	parse_line_color(char *line, t_map_settings *settings)
 {	
-	if(parser_base(line, "F", parser_color, (void *)(&settings->color_floor)) == NOT_FOUND)
-		return (NOT_FOUND);
+	if(parser_base(line, "F", parser_color, (void *)(&settings->color_floor)) == FOUND)
+		return (FOUND);
 
-	if(parser_base(line, "C", parser_color, (void *)(&settings->color_ceiling)) == NOT_FOUND)
-		return (NOT_FOUND);
+	if(parser_base(line, "C", parser_color, (void *)(&settings->color_ceiling)) == FOUND)
+		return (FOUND);
 	
-	return (FOUND);
+	return (NOT_FOUND);
 }

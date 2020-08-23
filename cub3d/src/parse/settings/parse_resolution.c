@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:04:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/22 18:14:05 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/23 14:59:27 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ t_answer	parser_resolution(char *line, void **value)
 	
 	if (ft_isdigit(*line) == 0)
 		return (ERROR);
-	resolution->width = ft_atoi(line);
-	
+	resolution->width = ft_atoi(line);	
 	line = skip_all(' ', line);
+	if(line == NULL)
+		return (ERROR);
 	
 	if (ft_isdigit(*line) == 0)
 		return (ERROR);
 	resolution->height = ft_atoi(line);
 
-	*value = (void *)resolution;	
+	*value = (void *)resolution;
 	return (SUCCESS);
 }
 
 t_parse_answer	parse_line_resolution(char *line, t_map_settings *settings)
 {	
-	if(parser_base(line, "R", parser_resolution, (void *)(&settings->resolution)) == NOT_FOUND)
-		return (NOT_FOUND);
+	if(parser_base(line, "R", parser_resolution, (void *)(&settings->resolution)) == FOUND)
+		return (FOUND);
 	
-	return (FOUND);
+	return (NOT_FOUND);
 }

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 12:30:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/22 18:12:32 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/23 15:00:38 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 t_answer	parser_settings_line(char *line, t_map_settings *settings)
 {
+	if(line == NULL)
+		return (ERROR);
+		
 	if(ft_strlen(line) < 1)
 		return (SUCCESS);
 
@@ -66,13 +69,8 @@ t_answer	return_settings(char *file_name, t_map_settings **settings)
 	if(*settings == NULL)
 		return (ERROR);
 
-	// (*settings)->color_floor = malloc(sizeof(t_rgb));
-	// if((*settings)->color_floor == NULL)
-	// 	return (ERROR);
-
-	// (*settings)->color_ceiling = malloc(sizeof(t_rgb));
-	// if((*settings)->color_ceiling == NULL)
-	// 	return (ERROR);
-
-	return (parse_settings(file_name, *settings));
+	if(parse_settings(file_name, *settings) == ERROR)
+		return (ERROR);
+	
+	return (SUCCESS);
 }

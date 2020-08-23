@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/08/22 18:10:30 by mgaston          ###   ########.fr        #
+#    Updated: 2020/08/23 14:51:26 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ SRCS_CUB3D = 	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				src/global.c \
 				src/parse/parser_base.c \
-				src/parse/map/parser.c \
-				src/parse/settings/parser.c src/parse/settings/parse_resolution.c src/parse/settings/parse_texture.c src/parse/settings/parse_colors.c
+				src/parse/map/parser.c src/parse/map/utils.c src/parse/map/validation.c \
+				src/parse/settings/parser.c src/parse/settings/parse_resolution.c src/parse/settings/parse_texture.c src/parse/settings/parse_colors.c src/parse/settings/utils.c
 
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
