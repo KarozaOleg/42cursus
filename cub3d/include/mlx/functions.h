@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global.h                                           :+:      :+:    :+:   */
+/*   functions.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 14:55:13 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/30 13:14:10 by mgaston           #+#    #+#             */
+/*   Updated: 2020/08/30 17:50:18 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GLOBAL_H
-# define GLOBAL_H
+#ifndef FUNCTIONS_H
+# define FUNCTIONS_H
+# include "../../include/mlx/essences.h"
+# include "../../include/global.h"
 
-# include "../libft/libft.h"
-# include "cub3d_essences.h"
-# include "mlx/essences.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <mlx.h>
-
-typedef enum	s_answer
-{
-	SUCCESS,
-	ERROR
-}				t_answer;
-
-void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_map_settings *settings, int **map, t_mlx_my *mlx_my);
-
+t_answer	return_mlx(t_mlx_my **mlx_my);
+void		free_mlx(t_mlx_my *mlx_my);
 #endif

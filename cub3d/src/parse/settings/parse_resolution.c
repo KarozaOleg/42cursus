@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:04:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/23 14:59:27 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/30 14:27:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_answer	parser_resolution(char *line, void **value)
 {
 	t_resolution *resolution;
 
-	resolution = malloc(sizeof(t_resolution));
+	resolution = malloc(sizeof(*resolution));
 	if(resolution == NULL)
 		return (ERROR);
 	

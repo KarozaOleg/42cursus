@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:22:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/22 18:08:04 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/08/30 14:08:51 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,8 @@
 # define PARSE_H
 
 # include "../global.h"
+# include "../cub3d_essences.h"
 # include "../../gnl/get_next_line.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-
-//TODO remove
-#include <stdio.h>
 
 typedef enum	s_parse_answer
 {

@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global.h                                           :+:      :+:    :+:   */
+/*   essences.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 14:55:13 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/30 12:33:13 by mgaston           #+#    #+#             */
+/*   Updated: 2020/08/30 17:54:57 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GLOBAL_H
-# define GLOBAL_H
+#ifndef ESSENCES_H
+# define ESSENCES_H
 
-# include "../libft/libft.h"
-# include "cub3d_essences.h"
-# include "mlx/essences.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <mlx.h>
-
-typedef enum	s_answer
+typedef struct	s_mlx_img
 {
-	SUCCESS,
-	ERROR
-}				t_answer;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_mlx_img;
 
-void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_map_settings *settings, int **map, t_mlx_my *mlx_my);
+typedef struct	s_mlx_my
+{ 
+	void		*mlx;
+	void		*mlx_win;
+	t_mlx_img	*mlx_img;
+	
+}				t_mlx_my;
 
 #endif

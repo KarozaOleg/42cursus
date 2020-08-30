@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global.h                                           :+:      :+:    :+:   */
+/*   test.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 14:55:13 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/30 12:23:49 by mgaston           #+#    #+#             */
+/*   Updated: 2020/08/30 16:09:02 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GLOBAL_H
-# define GLOBAL_H
 
-# include "../libft/libft.h"
-# include "cub3d_essences.h"
-# include "mlx/essences.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <mlx.h>
+#ifndef TEST_H
+# define TEST_H
 
-typedef enum	s_answer
-{
-	SUCCESS,
-	ERROR
-}				t_answer;
+#include <stdio.h>
+#include <unistd.h>
+#include "include/cub3d_essences.h"
 
-void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_map_settings *settings, int **map, t_mlx_my *mlx_my);
+void print_settings(t_map_settings *settings);
+void print_map(int **map);
 
 #endif
