@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:15:40 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 13:36:30 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 12:06:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/map.h"
+#include "../../include/map/map_utils.h"
 
 t_parse_answer	is_a_map_item(int value)
 {

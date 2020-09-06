@@ -6,12 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 18:04:52 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 16:49:18 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:08:56 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/settings.h"
-#include <stdio.h> 
+#include "../../include/settings/settings_utils.h"
+
 t_answer	parser_color(char *line, void **value)
 {
 	t_rgb *rgb;

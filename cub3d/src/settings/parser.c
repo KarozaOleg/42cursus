@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 12:30:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 16:38:56 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:09:11 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/settings.h"
+#include "../../include/settings/settings_utils.h"
 
 t_answer	parser_settings_line(char *line, t_map_settings *settings)
 {

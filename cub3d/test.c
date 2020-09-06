@@ -6,19 +6,20 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 16:51:40 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:09:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/parse/map.h"
-#include "include/parse/settings.h"
-#include "include/mlx/functions.h"
+#include "include/map/map_utils.h"
+#include "include/settings/settings_utils.h"
+#include "include/mlx/mlx_utils.h"
+#include "include/mlx/draw.h"
 #include "include/global.h"
 #include "test.h"
 
 int test_leaks()
 {
-	char *file_path = "map.cub";
+	char *file_path = "maps/map.cub";
 	t_map_settings *settings = NULL;
 	int **map = NULL;
 	t_mlx_my *mlx_my = NULL;
@@ -37,6 +38,7 @@ int test_leaks()
 	
 	if(return_mlx(&mlx_my, settings->resolution) == ERROR)
 		return (cub3d_exit("error, initialize mlx", settings, map, mlx_my));
+	
 
 	draw_map(mlx_my, map);
 	// draw_the_square(mlx_my);

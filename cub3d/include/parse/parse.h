@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:22:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 14:08:51 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 12:27:34 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSE_H
 
 # include "../global.h"
-# include "../cub3d_essences.h"
 # include "../../gnl/get_next_line.h"
 
 typedef enum	s_parse_answer

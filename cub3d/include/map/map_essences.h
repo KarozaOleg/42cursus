@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_essences.h                                   :+:      :+:    :+:   */
+/*   map_essences.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 12:21:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 13:17:00 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 12:18:08 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 12:22:34 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_ESSENCES_H
-# define CUB3D_ESSENCES_H
+#ifndef MAP_ESSENCES_H
+# define MAP_ESSENCES_H
+
+# include "../mlx/mlx_essences.h"
 
 # define MAP_EMPTY		0
 # define MAP_WALL		1
@@ -21,19 +23,6 @@
 # define MAP_PLAYER_S	5
 # define MAP_PLAYER_E	6
 # define MAP_PLAYER_W	7
-
-typedef struct	s_rgb
-{
-	int	red;
-	int green;
-	int blue;
-}				t_rgb;
-
-typedef struct	s_resolution
-{
-	int	width;
-	int height;
-}				t_resolution;
 
 typedef struct	s_map_settings
 {

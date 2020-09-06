@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:54:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 16:12:41 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:27:56 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/mlx/functions.h"
+#include "../../include/mlx/mlx_utils.h"
 
 void	my_mlx_pixel_put(t_mlx_img *scene, int x, int y, int color)
 {

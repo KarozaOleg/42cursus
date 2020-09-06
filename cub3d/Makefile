@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/09/05 14:38:25 by mgaston          ###   ########.fr        #
+#    Updated: 2020/09/06 13:20:22 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,42 +31,51 @@ OBJECTS_LIBFT = $(SRCS_LIBFT:.c=.o)
 # SRCS
 SRCS_CUB3D_PARSE = src/parse/parser_base.c
 
-SRCS_CUB3D_PARSE_MAP =	src/parse/map/parser.c \
-						src/parse/map/utils.c \
-						src/parse/map/validation.c
+SRCS_CUB3D_SETTINGS =	src/settings/parser.c \
+						src/settings/parse_resolution.c \
+						src/settings/parse_texture.c \
+						src/settings/parse_colors.c \
+						src/settings/utils.c
 
-SRCS_CUB3D_PARSE_SETTINGS = src/parse/settings/parser.c \
-							src/parse/settings/parse_resolution.c \
-							src/parse/settings/parse_texture.c \
-							src/parse/settings/parse_colors.c \
-							src/parse/settings/utils.c
+SRCS_CUB3D_MAP =	src/map/parser.c \
+					src/map/utils.c \
+					src/map/validation.c
 
 SRCS_CUB3D_MLX =	src/mlx/utils.c \
 					src/mlx/colors.c \
-					src/mlx/functions.c
+					src/mlx/draw.c
+
+SRCS_CUB3D_PLAYER	=	src/player/utils.c
 
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				src/global.c \
 				$(SRCS_CUB3D_PARSE) \
-				$(SRCS_CUB3D_PARSE_MAP) \
-				$(SRCS_CUB3D_PARSE_SETTINGS) \
+				$(SRCS_CUB3D_SETTINGS) \
+				$(SRCS_CUB3D_MAP) \
 				$(SRCS_CUB3D_MLX)
 				
 
 # INCLUDES
-INCLUDES_CUB3D_PARSE =	include/parse/map.h \
-						include/parse/parse.h \
-						include/parse/settings.h
+INCLUDES_CUB3D_PARSE =	include/parse/parse.h
 
-INCLUDES_CUB3D_MLX =	include/mlx/essences.h \
-						include/mlx/functions.h
+INCLUDES_CUB3D_SETTINGS = include/settings/settings_utils.h
+
+INCLUDE_CUB3D_MAP =		include/map/map_essences.h \
+						include/map/map_utils.h
+
+INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
+						include/mlx/mlx_utils.h \
+						include/mlx/draw.h \
+						include/mlx/colors.h
+
+INCLUDES_PLAYER =	include/player/player_essences.h
 
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
-			include/cub3d_essences.h \
 			include/global.h \
 			$(INCLUDES_CUB3D_PARSE) \
+			$(INCLUDE_CUB3D_MAP) \
 			$(INCLUDES_CUB3D_MLX)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)

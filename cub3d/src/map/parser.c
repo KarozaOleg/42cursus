@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/23 14:54:01 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 12:10:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/map.h"
+#include "../../include/map/map_utils.h"
 
 t_answer	return_arr_from_line(char *line, int **arr)
 {	

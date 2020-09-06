@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   essences.h                                         :+:      :+:    :+:   */
+/*   player_essences.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 12:33:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 14:45:20 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 11:32:13 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 11:58:21 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ESSENCES_H
-# define ESSENCES_H
+#ifndef PLAYER_ESSENCES_H
+# define PLAYER_ESSENCES_H
 
-typedef struct	s_mlx_img
+# include "../global.h"
+
+typedef struct	s_player
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_mlx_img;
+	int start_position;
+	int x;
+	int y;
+	int color;
+}				t_player;
 
-typedef struct	s_mlx_my
-{ 
-	void		*mlx;
-	void		*win;
-	t_mlx_img	*scene;
-	
-}				t_mlx_my;
+t_answer		intialize(int **map, t_player *player);
 
 #endif

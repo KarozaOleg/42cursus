@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   mlx_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 12:23:49 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:21:14 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/30 13:14:10 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 13:03:24 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MLX_FUNCTIONS_H
+# define MLX_FUNCTIONS_H
+# include "mlx_essences.h"
+# include "../global.h"
 
-#ifndef TEST_H
-# define TEST_H
+t_answer	return_mlx(t_mlx_my **mlx_my, t_resolution *resolution);
+void		free_mlx(t_mlx_my *mlx_my);
 
-#include <stdio.h>
-#include <unistd.h>
-#include "include/map/map_essences.h"
-
-void print_settings(t_map_settings *settings);
-void print_map(int **map);
+void		my_mlx_pixel_put(t_mlx_img *img, int x, int y, int color);
 
 #endif

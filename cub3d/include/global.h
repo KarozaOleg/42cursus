@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 13:24:54 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:02:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define GLOBAL_H
 
 # include "../libft/libft.h"
-# include "cub3d_essences.h"
-# include "mlx/essences.h"
+# include "map/map_essences.h"
+# include "mlx/mlx_essences.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>

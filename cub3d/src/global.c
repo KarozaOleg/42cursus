@@ -6,14 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 17:42:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 14:38:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:17:42 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/global.h"
-#include "../include/parse/map.h"
-#include "../include/parse/settings.h"
-#include "../include/mlx/functions.h"
+#include "../include/map/map_utils.h"
+#include "../include/mlx/mlx_utils.h"
+#include "../include/settings/settings_utils.h"
 
 void	ft_putstr(char *str)
 {

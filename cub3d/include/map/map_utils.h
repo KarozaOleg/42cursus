@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.h                                              :+:      :+:    :+:   */
+/*   map_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:28:52 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 14:38:24 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:02:03 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_H
-# define MAP_H
+#ifndef MAP_UTILS_H
+# define MAP_UTILS_H
 
-# include "parse.h"
+# include "../parse/parse.h"
 
 t_parse_answer	return_char2int_for_map(int value, int *converted);
 

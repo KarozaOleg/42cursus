@@ -1,24 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.h                                             :+:      :+:    :+:   */
+/*   mlx_essences.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 12:23:49 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:21:14 by mgaston          ###   ########.fr       */
+/*   Created: 2020/08/30 12:33:13 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 12:22:00 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef MLX_ESSENCES_H
+# define MLX_ESSENCES_H
 
-#ifndef TEST_H
-# define TEST_H
+typedef struct	s_rgb
+{
+	int	red;
+	int green;
+	int blue;
+}				t_rgb;
 
-#include <stdio.h>
-#include <unistd.h>
-#include "include/map/map_essences.h"
+typedef struct	s_resolution
+{
+	int	width;
+	int height;
+}				t_resolution;
 
-void print_settings(t_map_settings *settings);
-void print_map(int **map);
+typedef struct	s_mlx_img
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_mlx_img;
+
+typedef struct	s_mlx_my
+{ 
+	void		*mlx;
+	void		*win;
+	t_mlx_img	*scene;
+	
+}				t_mlx_my;
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 12:57:57 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/23 11:44:36 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:09:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/settings.h"
+#include "../../include/settings/settings_utils.h"
 
 t_answer	parser_texture(char *line, void **value)
 {

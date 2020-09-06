@@ -6,11 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/23 14:50:46 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 12:10:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/parse/map.h"
+#include "../../include/map/map_utils.h"
 
 t_parse_answer	is_a_player(int value)
 {
