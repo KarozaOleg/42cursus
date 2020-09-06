@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/08/30 13:57:38 by mgaston          ###   ########.fr        #
+#    Updated: 2020/09/05 14:38:25 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,9 @@ SRCS_CUB3D_PARSE_SETTINGS = src/parse/settings/parser.c \
 							src/parse/settings/parse_colors.c \
 							src/parse/settings/utils.c
 
-SRCS_CUB3D_MLX =	src/mlx/initialize.c \
-					src/mlx/utils.c
+SRCS_CUB3D_MLX =	src/mlx/utils.c \
+					src/mlx/colors.c \
+					src/mlx/functions.c
 
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \

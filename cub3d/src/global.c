@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 17:42:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/08/30 17:11:24 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/05 14:38:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../include/parse/map.h"
 #include "../include/parse/settings.h"
 #include "../include/mlx/functions.h"
-
 
 void	ft_putstr(char *str)
 {

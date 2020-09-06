@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global.h                                           :+:      :+:    :+:   */
+/*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/05 13:24:54 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/05 14:24:12 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/05 14:26:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GLOBAL_H
-# define GLOBAL_H
-
-# include "../libft/libft.h"
-# include "cub3d_essences.h"
-# include "mlx/essences.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <mlx.h>
-
-typedef enum	s_answer
+#include "../../include/mlx/functions.h"
+int		create_trgb(int t, int r, int g, int b)
 {
-	SUCCESS,
-	ERROR
-}				t_answer;
+	return(t << 24 | r << 16 | g << 8 | b);
+}
 
-void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_map_settings *settings, int **map, t_mlx_my *mlx_my);
+int		return_white()
+{
+	return (create_trgb(0, 255, 255, 255));
+}
 
-#endif
