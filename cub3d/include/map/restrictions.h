@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_essences.h                                    :+:      :+:    :+:   */
+/*   restrictions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:04:23 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 16:40:35 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 16:43:56 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_ESSENCES_H
-# define GAME_ESSENCES_H
-# include "../map/map_essences.h"
-# include "../mlx/mlx_essences.h"
-# include "../player/player_essences.h"
+#ifndef RESTRICTIONS_H
+# define RESTRICTIONS_H
 
-typedef struct	s_game
-{
-	t_map *map;
-	t_map_settings *map_settings;
-	t_mlx_my *mlx_my;
-	t_player *player;
-}				t_game;
+# include "../global.h"
+# include "map_essences.h"
+
+t_answer	return_restrictions_x(int **map, t_restriction ***restrictions);
 
 #endif

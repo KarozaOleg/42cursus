@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:39:35 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:51:20 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,11 @@
 
 int test_leaks()
 {
-	char *file_path = "maps/map.cub";
+	char *file_path = "maps/map_easy.cub";
 	t_game *game = NULL;
 	
 	if(return_game(file_path, &game) == ERROR)
 		return 1;
-	
-	
-	// draw_map(game->mlx_my->scene, game->map, 50);
-	// draw_player(game->mlx_my->scene, game->player, 50);
-	// mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0);
 	
 	register_mlx_hook_key_pressed(game);
 	mlx_loop(game->mlx_my->mlx);

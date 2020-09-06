@@ -6,11 +6,15 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:10:09 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:54:40 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
+#include "../../include/map/restrictions.h"
+
+//TODO remove
+#include <stdio.h>
 
 t_answer	return_arr_from_line(char *line, int **arr)
 {	
@@ -35,14 +39,14 @@ t_answer	return_arr_from_line(char *line, int **arr)
 	return (SUCCESS);
 }
 
-t_answer	return_map_from_lines(t_list *lines, int lines_amount, int ***map)
+t_answer	return_array_from_lines(t_list *lines, int lines_amount, int ***array)
 {
 	char	*line;
 	int		*arr;
 	int		i_line;
 
-	*map = malloc(sizeof(int *) * (1 + lines_amount));
-	if(*map == NULL)
+	*array = malloc(sizeof(int *) * (1 + lines_amount));
+	if(*array == NULL)
 		return (ERROR);
 	
 	i_line = 0;
@@ -54,9 +58,9 @@ t_answer	return_map_from_lines(t_list *lines, int lines_amount, int ***map)
 		if(return_arr_from_line(line, &arr) == ERROR)
 			return (ERROR);
 
-		(*map)[i_line++] = arr;
+		(*array)[i_line++] = arr;
 	}
-	(*map)[i_line] = NULL;
+	(*array)[i_line] = NULL;
 	return (SUCCESS);
 }
 
@@ -106,9 +110,14 @@ t_answer	return_lines_from_file(char *file_name, t_list **lines)
 	return (SUCCESS);
 }
 
-t_answer	return_map(char *file_name, int ***map)
+t_answer	return_map(char *file_name, t_map **map)
 {
 	t_list	*lines;
+	int		**array;
+
+	*map = malloc(sizeof(**map));
+	if(*map == NULL)
+		return (ERROR);
 
 	lines = NULL;
 	if (return_lines_from_file(file_name, &lines) == ERROR)
@@ -117,10 +126,23 @@ t_answer	return_map(char *file_name, int ***map)
 		return (ERROR);
 	}
 	
-	if (return_map_from_lines(lines, ft_lstsize(lines), map) == ERROR)
+	if (return_array_from_lines(lines, ft_lstsize(lines), &array) == ERROR)
 	{
 		ft_lstclear(&lines, free);
 		return (ERROR);
+	}
+
+	(*map)->array = array;
+
+	t_restriction **restrictions_x;
+	if(return_restrictions_x((*map)->array, &restrictions_x) == ERROR)
+		return (ERROR);
+
+	int y = 0;
+	while(restrictions_x[y] != NULL)
+	{
+		printf("min:%d, max:%d\n", restrictions_x[y]->min, restrictions_x[y]->max);
+		y+= 1;
 	}
 	
 	ft_lstclear(&lines, free);

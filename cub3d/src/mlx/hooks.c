@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:48:05 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:02:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,21 @@ t_answer	is_move_key(int keycode, t_player_move *player_move)
 void	player_move_handler(t_game *game, t_player_move player_move)
 {
 	if(player_move == LEFT)
+	{
 		game->player->x -= 1;
+	}
 	else if(player_move == RIGHT)
+	{
 		game->player->x += 1;
+	}
 	else if(player_move == DOWN)
+	{
 		game->player->y += 1;
+	}
 	else if(player_move == UP)
-		game->player->y -= 1;	
+	{
+		game->player->y -= 1;
+	}
 }
 
 int		key_pressed_handler(int keycode, t_game *game)

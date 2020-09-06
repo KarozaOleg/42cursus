@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:50:59 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:07:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ t_answer is_all_integers_valid(int *arr, t_parse_answer *is_player_found)
 	return (SUCCESS);
 }
 
-t_answer is_map_valid(int **map)
+t_answer is_map_valid(t_map *map)
 {
 	t_parse_answer	is_player_found;
 	int				i;
 
-	if(map == NULL)
+	if(map->array == NULL)
 		return (ERROR);
 
 	is_player_found = NOT_FOUND;
 	i = 0;
-	while(map[i] != NULL)
-		is_all_integers_valid(map[i++], &is_player_found);
+	while(map->array[i] != NULL)
+		is_all_integers_valid(map->array[i++], &is_player_found);
 		
 	if(is_player_found == NOT_FOUND)
 		return (ERROR);

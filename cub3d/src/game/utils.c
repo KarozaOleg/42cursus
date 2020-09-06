@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:55:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:13:22 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_answer	create_game(t_game **game)
 	return (SUCCESS);
 }
 
-t_answer		return_game(char *settings_file_path, t_game **game)
+t_answer	return_game(char *settings_file_path, t_game **game)
 {
-	int **map = NULL;
+	t_map *map = NULL;
 	t_map_settings *map_settings = NULL;
 	t_mlx_my *mlx_my = NULL;
 	t_player *player = NULL;
@@ -45,7 +45,7 @@ t_answer		return_game(char *settings_file_path, t_game **game)
 	if(return_mlx(&mlx_my, map_settings->resolution) == ERROR)
 		return (cub3d_exit("error, initialize mlx", *game));
 	
-	if(return_player(map, &player) == ERROR)
+	if(return_player(map->array, &player) == ERROR)
 		return (cub3d_exit("error, initialize player", *game));
 
 	(*game)->map = map;
@@ -56,7 +56,7 @@ t_answer		return_game(char *settings_file_path, t_game **game)
 	return (SUCCESS);
 }
 
-void			free_game(t_game *game)
+void		free_game(t_game *game)
 {	
 	if(game == NULL)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:15:40 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:06:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:48:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,20 @@ t_answer	is_a_map_line(char *line)
 	return (i == 0) ? ERROR : SUCCESS;
 }
 
-void	free_map(int** map)
+void	free_map(t_map *map)
 {
 	int i;
-
-	if(map == NULL)
-		return ;
+	
+	if(map->array != NULL)
+	{
+		i = 0;
+		while(map->array[i] != NULL)
+			free(map->array[i++]);
+		free(map->array);
+	}	
+	
+	//TODO free restirictions
 		
-	i = 0;
-	while(map[i] != NULL)
-		free(map[i++]);
-	free(map);
+	if(map == NULL)
+		free(map);
 }

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:18:08 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:22:34 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:43:14 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@
 # define MAP_PLAYER_S	5
 # define MAP_PLAYER_E	6
 # define MAP_PLAYER_W	7
+
+typedef struct s_restriction
+{
+	int min;
+	int max;
+}				t_restriction;
+typedef struct	s_map
+{
+	int **array;
+	t_restriction **restrictions_x;
+	t_restriction **restrictions_y;
+	int increased_to;
+}				t_map;
 
 typedef struct	s_map_settings
 {

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:39:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 16:12:24 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,10 @@ void	draw_scaled_point(t_mlx_img *scene, int x_shifted, int y_shifted, int incre
 }
 
 int		draw_scene(t_game *game)
-{
-	// game += 0;
-	
-	draw_map(game->mlx_my->scene, game->map, 50);
+{	
+	draw_map(game->mlx_my->scene, game->map->array, 50);
 	draw_player(game->mlx_my->scene, game->player, 50);
-	mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0);
-	
-	return 0;
+	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }
 
 void	draw_map(t_mlx_img *scene, int **map, int increased_to)
