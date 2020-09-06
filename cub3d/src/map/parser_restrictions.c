@@ -6,14 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 16:23:31 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:56:02 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:47:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/restrictions.h"
-
-//TODO remove
-#include <stdio.h>
 
 t_answer	is_not_a_wall(int value)
 {
@@ -42,41 +39,58 @@ int			return_amount_y(int **array)
 	return (amount);
 }
 
-t_answer	return_restrictions_x(int **map, t_restriction ***restrictions)
+t_answer	return_restrictions(int **array, t_restriction ****restrictions)
 {
+	t_restriction *restriction;
+	int amount_y;
+	int amount_x;
 	int y;
-
-	*restrictions = malloc(sizeof(**restrictions) * (1 + return_amount_y(map)));
+	
+	amount_y = return_amount_y(array);
+	*restrictions = malloc(sizeof(**restrictions) * (1 + amount_y));
 	if (*restrictions == NULL)
 		return (ERROR);
-	(*restrictions)[return_amount_y(map)] = NULL;
+	(*restrictions)[amount_y] = NULL;
 	
 	y = 0;
-	while (map[y] != NULL)
+	while (array[y] != NULL)
 	{
-		(*restrictions)[y] = malloc(sizeof(***restrictions));
+		amount_x = return_amount_x(array[y]);
+		(*restrictions)[y] = malloc(sizeof(***restrictions) * (1 + amount_x));
 		if((*restrictions)[y] == NULL)
 			return (ERROR);
+		(*restrictions)[y][amount_x] = NULL;
 
-		int x_min = -1;
-		int x_max = -1;
 		int x = 0;
-		while(map[y][x] > -1)
+		while(array[y][x] > -1)
 		{
-			printf("x:%d, y:%d\n", x, y);
-			if(is_not_a_wall(map[y][x]) == SUCCESS)
-			{
-				printf("not a wall\n");
+			restriction = malloc(sizeof(*restriction));
+			if(restriction == NULL)
+				return (ERROR);
 				
-				if(x_min == -1)
-					x_min = x;
-				if(x_max < x)
-					x_max = x;
-			}
+			if(y == 0)
+				restriction->up = ERROR;
+			else
+				restriction->up = is_not_a_wall(array[y - 1][x]);
+				
+			if(x == 0)
+				restriction->left = ERROR;
+			else
+				restriction->left = is_not_a_wall(array[y][x - 1]);
+
+			if(y == amount_y - 1)
+				restriction->down = ERROR;
+			else
+				restriction->down = is_not_a_wall(array[y + 1][x]);
+
+			if(x == amount_x - 1)
+				restriction->right = ERROR;
+			else
+				restriction->right = is_not_a_wall(array[y][x + 1]);
+			
+			(*restrictions)[y][x] = restriction;
 			x += 1;
 		}
-		(*restrictions)[y]->min = x_min;
-		(*restrictions)[y]->max = x_max;
 		y += 1;
 	}
 	return (SUCCESS);

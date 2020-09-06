@@ -6,12 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 17:42:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:24:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:03:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/global.h"
 #include "../include/game/game_utils.h"
+#include "../include/global.h"
 
 void	ft_putstr(char *str)
 {

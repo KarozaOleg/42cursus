@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/09/06 16:40:44 by mgaston          ###   ########.fr        #
+#    Updated: 2020/09/06 17:53:16 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ INCLUDES_CUB3D_GAME =	include/game/game_essences.h \
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
 			include/global.h \
+			include/global_essences.h \
 			$(INCLUDES_CUB3D_PARSE) \
 			$(INCLUDE_CUB3D_MAP) \
 			$(INCLUDES_CUB3D_MLX) \

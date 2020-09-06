@@ -6,13 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:12:24 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:41:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/game/game_essences.h"
 #include "../../include/mlx/draw.h"
-#include <stdio.h>
 
 void	draw_scaled_point(t_mlx_img *scene, int x_shifted, int y_shifted, int increase_to, int color)
 {
@@ -50,6 +48,8 @@ void	draw_map(t_mlx_img *scene, int **map, int increased_to)
 		{
 			if(map[y][x] == 1)
 				draw_scaled_point(scene, x * increased_to, y * increased_to, increased_to, return_white());
+			else
+				draw_scaled_point(scene, x * increased_to, y * increased_to, increased_to, return_black());
 			x += 1;
 		}
 		y += 1;

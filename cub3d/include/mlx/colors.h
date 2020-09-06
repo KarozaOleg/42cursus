@@ -6,13 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:44:36 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 11:45:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:42:00 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
 
+int		return_black();
 int		return_white();
 int		return_red();
 

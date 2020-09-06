@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:51:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:42:05 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int test_leaks()
 {
-	char *file_path = "maps/map_easy.cub";
+	char *file_path = "maps/map.cub";
 	t_game *game = NULL;
 	
 	if(return_game(file_path, &game) == ERROR)

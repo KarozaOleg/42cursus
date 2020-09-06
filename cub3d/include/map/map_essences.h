@@ -6,13 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:18:08 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:43:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:28:37 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_ESSENCES_H
 # define MAP_ESSENCES_H
 
+# include "../global_essences.h"
 # include "../mlx/mlx_essences.h"
 
 # define MAP_EMPTY		0
@@ -26,14 +27,16 @@
 
 typedef struct s_restriction
 {
-	int min;
-	int max;
+	t_answer left;
+	t_answer right;
+	t_answer down;
+	t_answer up;
 }				t_restriction;
+
 typedef struct	s_map
 {
 	int **array;
-	t_restriction **restrictions_x;
-	t_restriction **restrictions_y;
+	t_restriction ***restrictions;
 	int increased_to;
 }				t_map;
 

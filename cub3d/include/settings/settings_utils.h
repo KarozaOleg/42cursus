@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 13:06:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:54:54 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:01:58 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SETTINGS_UTILS_H
 
 # include "../parse/parse.h"
+# include "../map/map_essences.h"
 
 t_parse_answer	is_a_settings_line(char *line);
 t_parse_answer	parse_line_resolution(char *line, t_map_settings *map_settings);

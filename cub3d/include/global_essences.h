@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.h                                        :+:      :+:    :+:   */
+/*   global_essences.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 13:14:10 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:05:34 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 17:52:54 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 18:02:18 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_FUNCTIONS_H
-# define MLX_FUNCTIONS_H
-# include "mlx_essences.h"
-# include "../global.h"
-# include "../global_essences.h"
+#ifndef GLOBAL_ESSENCES_H
+# define GLOBAL_ESSENCES_H
 
-t_answer	return_mlx(t_mlx_my **mlx_my, t_resolution *resolution);
-void		free_mlx(t_mlx_my *mlx_my);
-
-void		my_mlx_pixel_put(t_mlx_img *img, int x, int y, int color);
+typedef enum	s_answer
+{
+	SUCCESS,
+	ERROR
+}				t_answer;
 
 #endif

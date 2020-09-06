@@ -6,14 +6,15 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:22:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:27:34 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:03:32 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-# include "../global.h"
+# include "../global.h" 
+# include "../global_essences.h"
 # include "../../gnl/get_next_line.h"
 
 typedef enum	s_parse_answer

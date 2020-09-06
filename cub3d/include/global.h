@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:32:30 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:05:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdlib.h>
 # include <mlx.h>
-
-
-typedef enum	s_answer
-{
-	SUCCESS,
-	ERROR
-}				t_answer;
 
 void	ft_putstr(char *str);
 int		cub3d_exit(char *exit_comment, t_game *game);

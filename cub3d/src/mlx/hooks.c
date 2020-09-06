@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:02:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:47:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,28 @@ t_answer	is_move_key(int keycode, t_player_move *player_move)
 
 void	player_move_handler(t_game *game, t_player_move player_move)
 {
+	t_restriction *restriction;
+
+	restriction = game->map->restrictions[game->player->y][game->player->x];
 	if(player_move == LEFT)
 	{
-		game->player->x -= 1;
+		if(restriction->left == SUCCESS)
+			game->player->x -= 1;
 	}
 	else if(player_move == RIGHT)
 	{
-		game->player->x += 1;
+		if(restriction->right == SUCCESS)
+			game->player->x += 1;
 	}
 	else if(player_move == DOWN)
 	{
-		game->player->y += 1;
+		if(restriction->down == SUCCESS)
+			game->player->y += 1;
 	}
 	else if(player_move == UP)
 	{
-		game->player->y -= 1;
+		if(restriction->up == SUCCESS)
+			game->player->y -= 1;
 	}
 }
 

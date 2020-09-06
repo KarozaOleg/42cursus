@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:54:40 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 18:45:02 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,12 @@ t_answer	return_lines_from_file(char *file_name, t_list **lines)
 
 t_answer	return_map(char *file_name, t_map **map)
 {
-	t_list	*lines;
-	int		**array;
+	t_list			*lines;
+	int				**array;
+	t_restriction	***restrictions;
+
+	array = NULL;
+	restrictions = NULL;
 
 	*map = malloc(sizeof(**map));
 	if(*map == NULL)
@@ -131,19 +135,13 @@ t_answer	return_map(char *file_name, t_map **map)
 		ft_lstclear(&lines, free);
 		return (ERROR);
 	}
-
-	(*map)->array = array;
-
-	t_restriction **restrictions_x;
-	if(return_restrictions_x((*map)->array, &restrictions_x) == ERROR)
+	
+	if(return_restrictions(array, &restrictions) == ERROR)
 		return (ERROR);
 
-	int y = 0;
-	while(restrictions_x[y] != NULL)
-	{
-		printf("min:%d, max:%d\n", restrictions_x[y]->min, restrictions_x[y]->max);
-		y+= 1;
-	}
+	(*map)->array = array;
+	(*map)->restrictions = restrictions;
+	(*map)->increased_to = 50;
 	
 	ft_lstclear(&lines, free);
 	return (SUCCESS);
