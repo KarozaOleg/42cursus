@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   hooks.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 12:11:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 15:36:11 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 14:48:51 by mgaston           #+#    #+#             */
+/*   Updated: 2020/09/06 15:37:55 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
+#ifndef HOOKS_H
+# define HOOKS_H
+# include "../global.h"
 # include "mlx_essences.h"
-# include "mlx_utils.h"
-# include "colors.h"
-# include "../player/player_essences.h"
 
-int		draw_scene(t_game *game);
-void	draw_map(t_mlx_img *scene, int **map, int increased_to);
-void	draw_player(t_mlx_img *scene, t_player *player, int increased_to);
-void	draw_the_line(t_mlx_img *scene);
-void	draw_the_square(t_mlx_img *scene);
+void	register_mlx_hook_key_pressed(t_game *game);
 
 #endif
-

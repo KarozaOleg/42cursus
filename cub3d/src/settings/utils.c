@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:16:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:09:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 15:54:51 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,70 +34,70 @@ t_parse_answer	is_a_settings_line(char *line)
 	return (NOT_FOUND);
 }
 
-t_answer		is_settings_valid(t_map_settings *settings)
+t_answer		is_map_settings_valid(t_map_settings *map_settings)
 {
-	if(settings == NULL)
+	if(map_settings == NULL)
 		return (ERROR);
-	if(settings->resolution == NULL)
+	if(map_settings->resolution == NULL)
 		return (ERROR);
-	if(settings->texture_no == NULL)
+	if(map_settings->texture_no == NULL)
 		return (ERROR);
-	if(settings->texture_so == NULL)
+	if(map_settings->texture_so == NULL)
 		return (ERROR);
-	if(settings->texture_we == NULL)
+	if(map_settings->texture_we == NULL)
 		return (ERROR);
-	if(settings->texture_ea == NULL)
+	if(map_settings->texture_ea == NULL)
 		return (ERROR);
-	if(settings->texture_s == NULL)
+	if(map_settings->texture_s == NULL)
 		return (ERROR);
-	if(settings->color_floor == NULL)
+	if(map_settings->color_floor == NULL)
 		return (ERROR);
-	if(settings->color_ceiling == NULL)
+	if(map_settings->color_ceiling == NULL)
 		return (ERROR);
 
 	return (SUCCESS);
 }
 
-void			initialize_settings(t_map_settings *settings)
+void			initialize_map_settings(t_map_settings *map_settings)
 {
-	settings->resolution = NULL;
-	settings->texture_no = NULL;
-	settings->texture_so = NULL;
-	settings->texture_we = NULL;
-	settings->texture_ea = NULL;
-	settings->texture_s = NULL;
-	settings->color_floor = NULL;
-	settings->color_ceiling = NULL;
+	map_settings->resolution = NULL;
+	map_settings->texture_no = NULL;
+	map_settings->texture_so = NULL;
+	map_settings->texture_we = NULL;
+	map_settings->texture_ea = NULL;
+	map_settings->texture_s = NULL;
+	map_settings->color_floor = NULL;
+	map_settings->color_ceiling = NULL;
 }
 
-void			free_settings(t_map_settings *settings)
+void			free_map_settings(t_map_settings *map_settings)
 {
-	if(settings == NULL)
+	if(map_settings == NULL)
 		return ;
 		
-	if(settings->resolution != NULL)
-		free(settings->resolution);
+	if(map_settings->resolution != NULL)
+		free(map_settings->resolution);
 
-	if(settings->texture_no != NULL)
-		free(settings->texture_no);
+	if(map_settings->texture_no != NULL)
+		free(map_settings->texture_no);
 
-	if(settings->texture_so != NULL)
-		free(settings->texture_so);
+	if(map_settings->texture_so != NULL)
+		free(map_settings->texture_so);
 
-	if(settings->texture_we != NULL)
-		free(settings->texture_we);
+	if(map_settings->texture_we != NULL)
+		free(map_settings->texture_we);
 
-	if(settings->texture_ea != NULL)
-		free(settings->texture_ea);
+	if(map_settings->texture_ea != NULL)
+		free(map_settings->texture_ea);
 
-	if(settings->texture_s != NULL)
-		free(settings->texture_s);
+	if(map_settings->texture_s != NULL)
+		free(map_settings->texture_s);
 
-	if(settings->color_floor != NULL)
-		free(settings->color_floor);
+	if(map_settings->color_floor != NULL)
+		free(map_settings->color_floor);
 
-	if(settings->color_ceiling != NULL)
-		free(settings->color_ceiling);
+	if(map_settings->color_ceiling != NULL)
+		free(map_settings->color_ceiling);
 
-	free(settings);
+	free(map_settings);
 }

@@ -6,54 +6,33 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:42:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 15:39:35 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/map/map_utils.h"
-#include "include/settings/settings_utils.h"
-#include "include/mlx/mlx_utils.h"
-#include "include/mlx/draw.h"
-#include "include/player/player_utils.h"
+#include "include/game/game_utils.h"
+#include "include/mlx/hooks.h"
 #include "include/global.h"
+#include "include/mlx/draw.h"
 #include "test.h"
 
 int test_leaks()
 {
 	char *file_path = "maps/map.cub";
-	t_map_settings *settings = NULL;
-	int **map = NULL;
-	t_mlx_my *mlx_my = NULL;
-	t_player *player = NULL;
-
-	if(return_map(file_path, &map) == ERROR)
-		return (cub3d_exit("error, parsing map", settings, map, mlx_my, player));
+	t_game *game = NULL;
 	
-	if(is_map_valid(map) == ERROR)
-		return (cub3d_exit("error, map is invalid", settings, map, mlx_my, player));
-	
-	if(return_settings(file_path, &settings) == ERROR)
-		return (cub3d_exit("error, parsing settings", settings, map, mlx_my, player));
-
-	if(is_settings_valid(settings) == ERROR)
-		return (cub3d_exit("error, settings is invalid", settings, map, mlx_my, player));
-	
-	if(return_mlx(&mlx_my, settings->resolution) == ERROR)
-		return (cub3d_exit("error, initialize mlx", settings, map, mlx_my, player));
-	
-	if(return_player(map, &player) == ERROR)
-		return (cub3d_exit("error, initialize player", settings, map, mlx_my, player));
-	
-	draw_map(mlx_my, map);
-	draw_player(mlx_my, player);
-	// draw_the_square(mlx_my);
+	if(return_game(file_path, &game) == ERROR)
+		return 1;
 	
 	
-	// print_map(map);
-	// print_settings(settings);
-
-	mlx_loop(mlx_my->mlx);
-	return (cub3d_exit("", settings, map, mlx_my, player));
+	// draw_map(game->mlx_my->scene, game->map, 50);
+	// draw_player(game->mlx_my->scene, game->player, 50);
+	// mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0);
+	
+	register_mlx_hook_key_pressed(game);
+	mlx_loop(game->mlx_my->mlx);
+	
+	return (cub3d_exit("", game));
 }
 
 //gcc test*.c cub3d.a -lmlx -framework OpenGL -framework AppKit

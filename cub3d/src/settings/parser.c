@@ -6,13 +6,13 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 12:30:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:09:11 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 15:58:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/settings/settings_utils.h"
 
-t_answer	parser_settings_line(char *line, t_map_settings *settings)
+t_answer	parser_map_settings_line(char *line, t_map_settings *map_settings)
 {
 	if (line == NULL)
 		return (ERROR);
@@ -23,19 +23,19 @@ t_answer	parser_settings_line(char *line, t_map_settings *settings)
 	if (is_a_settings_line(line) == NOT_FOUND)
 		return (SUCCESS);	
 
-	if (parse_line_resolution(line, settings) == FOUND)
+	if (parse_line_resolution(line, map_settings) == FOUND)
 		return (SUCCESS);
 
-	if (parse_line_texture(line, settings) == FOUND)
+	if (parse_line_texture(line, map_settings) == FOUND)
 		return (SUCCESS);
 
-	if (parse_line_color(line, settings) == FOUND)
+	if (parse_line_color(line, map_settings) == FOUND)
 		return (SUCCESS);
 
 	return (ERROR);
 }
 
-t_answer	parse_settings(char *file_name, t_map_settings *settings)
+t_answer	parse_map_settings(char *file_name, t_map_settings *map_settings)
 {
 	int		answer;
 	char	*line;
@@ -47,14 +47,14 @@ t_answer	parse_settings(char *file_name, t_map_settings *settings)
 	
 	while((answer = get_next_line(fd, &line)) > 0)
 	{
-		if(parser_settings_line(line, settings) == ERROR)
+		if(parser_map_settings_line(line, map_settings) == ERROR)
 			return (ERROR);
 		free(line);
 	}
 
 	if(line != NULL)
 	{
-		if(parser_settings_line(line, settings) == ERROR)
+		if(parser_map_settings_line(line, map_settings) == ERROR)
 			return (ERROR);
 		free(line);
 	}
@@ -66,15 +66,15 @@ t_answer	parse_settings(char *file_name, t_map_settings *settings)
 	return (SUCCESS);
 }
 
-t_answer	return_settings(char *file_name, t_map_settings **settings)
+t_answer	return_map_settings(char *file_name, t_map_settings **map_settings)
 {
-	*settings = malloc(sizeof(**settings));
-	if(*settings == NULL)
+	*map_settings = malloc(sizeof(**map_settings));
+	if(*map_settings == NULL)
 		return (ERROR);
 
-	initialize_settings(*settings);
+	initialize_map_settings(*map_settings);
 	
-	if(parse_settings(file_name, *settings) == ERROR)
+	if(parse_map_settings(file_name, *map_settings) == ERROR)
 		return (ERROR);
 	
 	return (SUCCESS);

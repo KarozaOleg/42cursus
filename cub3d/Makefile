@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/09/06 13:43:08 by mgaston          ###   ########.fr        #
+#    Updated: 2020/09/06 15:30:57 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,12 @@ SRCS_CUB3D_MAP =	src/map/parser.c \
 
 SRCS_CUB3D_MLX =	src/mlx/utils.c \
 					src/mlx/colors.c \
-					src/mlx/draw.c
+					src/mlx/draw.c \
+					src/mlx/hooks.c
 
-SRCS_CUB3D_PLAYER	=	src/player/utils.c
+SRCS_CUB3D_PLAYER = src/player/utils.c
+
+SRCS_CUB3D_GAME = src/game/utils.c
 
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
@@ -54,7 +57,8 @@ SRCS_CUB3D =	gnl/get_next_line.c \
 				$(SRCS_CUB3D_SETTINGS) \
 				$(SRCS_CUB3D_MAP) \
 				$(SRCS_CUB3D_MLX)  \
-				$(SRCS_CUB3D_PLAYER)
+				$(SRCS_CUB3D_PLAYER) \
+				$(SRCS_CUB3D_GAME)
 				
 
 # INCLUDES
@@ -68,18 +72,23 @@ INCLUDE_CUB3D_MAP =		include/map/map_essences.h \
 INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/mlx_utils.h \
 						include/mlx/draw.h \
-						include/mlx/colors.h
+						include/mlx/colors.h \
+						include/mlx/hooks.h
 
-INCLUDES_PLAYER =	include/player/player_essences.h \
-					include/player/player_utils.h
+INCLUDES_CUB3D_PLAYER =	include/player/player_essences.h \
+						include/player/player_utils.h
+
+INCLUDES_CUB3D_GAME =	include/game/game_essences.h \
+						include/game/game_utils.h
 
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
 			include/global.h \
 			$(INCLUDES_CUB3D_PARSE) \
 			$(INCLUDE_CUB3D_MAP) \
-			$(INCLUDES_PLAYER) \
-			$(INCLUDES_CUB3D_MLX)
+			$(INCLUDES_CUB3D_MLX) \
+			$(INCLUDES_CUB3D_PLAYER) \
+			$(INCLUDES_CUB3D_GAME)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 
