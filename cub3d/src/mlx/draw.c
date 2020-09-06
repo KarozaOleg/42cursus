@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:28:48 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:40:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,21 @@ void	draw_map(t_mlx_my *mlx_my, int **map)
 	mlx_put_image_to_window(mlx_my->mlx, mlx_my->win, mlx_my->scene->img, 0, 0);
 }
 
-void	draw_player(t_mlx_my *mlx_my)
+void	draw_player(t_mlx_my *mlx_my, t_player *player)
 {
 	mlx_my += 0;
+	player += 0;
+}
+
+void	draw_the_line(t_mlx_my *mlx_my)
+{
+	int x = 0;
+	while(x < 1000)
+	{
+		my_mlx_pixel_put(mlx_my->scene, x, 10, return_white());
+		x += 1;
+	}
+	mlx_put_image_to_window(mlx_my->mlx, mlx_my->win, mlx_my->scene, 0, 0);
 }
 
 void	draw_the_square(t_mlx_my *mlx_my)
@@ -75,15 +87,4 @@ void	draw_the_square(t_mlx_my *mlx_my)
 		y += 1;
 	}
 	mlx_put_image_to_window(mlx_my->mlx, mlx_my->win, mlx_my->scene->img, 0, 0);
-}
-
-void	draw_the_line(t_mlx_my *mlx_my)
-{
-	int x = 0;
-	while(x < 1000)
-	{
-		my_mlx_pixel_put(mlx_my->scene, x, 10, return_white());
-		x += 1;
-	}
-	mlx_put_image_to_window(mlx_my->mlx, mlx_my->win, mlx_my->scene, 0, 0);
 }

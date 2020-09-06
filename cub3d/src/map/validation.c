@@ -6,13 +6,13 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 12:10:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/06 13:49:32 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
 
-t_parse_answer	is_a_player(int value)
+t_parse_answer	is_a_player_value(int value)
 {
 	t_parse_answer answer;
 
@@ -33,10 +33,10 @@ t_answer is_all_integers_valid(int *arr, t_parse_answer *is_player_found)
 			arr[i] != MAP_WALL &&
 			arr[i] != MAP_SPRITE &&
 			arr[i] != MAP_UNIVERSE &&
-			is_a_player(arr[i]) == NOT_FOUND)
+			is_a_player_value(arr[i]) == NOT_FOUND)
 			return (ERROR);
 			
-		if(is_a_player(arr[i]) == FOUND)
+		if(is_a_player_value(arr[i]) == FOUND)
 		{
 			if(*is_player_found == FOUND)
 				return (ERROR);

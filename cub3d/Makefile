@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/09/06 13:20:22 by mgaston          ###   ########.fr        #
+#    Updated: 2020/09/06 13:43:08 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRCS_CUB3D =	gnl/get_next_line.c \
 				$(SRCS_CUB3D_PARSE) \
 				$(SRCS_CUB3D_SETTINGS) \
 				$(SRCS_CUB3D_MAP) \
-				$(SRCS_CUB3D_MLX)
+				$(SRCS_CUB3D_MLX)  \
+				$(SRCS_CUB3D_PLAYER)
 				
 
 # INCLUDES
@@ -69,13 +70,15 @@ INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/draw.h \
 						include/mlx/colors.h
 
-INCLUDES_PLAYER =	include/player/player_essences.h
+INCLUDES_PLAYER =	include/player/player_essences.h \
+					include/player/player_utils.h
 
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
 			include/global.h \
 			$(INCLUDES_CUB3D_PARSE) \
 			$(INCLUDE_CUB3D_MAP) \
+			$(INCLUDES_PLAYER) \
 			$(INCLUDES_CUB3D_MLX)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
