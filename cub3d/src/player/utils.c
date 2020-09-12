@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:05:53 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/12 17:31:35 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ t_answer	return_player(int **map, t_player **player)
 	(*player)->x = -1;
 	(*player)->y = -1;
 	(*player)->color = return_red();
-
+	(*player)->fov = 60 * (PI / 180);
+	(*player)->pov = PI / 2;
+	(*player)->pov_step = 2 * (PI / 180);
+	(*player)->num_rays = 320;
+	
 	int y = 0;
 	while(map[y] != NULL)
 	{

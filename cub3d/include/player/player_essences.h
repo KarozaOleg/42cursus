@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:32:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:05:17 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/12 18:14:02 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ typedef struct	s_player
 	int x;
 	int y;
 	int color;
+	int move_speed;
+	float fov;
+	float pov;
+	float pov_step;
+	int num_rays;
 }				t_player;
 
 #endif

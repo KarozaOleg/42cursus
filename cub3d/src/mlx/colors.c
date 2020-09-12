@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:24:12 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:41:16 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/12 17:48:14 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,12 @@ int		return_red()
 	return (create_trgb(0, 255, 45, 0));
 }
 
+int		return_magenta()
+{
+	return (create_trgb(0, 255, 0, 255));
+}
+
+int		return_yellow()
+{
+	return (create_trgb(0, 252, 186, 3));
+}
