@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_essences.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:32:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/12 18:14:02 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/16 18:52:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ typedef enum	s_player_move
 {
 	LEFT,
 	RIGHT,
-	DOWN,
-	UP
+	BACK,
+	FRONT
 }				t_player_move;
 
 typedef struct	s_player
@@ -27,7 +27,7 @@ typedef struct	s_player
 	int x;
 	int y;
 	int color;
-	int move_speed;
+	float move_speed;
 	float fov;
 	float pov;
 	float pov_step;

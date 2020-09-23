@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_essences.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:18:08 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:28:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/18 21:22:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ typedef struct	s_map
 {
 	int **array;
 	t_restriction ***restrictions;
-	int increased_to;
+	int scaled_to;
+	float minimap_ratio;
 }				t_map;
 
 typedef struct	s_map_settings

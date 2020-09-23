@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:45:02 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/23 20:26:02 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_answer	return_arr_from_line(char *line, int **arr)
 	i = 0;
 	while(i < str_len)
 	{
-		if(return_char2int_for_map(line[i], &converted) == ERROR)
+		if(return_char2int_for_map(line[i], &converted) == NOT_FOUND)
 			return (ERROR);
-		(*arr)[i] = converted;
-		++i;
+				
+		(*arr)[i++] = converted;
 	}
 	(*arr)[i] = -1;
 	return (SUCCESS);
@@ -45,7 +45,7 @@ t_answer	return_array_from_lines(t_list *lines, int lines_amount, int ***array)
 	int		*arr;
 	int		i_line;
 
-	*array = malloc(sizeof(int *) * (1 + lines_amount));
+	*array = malloc(sizeof(int *) * (1 + (lines_amount)));
 	if(*array == NULL)
 		return (ERROR);
 	
@@ -58,7 +58,7 @@ t_answer	return_array_from_lines(t_list *lines, int lines_amount, int ***array)
 		if(return_arr_from_line(line, &arr) == ERROR)
 			return (ERROR);
 
-		(*array)[i_line++] = arr;
+		(*array)[i_line++] = arr;	
 	}
 	(*array)[i_line] = NULL;
 	return (SUCCESS);
@@ -141,7 +141,8 @@ t_answer	return_map(char *file_name, t_map **map)
 
 	(*map)->array = array;
 	(*map)->restrictions = restrictions;
-	(*map)->increased_to = 50;
+	(*map)->scaled_to = 32;
+	(*map)->minimap_ratio = 1;
 	
 	ft_lstclear(&lines, free);
 	return (SUCCESS);

@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:54:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:04:53 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/14 21:22:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/mlx_utils.h"
+
+//TODO remove
+#include <stdio.h>
 
 void	my_mlx_pixel_put(t_mlx_img *scene, int x, int y, int color)
 {
@@ -33,14 +36,14 @@ t_answer return_mlx(t_mlx_my **mlx_my, t_resolution *resolution)
 	(*mlx_my)->win = NULL;
 	(*mlx_my)->scene = NULL;
 	
-	(*mlx_my)->scene = malloc(sizeof(*(*mlx_my)->scene));
+	(*mlx_my)->scene = malloc(sizeof(*((*mlx_my)->scene)));
 	if((*mlx_my)->scene == NULL)
 		return (ERROR);
 
 	(*mlx_my)->mlx = mlx_init();
     (*mlx_my)->win = mlx_new_window((*mlx_my)->mlx, resolution->width, resolution->height, "There is no spoon");
     (*mlx_my)->scene->img = mlx_new_image((*mlx_my)->mlx, resolution->width, resolution->height);
-	(*mlx_my)->scene->addr = mlx_get_data_addr((*mlx_my)->scene->img, &((*mlx_my)->scene->bits_per_pixel), &((*mlx_my)->scene->line_length), &((*mlx_my)->scene->endian));
+	(*mlx_my)->scene->addr = mlx_get_data_addr((*mlx_my)->scene->img, &((*mlx_my)->scene)->bits_per_pixel, &((*mlx_my)->scene)->line_length, &((*mlx_my)->scene)->endian);
 	
 	return (SUCCESS);
 }

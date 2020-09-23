@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_restrictions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 16:23:31 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:47:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/23 20:06:29 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			return_amount_x(int *array)
 	int amount;
 
 	amount = 0;
-	while(array[amount] > - 1)
+	while(array[amount] > -1)
 		amount += 1;
 	return (amount);
 }

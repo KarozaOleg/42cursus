@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 18:09:35 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/23 20:38:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_answer	create_game(t_game **game)
 	*game = malloc(sizeof(**game));
 	if(*game == NULL)
 		return (ERROR);
+
 	return (SUCCESS);
 }
 
@@ -45,7 +46,7 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	if(return_mlx(&mlx_my, map_settings->resolution) == ERROR)
 		return (cub3d_exit("error, initialize mlx", *game));
 	
-	if(return_player(map->array, &player) == ERROR)
+	if(return_player(map_settings->resolution->width, map->array, &player, map->scaled_to, map->minimap_ratio) == ERROR)
 		return (cub3d_exit("error, initialize player", *game));
 
 	(*game)->map = map;
@@ -61,9 +62,9 @@ void		free_game(t_game *game)
 	if(game == NULL)
 		return ;
 		
+	//TODO fix it
 	free_map_settings(game->map_settings);
 	free_map(game->map);
-	free_mlx(game->mlx_my);
-	free_player(game->player);
-	
+	// free_mlx(game->mlx_my);	
+	// free_player(game->player);	
 }

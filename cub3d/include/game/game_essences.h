@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_essences.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 17:42:33 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/17 18:43:50 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 typedef struct	s_game
 {
-	t_map *map;
-	t_map_settings *map_settings;
-	t_mlx_my *mlx_my;
-	t_player *player;
+	t_map			*map;
+	t_map_settings	*map_settings;
+	t_mlx_my		*mlx_my;
+	t_player		*player;
 }				t_game;
 
 #endif

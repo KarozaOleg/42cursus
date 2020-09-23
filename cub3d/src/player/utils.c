@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/12 17:31:35 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/23 23:14:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/colors.h"
 #include "../../include/player/player_utils.h"
+
+//TODO remove
+#include <stdio.h>
 
 t_answer	is_a_player(int value)
 {
@@ -20,9 +23,11 @@ t_answer	is_a_player(int value)
 	return (ERROR);
 }
 
-t_answer	return_player(int **map, t_player **player)
+t_answer	return_player(int width, int **map, t_player **player, int scaled_to, float minimap_ratio)
 {
-	*player = malloc(sizeof(*player));
+	width += 0;
+	
+	*player = malloc(sizeof(**player));
 	if(*player == NULL)
 		return (ERROR);
 
@@ -30,10 +35,11 @@ t_answer	return_player(int **map, t_player **player)
 	(*player)->x = -1;
 	(*player)->y = -1;
 	(*player)->color = return_red();
-	(*player)->fov = 60 * (PI / 180);
+	(*player)->move_speed = 2.0;
+	(*player)->fov = 60.0 * (PI / 180);
 	(*player)->pov = PI / 2;
-	(*player)->pov_step = 2 * (PI / 180);
-	(*player)->num_rays = 320;
+	(*player)->pov_step = 2.0 * (PI / 180);
+	(*player)->num_rays = width;
 	
 	int y = 0;
 	while(map[y] != NULL)
@@ -44,8 +50,8 @@ t_answer	return_player(int **map, t_player **player)
 			if(is_a_player(map[y][x]) == SUCCESS)
 			{
 				(*player)->start_position = map[y][x];
-				(*player)->x = x;
-				(*player)->y = y;
+				(*player)->x = x * (scaled_to * minimap_ratio);
+				(*player)->y = y * (scaled_to * minimap_ratio);
 				break;
 			}
 			x += 1;
