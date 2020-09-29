@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/23 23:14:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/29 18:33:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_answer	return_player(int width, int **map, t_player **player, int scaled_to, f
 	(*player)->x = -1;
 	(*player)->y = -1;
 	(*player)->color = return_red();
-	(*player)->move_speed = 2.0;
+	(*player)->move_speed = 4.0;
 	(*player)->fov = 60.0 * (PI / 180);
 	(*player)->pov = PI / 2;
 	(*player)->pov_step = 2.0 * (PI / 180);

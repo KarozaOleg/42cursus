@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/23 23:19:50 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/29 19:03:37 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,15 +265,30 @@ void	draw_projection_plane(t_game *game)
 			wall_height  = (float)game->map_settings->resolution->height;
 		
 		float value = (((float)game->map_settings->resolution->height) / 2.0) - (wall_height / 2.0);
-		
+
+		draw_square(
+			game->mlx_my->scene,
+			ray_index,
+			ray_index + 1,
+			0,
+			value,
+			CEILING);
+			
 		draw_square(
 			game->mlx_my->scene,
 			ray_index,
 			ray_index + 1,
 			value,
 			value + wall_height,
-			return_white()
-		);
+			WHITE);
+
+		draw_square(
+			game->mlx_my->scene,
+			ray_index,
+			ray_index + 1,
+			value + wall_height,
+			game->map_settings->resolution->height,
+			FLOOR);
 		
 		ray_angle += player->fov / ((float)player->num_rays);
 		ray_index += 1;
@@ -282,13 +297,14 @@ void	draw_projection_plane(t_game *game)
 
 int		draw_scene(t_game *game)
 {		
+
 	// clear(game->mlx_my->scene, game->map_settings);
 
-	draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
-	draw_player(game->mlx_my->scene, game->player);
-	draw_rays(game->map->array, game->mlx_my->scene, game->player, game->map->scaled_to * game->map->minimap_ratio);
+	// draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
+	// draw_player(game->mlx_my->scene, game->player);
+	// draw_rays(game->map->array, game->mlx_my->scene, game->player, game->map->scaled_to * game->map->minimap_ratio);
 
-	// draw_projection_plane(game);
+	draw_projection_plane(game);
 	
 	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }

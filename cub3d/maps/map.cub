@@ -1,4 +1,4 @@
-R 1700 800
+R 600 250
 
 NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture

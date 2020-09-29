@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:32:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/16 18:52:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/29 18:13:26 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef enum	s_player_move
 typedef struct	s_player
 {
 	int start_position;
-	int x;
-	int y;
+	float x;
+	float y;
 	int color;
 	float move_speed;
 	float fov;

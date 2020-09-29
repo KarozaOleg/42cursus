@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/23 23:22:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/29 18:29:35 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,38 @@
 #include <stdio.h>
 #include <math.h>
 
-t_answer	is_move_key(int keycode, t_player_move *player_move)
-{
-	if((keycode >= 0 && keycode <= 2) || keycode == 13)
-	{
-		if(keycode == 0)
-			*player_move = LEFT;
-		else if(keycode == 2)
-			*player_move = RIGHT;
-		else if(keycode == 1)
-			*player_move = BACK;
-		else if(keycode == 13)
-			*player_move = FRONT;
-		else
-			return (ERROR);
+// t_answer	is_move_key(int keycode, int *player_move)
+// {
+// 	if((keycode >= 0 && keycode <= 2) || keycode == 13)
+// 	{
+// 		if(keycode == 0)
+// 			*player_move = LEFT;
+// 		else if(keycode == 2)
+// 			*player_move = RIGHT;
+// 		else if(keycode == 1)
+// 			*player_move = BACK;
+// 		else if(keycode == 13)
+// 			*player_move = FRONT;
+// 		else
+// 			return (ERROR);
 		
-		return (SUCCESS);
-	}
-	return (ERROR);
-}
+// 		return (SUCCESS);
+// 	}
+// 	return (ERROR);
+// }
 
-t_answer	is_move_key_linux(int keycode, t_player_move *player_move)
+t_answer	handle_key_linux(int keycode, int *pov_change, int *player_move)
 {
 	if(keycode == 97 || keycode == 119 || keycode == 100 || keycode == 115)
 	{
 		if(keycode == 97)
-			*player_move = LEFT;
-
+		 	*pov_change = -1;
 		else if(keycode == 100)
-			*player_move = RIGHT;
-
+			*pov_change = 1;
 		else if(keycode == 115)
-			*player_move = BACK;
-
+			*player_move = -1;
 		else if(keycode == 119)
-			*player_move = FRONT;
+			*player_move = 1;
 		else
 			return (ERROR);
 		
@@ -92,43 +89,62 @@ t_answer	is_pov_change_key_linux(int keycode, float pov_step, float *pov_change)
 	return (ERROR);
 }
 
-void	player_move_handler(t_game *game, t_player_move player_move)
-{
-	float x_next = game->player->x;
-	float y_next = game->player->y;
+// void	player_move_handler(t_game *game, t_player_move player_move)
+// {
+// 	if(player_move == BACK)
+// 	{
+// 		// x_next += -1.0 * (x_next * game->player->move_speed / 100);
+// 		// y_next += -1.0 * (y_next * game->player->move_speed / 100);
+// 		x_next += cos(game->player->pov) * (game->player->move_speed * -1.0);
+// 		y_next += sin(game->player->pov) * (game->player->move_speed * -1.0);
+// 	}
+// 	else if(player_move == FRONT)
+// 	{
+// 		// x_next += (x_next * game->player->move_speed / 100);
+// 		// y_next += (y_next * game->player->move_speed / 100);
+// 		x_next += cos(game->player->pov) * (game->player->move_speed);
+// 		y_next += sin(game->player->pov) * (game->player->move_speed);
+// 	}
+// 	if(game->map->array[(int)(y_next / ((float)game->map->scaled_to))][(int)(x_next / ((float)game->map->scaled_to))] != 1)
+// 	{
+// 		game->player->x = x_next;
+// 		game->player->y = y_next;
+// 	}
+// }
 
-	if(player_move == BACK)
-	{
-		x_next += cos(game->player->pov) * (game->player->move_speed * -1.0);
-		y_next += sin(game->player->pov) * (game->player->move_speed * -1.0);
-	}
-	else if(player_move == FRONT)
-	{
-		x_next += cos(game->player->pov) * (x_next * .11) + 0.00001;
-		y_next += sin(game->player->pov) * (y_next * .11) + 0.00001;
-	}
-	if(game->map->array[(int)(y_next / ((float)game->map->scaled_to))][(int)(x_next / ((float)game->map->scaled_to))] != 1)
-	{
-		game->player->x = x_next;
-		game->player->y = y_next;
-	}
-}
+	// player.rotationAngle += player.turnDirection * player.turnSpeed * deltaTime;
+    // float moveStep = player.walkDirection * player.walkSpeed * deltaTime;
+
+    // float newPlayerX = player.x + cos(player.rotationAngle) * moveStep;
+    // float newPlayerY = player.y + sin(player.rotationAngle) * moveStep;
+
+    // if (!mapHasWallAt(newPlayerX, newPlayerY)) {
+    //     player.x = newPlayerX;
+    //     player.y = newPlayerY;
+    // }
 
 int		key_pressed_handler(int keycode, t_game *game)
 {
-	t_player_move player_move;
-	float pov_change;
-	
-	if(is_pov_change_key_linux(keycode, game->player->pov_step, &pov_change) == SUCCESS)
+	int player_move = 0;
+	int player_turn = 0;
+	if(handle_key_linux(keycode, &player_turn, &player_move) == SUCCESS)
 	{
-		game->player->pov += pov_change;
-		draw_scene(game);
+		game->player->pov += player_turn * game->player->pov_step;
+
+		float step = player_move * game->player->move_speed;
+		float newX = game->player->x + cos(game->player->pov) * step;
+		float newY = game->player->y + sin(game->player->pov) * step;
+
+		if(game->map->array[(int)(newY / ((float)game->map->scaled_to))][(int)(newX / ((float)game->map->scaled_to))] != 1)
+		{
+			game->player->x = newX;
+			game->player->y = newY;
+		}
+		
 	}
-	else if(is_move_key_linux(keycode, &player_move) == SUCCESS)
-	{
-		player_move_handler(game, player_move);
-		draw_scene(game);
-	}
+
+	// player_move_handler(game, player_move);
+	draw_scene(game);
 	
 	return 0;
 }

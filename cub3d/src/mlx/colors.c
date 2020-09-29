@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:24:12 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/12 17:48:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/09/29 19:01:51 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,14 @@ int		return_magenta()
 int		return_yellow()
 {
 	return (create_trgb(0, 252, 186, 3));
+}
+
+int		return_up()
+{
+	return (create_trgb(0, 50, 46, 44));
+}
+
+int		return_down()
+{
+	return (create_trgb(0, 118, 112, 106));
 }
