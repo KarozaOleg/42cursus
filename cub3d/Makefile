@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
+#    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/09/06 17:53:16 by mgaston          ###   ########.fr        #
+#    Updated: 2020/10/05 22:59:27 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/mlx_utils.h \
 						include/mlx/draw.h \
 						include/mlx/colors.h \
-						include/mlx/hooks.h
+						include/mlx/hooks.h \
+						include/mlx/texture.h
 
 INCLUDES_CUB3D_PLAYER =	include/player/player_essences.h \
 						include/player/player_utils.h
