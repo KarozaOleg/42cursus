@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/11 23:14:58 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/12 21:53:05 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -453,27 +453,79 @@ t_answer cast_ray(t_game *game, t_ray *ray)
 	return (SUCCESS);
 }
 
-typedef struct s_texture
-{
-	t_image *texture;
-	char	*tex;
-	int bbp;
-	int size_line;
-	int endian;
-}				t_texture;
+typedef struct s_sprite
+{	
+	int x;
+	int y;
+	float sprite_dir;
+	float sprite_dist;
+	int sprite_screen_size;
+	int h_offset;
+	int v_offset;
+}				t_sprite;
 
-t_image *textures[5];
-int texture_loaded = 0;
+#define sprite_amount 3
+t_sprite *sprite[sprite_amount];
+t_bool sprites_loaded = FALSE;
+t_image *sprite_texture;
 
-int return_texture_color(int x, int y, int side)
+
+#define wall_amount 4
+t_image *wall[wall_amount];
+t_bool walls_loaded = FALSE;
+
+int return_texture_color(t_image *texture, int x, int y)
 {
 	char	*dst;
 	int		color;
 		
-	dst = textures[side]->addr + (y * textures[side]->sl + x * (textures[side]->bpp / 8));
+	dst = texture->addr + (y * texture->sl + x * (texture->bpp / 8));
 	color = *(unsigned int*)dst;
 
 	return (color);
+}
+
+void	sprite_calculate(t_game *game, t_sprite *sprite)
+{
+	t_player *player = game->player;	
+	int x = sprite->x * game->map->scaled_to;	
+	int y = sprite->y * game->map->scaled_to;
+	
+	sprite->sprite_dir = atan2(y - player->y, x - player->x);	
+    sprite->sprite_dist = sqrt(pow(player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
+    sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
+	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
+		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
+    sprite->h_offset = (sprite->sprite_dir - player->pov)*(game->map_settings->resolution->width)/(float)(player->fov) + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
+	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2;
+}
+
+void	draw_sprite(t_game *game, t_sprite *sprite, float *depth_buffer)
+{    
+	for (int i=0; i < sprite->sprite_screen_size; i++) 
+	{
+        if (sprite->h_offset+i<0 || sprite->h_offset+i >= game->map_settings->resolution->width) 
+			continue;
+		if(depth_buffer[sprite->h_offset+i] < sprite->sprite_dist)
+			continue;
+		
+        for (int j=0; j < sprite->sprite_screen_size; j++) 
+		{
+            if (sprite->v_offset+j<0 || sprite->v_offset+j >= game->map_settings->resolution->height) 
+				continue;	
+				
+			int texture_x = i*64/sprite->sprite_screen_size;
+			int texture_y = j*64/sprite->sprite_screen_size;
+			int color = return_texture_color(sprite_texture, texture_x, texture_y);
+			if(color == 0x0)
+				continue;
+			
+			int x = game->map_settings->resolution->width + sprite->h_offset+i;
+			int y = sprite->v_offset+j;
+				
+			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);			
+        }
+    }
 }
 
 t_answer	draw_projection_plane_ddp(t_game *game)
@@ -481,13 +533,36 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 	t_player *player = game->player;
 	t_ray *ray;
 
-	if(texture_loaded == 0)
+	if(sprites_loaded == FALSE)
+	{
+		int width;
+		int height;
+
+		char *texture_name = "textures/barrel.xpm";
+		sprite_texture = malloc(sizeof(*(sprite_texture)));
+		sprite_texture->img = mlx_xpm_file_to_image(game->mlx_my->mlx, texture_name, &width, &height);
+		sprite_texture->addr = (char *)mlx_get_data_addr(sprite_texture->img, &(sprite_texture->bpp), &(sprite_texture->sl), &(sprite_texture->endl));
+		
+		int i = 0;
+		while(i < sprite_amount)
+		{		
+			sprite[i] = malloc(sizeof(*sprite[i]));
+
+			sprite[i]->x = 5;
+			sprite[i]->y = i + 5;			
+			
+			i += 1;
+		}
+		sprites_loaded = TRUE;
+	}
+
+	if(walls_loaded == FALSE)
 	{
 		int width;
 		int height;
 		
 		int i = 0;
-		while(i < 5)
+		while(i < wall_amount)
 		{
 			char *texture_name;
 			if(i == 0)
@@ -498,16 +573,14 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 				texture_name = "textures/wall_2.xpm";
 			else if(i == 3)
 				texture_name = "textures/wall_3.xpm";
-			else if(i == 4)
-				texture_name = "textures/barrel.xpm";
 
-			textures[i] = malloc(sizeof(*textures[i]));
-			textures[i]->img = mlx_xpm_file_to_image(game->mlx_my->mlx, texture_name, &width, &height);
-			textures[i]->addr = (char *)mlx_get_data_addr(textures[i]->img, &(textures[i]->bpp), &(textures[i]->sl), &(textures[i]->endl));
+			wall[i] = malloc(sizeof(*wall[i]));
+			wall[i]->img = mlx_xpm_file_to_image(game->mlx_my->mlx, texture_name, &width, &height);
+			wall[i]->addr = (char *)mlx_get_data_addr(wall[i]->img, &(wall[i]->bpp), &(wall[i]->sl), &(wall[i]->endl));
 
 			i += 1;
 		}
-		texture_loaded = 1;
+		walls_loaded = TRUE;
 	}
 
 	ray = malloc(sizeof(*ray));
@@ -516,6 +589,8 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 
 	float ray_angle = game->player->pov - (game->player->fov / 2.0);
 	int ray_index = 0;	
+
+	float depth_buffer[game->player->num_rays];
 
 	while(ray_index < game->player->num_rays)
 	{
@@ -529,6 +604,9 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		
 		if(cast_ray(game, ray) == ERROR)
 			return (ERROR);
+		
+		float dist = ray_index*cos(ray->angle - game->player->pov);
+        depth_buffer[ray_index] = dist;
 			
 		float perpDistance = ray->distance * cos(ray->angle - game->player->pov);
         float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
@@ -583,7 +661,7 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 			ray_index + 1,
 			y,
 			y + 1,
-			return_texture_color(textureOffsetX, textureOffsetY, texture_id));
+			return_texture_color(wall[texture_id], textureOffsetX, textureOffsetY));
         }
 
 		draw_square(
@@ -598,39 +676,43 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		ray_index += 1;
 	}
 
-	int sprite_y = 14 * game->map->scaled_to;
-	int sprite_x = 2 * game->map->scaled_to;
-	
-	float sprite_dir = atan2(sprite_y - player->y, sprite_x - player->x);
-	
-    float sprite_dist = sqrt(pow(player->x/game->map->scaled_to - sprite_x/game->map->scaled_to, 2) + pow(player->y/game->map->scaled_to - sprite_y/game->map->scaled_to, 2));
-    int sprite_screen_size = game->map_settings->resolution->height/sprite_dist;
-	if (sprite_screen_size > game->map_settings->resolution->height * 2)
-		sprite_screen_size = game->map_settings->resolution->height * 2;
-    int h_offset = (sprite_dir - player->pov)*(game->map_settings->resolution->width)/(float)(player->fov) + game->map_settings->resolution->width/2 - sprite_screen_size/2;
-	int v_offset = game->map_settings->resolution->height/2.0;
-    
-	for (int i=0; i<sprite_screen_size; i++) 
+	int sprite_i = 0;
+	while(sprite_i < sprite_amount)
 	{
-        if (h_offset+i<0 || h_offset+i >= game->map_settings->resolution->width) 
-			continue;
-		
-        for (int j=0; j<sprite_screen_size; j++) 
+		sprite_calculate(game, sprite[sprite_i]);
+		for (int i=0; i < sprite[sprite_i]->sprite_screen_size; i++) 
 		{
-            if (v_offset+j<0 || v_offset+j >= game->map_settings->resolution->height) 
-				continue;		
-			
-			int x_sprite = i*64/sprite_screen_size;
-			int y_sprite = j*64/sprite_screen_size;
-			int color = return_texture_color(x_sprite, y_sprite, 4);
-			if(color != 0x0)
+			if (sprite[sprite_i]->h_offset+i<0 || sprite[sprite_i]->h_offset+i >= game->map_settings->resolution->width) 
+				continue;
+
+			for (int j=0; j < sprite[sprite_i]->sprite_screen_size; j++) 
 			{
-				int x = game->map_settings->resolution->width + h_offset+i;
-				int y = v_offset+j;
-				my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
+				if (sprite[sprite_i]->v_offset+j<0 || sprite[sprite_i]->v_offset+j >= game->map_settings->resolution->height) 
+					continue;	
+						
+				int texture_x = i*64/sprite[sprite_i]->sprite_screen_size;
+				int texture_y = j*64/sprite[sprite_i]->sprite_screen_size;
+				int color = return_texture_color(sprite_texture, texture_x, texture_y);
+				if(color == 0x0)
+					continue;
+
+				if(depth_buffer[sprite[sprite_i]->h_offset+i] > sprite[sprite_i]->sprite_dist)
+					depth_buffer[sprite[sprite_i]->h_offset+i] = sprite[sprite_i]->sprite_dist;
+
 			}
-        }
-    }
+		}
+		
+		sprite_i += 1;
+	}
+
+	sprite_i = 0;
+	while(sprite_i < sprite_amount)
+	{
+		draw_sprite(game, sprite[sprite_i], depth_buffer);
+		
+		sprite_i += 1;
+	}
+	
 	return (SUCCESS);
 }
 
