@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_utils.h                                       :+:      :+:    :+:   */
+/*   texture_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 15:11:16 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:43:26 by mgaston          ###   ########.fr       */
+/*   Created: 2020/11/14 17:16:07 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/14 18:07:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_UTILS_H
-# define GAME_UTILS_H
+# include "../global.h"
 # include "../global_essences.h"
-# include "../player/player_utils.h"
-# include "../map/map_utils.h"
-# include "../mlx/mlx_utils.h"
-# include "../settings/settings_utils.h"
-# include "../texture/texture_utils.h"
-# include "../sprite/sprite_utils.h"
-# include "game_essences.h"
+# include "texture_essence.h"
+# include "../map/map_essences.h"
 
-t_answer		return_game(char *settings_file_path, t_game **game);
-void			free_game(t_game *game);
+#ifndef TEXTURE_UTILS_H
+# define TEXTURE_UTILS_H
+
+int				return_texture_color(t_image *texture, int x, int y);
+t_answer		return_texture_sprite(void *mlx, char *file_path_sprite, t_image **texture_sprite);
+t_answer		return_texture_wall(void *mlx, t_map_settings *map_settings, t_image ***texture_wall);
 
 #endif

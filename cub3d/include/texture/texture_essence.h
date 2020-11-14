@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   texture_essence.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 12:11:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:48:01 by mgaston          ###   ########.fr       */
+/*   Created: 2020/11/14 17:14:46 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/14 17:20:39 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
-# include "mlx_utils.h"
-# include "colors.h"
-#include "../game/game_essences.h"
-#include "../texture/texture_utils.h"
-#include "../sprite/sprite_utils.h"
+#ifndef TEXTURE_ESSENCES_H
+# define TEXTURE_ESSENCES_H
 
-int		draw_scene(t_game *game);
-void	draw_line(t_mlx_img *scene, int x1, int x2, int y1, int y2, int color);
+typedef struct	s_image
+{
+	unsigned int	*img;
+	char			*addr;
+	int				bpp;
+	int				sl;
+	int				endl;
+}				t_image;
 
 #endif
-

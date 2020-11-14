@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_essences.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/29 21:38:15 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 18:39:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include "../map/map_essences.h"
 # include "../mlx/mlx_essences.h"
 # include "../player/player_essences.h"
+# include "../texture/texture_essence.h"
+# include "../sprite/sprite_essence.h"
 
 typedef struct	s_game
 {
@@ -22,6 +24,9 @@ typedef struct	s_game
 	t_map_settings	*map_settings;
 	t_mlx_my		*mlx_my;
 	t_player		*player;
+	t_sprite		**sprites;
+	t_image			**texture_wall;
+	t_image			*texture_sprite;
 }				t_game;
 
 typedef struct	s_ray

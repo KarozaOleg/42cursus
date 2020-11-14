@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/10/05 22:59:27 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/14 18:41:37 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,11 @@ SRCS_CUB3D_MLX =	src/mlx/utils.c \
 
 SRCS_CUB3D_PLAYER = src/player/utils.c
 
+SRCS_CUB3D_SPRITES = src/sprite/utils.c
+
 SRCS_CUB3D_GAME = src/game/utils.c
+
+SRCS_CUB3D_TEXTURE = src/texture/utils.c
 
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
@@ -59,7 +63,9 @@ SRCS_CUB3D =	gnl/get_next_line.c \
 				$(SRCS_CUB3D_MAP) \
 				$(SRCS_CUB3D_MLX)  \
 				$(SRCS_CUB3D_PLAYER) \
-				$(SRCS_CUB3D_GAME)
+				$(SRCS_CUB3D_SPRITES) \
+				$(SRCS_CUB3D_GAME) \
+				$(SRCS_CUB3D_TEXTURE)
 				
 
 # INCLUDES
@@ -75,14 +81,19 @@ INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/mlx_utils.h \
 						include/mlx/draw.h \
 						include/mlx/colors.h \
-						include/mlx/hooks.h \
-						include/mlx/texture.h
+						include/mlx/hooks.h
 
 INCLUDES_CUB3D_PLAYER =	include/player/player_essences.h \
 						include/player/player_utils.h
 
+INCLUDES_CUB3D_SPRITES =	include/sprite/sprite_essence.h \
+							include/sprite/sprite_utils.h
+
 INCLUDES_CUB3D_GAME =	include/game/game_essences.h \
 						include/game/game_utils.h
+
+INCLUDES_CUD3B_TEXTURE =	include/texture/texture_essence.h \
+							include/texture/texture_utils.h
 
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
@@ -92,7 +103,9 @@ INCLUDES =	libft/libft.h \
 			$(INCLUDE_CUB3D_MAP) \
 			$(INCLUDES_CUB3D_MLX) \
 			$(INCLUDES_CUB3D_PLAYER) \
-			$(INCLUDES_CUB3D_GAME)
+			$(INCLUDES_CUB3D_SPRITES) \
+			$(INCLUDES_CUB3D_GAME) \
+			$(INCLUDES_CUD3B_TEXTURE)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 

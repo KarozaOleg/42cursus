@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/23 20:38:46 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 18:45:06 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game/game_utils.h"
+//TODO remove
+#include <stdio.h>
 
 t_answer	create_game(t_game **game)
 {
@@ -27,6 +29,9 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	t_map_settings *map_settings = NULL;
 	t_mlx_my *mlx_my = NULL;
 	t_player *player = NULL;
+	t_sprite **sprites = NULL;
+	t_image *texture_sprite = NULL;
+	t_image **texture_wall = NULL;
 
 	if(create_game(game) == ERROR)
 		return (cub3d_exit("error, creating game", *game));
@@ -49,10 +54,22 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	if(return_player(map_settings->resolution->width, map->array, &player, map->scaled_to, map->minimap_ratio) == ERROR)
 		return (cub3d_exit("error, initialize player", *game));
 
+	if(return_sprites(map->array, &sprites) == ERROR)
+		return (cub3d_exit("error, find sprites", *game));
+
+	if(return_texture_wall(mlx_my->mlx, map_settings, &texture_wall) == ERROR)
+		return (cub3d_exit("error, load texture wall", *game));
+
+	if(return_texture_sprite(mlx_my->mlx, map_settings->texture_s, &texture_sprite) == ERROR)
+		return (cub3d_exit("error, load texture sprite", *game));
+
 	(*game)->map = map;
 	(*game)->map_settings = map_settings;
 	(*game)->mlx_my = mlx_my;
 	(*game)->player = player;
+	(*game)->sprites = sprites;
+	(*game)->texture_wall = texture_wall;
+	(*game)->texture_sprite = texture_sprite;
 
 	return (SUCCESS);
 }
@@ -63,6 +80,7 @@ void		free_game(t_game *game)
 		return ;
 		
 	//TODO fix it
+	//TODO free all
 	free_map_settings(game->map_settings);
 	free_map(game->map);
 	// free_mlx(game->mlx_my);	

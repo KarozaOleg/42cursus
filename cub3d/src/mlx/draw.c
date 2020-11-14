@@ -3,28 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/12 21:53:05 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 19:04:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/draw.h"
 #include <math.h>
-#include "../../include/mlx/texture.h"
 
 //TODO remove
 #include <stdio.h>
-
-typedef struct	s_image
-{
-	unsigned int	*img;
-	char			*addr;
-	int				bpp;
-	int				sl;
-	int				endl;
-}				t_image;
 
 void	draw_scaled_point(t_mlx_img *scene, int x_shifted, int y_shifted, int scaled_to, int color)
 {
@@ -239,7 +229,7 @@ float	normalize_angle(float angle)
 }
 
 float distance_between_points(float x1, float y1, float x2, float y2) {
-    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
 t_bool map_has_wall_at(t_game *game, float x, float y) {
@@ -453,145 +443,19 @@ t_answer cast_ray(t_game *game, t_ray *ray)
 	return (SUCCESS);
 }
 
-typedef struct s_sprite
-{	
-	int x;
-	int y;
-	float sprite_dir;
-	float sprite_dist;
-	int sprite_screen_size;
-	int h_offset;
-	int v_offset;
-}				t_sprite;
-
-#define sprite_amount 3
-t_sprite *sprite[sprite_amount];
-t_bool sprites_loaded = FALSE;
-t_image *sprite_texture;
-
-
-#define wall_amount 4
-t_image *wall[wall_amount];
-t_bool walls_loaded = FALSE;
-
-int return_texture_color(t_image *texture, int x, int y)
-{
-	char	*dst;
-	int		color;
-		
-	dst = texture->addr + (y * texture->sl + x * (texture->bpp / 8));
-	color = *(unsigned int*)dst;
-
-	return (color);
-}
-
-void	sprite_calculate(t_game *game, t_sprite *sprite)
-{
-	t_player *player = game->player;	
-	int x = sprite->x * game->map->scaled_to;	
-	int y = sprite->y * game->map->scaled_to;
-	
-	sprite->sprite_dir = atan2(y - player->y, x - player->x);	
-    sprite->sprite_dist = sqrt(pow(player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
-    sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
-	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
-		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
-    sprite->h_offset = (sprite->sprite_dir - player->pov)*(game->map_settings->resolution->width)/(float)(player->fov) + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
-	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2;
-}
-
-void	draw_sprite(t_game *game, t_sprite *sprite, float *depth_buffer)
-{    
-	for (int i=0; i < sprite->sprite_screen_size; i++) 
-	{
-        if (sprite->h_offset+i<0 || sprite->h_offset+i >= game->map_settings->resolution->width) 
-			continue;
-		if(depth_buffer[sprite->h_offset+i] < sprite->sprite_dist)
-			continue;
-		
-        for (int j=0; j < sprite->sprite_screen_size; j++) 
-		{
-            if (sprite->v_offset+j<0 || sprite->v_offset+j >= game->map_settings->resolution->height) 
-				continue;	
-				
-			int texture_x = i*64/sprite->sprite_screen_size;
-			int texture_y = j*64/sprite->sprite_screen_size;
-			int color = return_texture_color(sprite_texture, texture_x, texture_y);
-			if(color == 0x0)
-				continue;
-			
-			int x = game->map_settings->resolution->width + sprite->h_offset+i;
-			int y = sprite->v_offset+j;
-				
-			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);			
-        }
-    }
-}
-
 t_answer	draw_projection_plane_ddp(t_game *game)
 {
 	t_player *player = game->player;
 	t_ray *ray;
 
-	if(sprites_loaded == FALSE)
-	{
-		int width;
-		int height;
-
-		char *texture_name = "textures/barrel.xpm";
-		sprite_texture = malloc(sizeof(*(sprite_texture)));
-		sprite_texture->img = mlx_xpm_file_to_image(game->mlx_my->mlx, texture_name, &width, &height);
-		sprite_texture->addr = (char *)mlx_get_data_addr(sprite_texture->img, &(sprite_texture->bpp), &(sprite_texture->sl), &(sprite_texture->endl));
-		
-		int i = 0;
-		while(i < sprite_amount)
-		{		
-			sprite[i] = malloc(sizeof(*sprite[i]));
-
-			sprite[i]->x = 5;
-			sprite[i]->y = i + 5;			
-			
-			i += 1;
-		}
-		sprites_loaded = TRUE;
-	}
-
-	if(walls_loaded == FALSE)
-	{
-		int width;
-		int height;
-		
-		int i = 0;
-		while(i < wall_amount)
-		{
-			char *texture_name;
-			if(i == 0)
-				texture_name = "textures/wall_0.xpm";
-			else if(i == 1)
-				texture_name = "textures/wall_1.xpm";
-			else if(i == 2)
-				texture_name = "textures/wall_2.xpm";
-			else if(i == 3)
-				texture_name = "textures/wall_3.xpm";
-
-			wall[i] = malloc(sizeof(*wall[i]));
-			wall[i]->img = mlx_xpm_file_to_image(game->mlx_my->mlx, texture_name, &width, &height);
-			wall[i]->addr = (char *)mlx_get_data_addr(wall[i]->img, &(wall[i]->bpp), &(wall[i]->sl), &(wall[i]->endl));
-
-			i += 1;
-		}
-		walls_loaded = TRUE;
-	}
-
 	ray = malloc(sizeof(*ray));
 	if(ray == NULL)
 		return ERROR;
 
-	float ray_angle = game->player->pov - (game->player->fov / 2.0);
-	int ray_index = 0;	
-
 	float depth_buffer[game->player->num_rays];
 
+	float ray_angle = game->player->pov - (game->player->fov / 2.0);
+	int ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
 		ray->angle = normalize_angle(ray_angle);
@@ -656,12 +520,12 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 			int textureOffsetY = distanceFromTop * ((float)64 / wallStripHeight);			
 			
 			draw_square(
-			game->mlx_my->scene,
-			ray_index,
-			ray_index + 1,
-			y,
-			y + 1,
-			return_texture_color(wall[texture_id], textureOffsetX, textureOffsetY));
+				game->mlx_my->scene,
+				ray_index,
+				ray_index + 1,
+				y,
+				y + 1,
+				return_texture_color(game->texture_wall[texture_id], textureOffsetX, textureOffsetY));
         }
 
 		draw_square(
@@ -676,43 +540,14 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		ray_index += 1;
 	}
 
-	int sprite_i = 0;
-	while(sprite_i < sprite_amount)
-	{
-		sprite_calculate(game, sprite[sprite_i]);
-		for (int i=0; i < sprite[sprite_i]->sprite_screen_size; i++) 
-		{
-			if (sprite[sprite_i]->h_offset+i<0 || sprite[sprite_i]->h_offset+i >= game->map_settings->resolution->width) 
-				continue;
-
-			for (int j=0; j < sprite[sprite_i]->sprite_screen_size; j++) 
-			{
-				if (sprite[sprite_i]->v_offset+j<0 || sprite[sprite_i]->v_offset+j >= game->map_settings->resolution->height) 
-					continue;	
-						
-				int texture_x = i*64/sprite[sprite_i]->sprite_screen_size;
-				int texture_y = j*64/sprite[sprite_i]->sprite_screen_size;
-				int color = return_texture_color(sprite_texture, texture_x, texture_y);
-				if(color == 0x0)
-					continue;
-
-				if(depth_buffer[sprite[sprite_i]->h_offset+i] > sprite[sprite_i]->sprite_dist)
-					depth_buffer[sprite[sprite_i]->h_offset+i] = sprite[sprite_i]->sprite_dist;
-
-			}
-		}
-		
-		sprite_i += 1;
-	}
-
-	sprite_i = 0;
-	while(sprite_i < sprite_amount)
-	{
-		draw_sprite(game, sprite[sprite_i], depth_buffer);
-		
-		sprite_i += 1;
-	}
-	
+	sort_sprites(game, depth_buffer);
+	draw_sprites(game, depth_buffer);
+	// sprite_i = 0;
+	// while(sprite_i < sprite_amount)
+	// {
+	// 	draw_sprite(game, sprite[sprite_i], depth_buffer);		
+	// 	sprite_i += 1;
+	// }	
 	return (SUCCESS);
 }
 
@@ -741,7 +576,7 @@ void	draw_projection_plane(t_game *game)
 				x = x_possible;
 				y = y_possible;
 			}
-		}		
+		}
 		
 		float ray_distance = sqrt(pow(((float)player->x) - x, 2) + pow(((float)player->y) - y, 2));
 
@@ -783,8 +618,7 @@ void	draw_projection_plane(t_game *game)
 }
 
 int		draw_scene(t_game *game)
-{		
-
+{
 	// clear(game->mlx_my->scene, game->map_settings);
 
 	if(draw_projection_plane_ddp(game) == ERROR)
@@ -795,8 +629,6 @@ int		draw_scene(t_game *game)
 	// draw_rays(game->map->array, game->mlx_my->scene, game->player, game->map->scaled_to * game->map->minimap_ratio);
 
 	// draw_projection_plane(game);
-
-	
 		
 	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }

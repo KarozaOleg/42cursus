@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_utils.h                                       :+:      :+:    :+:   */
+/*   sprite_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 15:11:16 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:43:26 by mgaston          ###   ########.fr       */
+/*   Created: 2020/11/14 17:39:19 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/14 19:03:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_UTILS_H
-# define GAME_UTILS_H
-# include "../global_essences.h"
-# include "../player/player_utils.h"
-# include "../map/map_utils.h"
-# include "../mlx/mlx_utils.h"
-# include "../settings/settings_utils.h"
-# include "../texture/texture_utils.h"
-# include "../sprite/sprite_utils.h"
-# include "game_essences.h"
+#ifndef SPRITE_UTILS_H
+# define SPRITE_UTILS_H
 
-t_answer		return_game(char *settings_file_path, t_game **game);
-void			free_game(t_game *game);
+#include <math.h>
+# include "../global.h"
+# include "../global_essences.h"
+#include "sprite_essence.h"
+#include "../game/game_essences.h"
+# include "../texture/texture_utils.h"
+# include "../mlx/mlx_utils.h"
+
+void	sort_sprites(t_game *game, float *depth_buffer);
+void	draw_sprites(t_game *game, float *depth_buffer);
+t_answer	return_sprites(int **map, t_sprite ***sprites);
 
 #endif

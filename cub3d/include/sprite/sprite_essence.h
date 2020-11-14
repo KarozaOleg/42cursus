@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.h                                             :+:      :+:    :+:   */
+/*   sprite_essence.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 12:11:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:48:01 by mgaston          ###   ########.fr       */
+/*   Created: 2020/11/14 17:38:35 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/14 18:17:50 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DRAW_H
-# define DRAW_H
-# include "mlx_utils.h"
-# include "colors.h"
-#include "../game/game_essences.h"
-#include "../texture/texture_utils.h"
-#include "../sprite/sprite_utils.h"
+#ifndef SPRITE_ESSENCE_H
+# define SPRITE_ESSENCE_H
 
-int		draw_scene(t_game *game);
-void	draw_line(t_mlx_img *scene, int x1, int x2, int y1, int y2, int color);
+typedef struct s_sprite
+{	
+	int x;
+	int y;
+	float sprite_dir;
+	float sprite_dist;
+	int sprite_screen_size;
+	int h_offset;
+	int v_offset;
+}				t_sprite;
 
 #endif
-
