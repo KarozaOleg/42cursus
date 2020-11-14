@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:48:51 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 17:59:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:55:31 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "../global.h"
 # include "mlx_essences.h"
 
-void	register_mlx_hook_key_pressed(t_game *game);
+void	register_mlx_hook_key_pressed(t_game **game);
 
 #endif

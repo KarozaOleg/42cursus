@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:15:40 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/14 22:34:13 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:05:18 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ t_answer	is_a_map_line(char *line)
 void	free_map(t_map *map)
 {
 	int i;
+
+	if(map == NULL)
+		return;
 	
 	if(map->array != NULL)
 	{
@@ -77,9 +80,5 @@ void	free_map(t_map *map)
 			free(map->array[i++]);
 		free(map->array);
 	}	
-	
-	//TODO free restirictions
-		
-	if(map == NULL)
-		free(map);
+	free(map);
 }

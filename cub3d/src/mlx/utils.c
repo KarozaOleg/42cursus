@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:54:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/14 21:22:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:47:12 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	free_mlx(t_mlx_my *mlx_my)
 		return ;
 
 	if(mlx_my->scene != NULL)
-		free(mlx_my->scene);
+		free(mlx_my->scene);	
+
+	// mlx_clear_window(vars->mlx_ptr, vars->win_ptr);
+	// mlx_destroy_window(vars->mlx_ptr, vars->win_ptr);
 	
 	if(mlx_my->win != NULL)
 		mlx_destroy_window(mlx_my->mlx, mlx_my->win);

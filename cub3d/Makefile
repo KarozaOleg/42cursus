@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/14 18:41:37 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/14 20:02:14 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,7 @@ SRCS_CUB3D_SETTINGS =	src/settings/parser.c \
 
 SRCS_CUB3D_MAP =	src/map/parser.c \
 					src/map/utils.c \
-					src/map/validation.c \
-					src/map/parser_restrictions.c
+					src/map/validation.c
 
 SRCS_CUB3D_MLX =	src/mlx/utils.c \
 					src/mlx/colors.c \
@@ -74,8 +73,7 @@ INCLUDES_CUB3D_PARSE =	include/parse/parse.h
 INCLUDES_CUB3D_SETTINGS = include/settings/settings_utils.h
 
 INCLUDE_CUB3D_MAP =		include/map/map_essences.h \
-						include/map/map_utils.h \
-						include/map/restrictions.h
+						include/map/map_utils.h
 
 INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/mlx_utils.h \

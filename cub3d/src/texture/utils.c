@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:17:38 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 19:03:39 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:18:23 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,21 @@ t_answer return_texture_wall(void *mlx, t_map_settings *map_settings, t_image **
 		i += 1;
 	}
 	return SUCCESS;
+}
+
+void			free_texture_sprite(t_image *texture_sprite)
+{
+	free(texture_sprite);
+}
+
+void			free_texture_walls(t_image **texture_wall)
+{
+	int i;
+
+	i = 0;
+	while(i < 4)
+	{
+		free(texture_wall[i]);
+		i += 1;
+	}
 }

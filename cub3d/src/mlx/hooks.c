@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 17:03:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 21:15:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,44 @@ t_answer	handle_key_macos(int keycode, int *pov_change, int *player_move)
 	return (ERROR);
 }
 
-int		key_pressed_handler(int keycode, t_game *game)
+int		key_pressed_handler(int keycode, t_game **game)
 {
 	int player_move = 0;
 	int player_turn = 0;
 	if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
 	{
-		game->player->pov += player_turn * game->player->pov_step;
+		(*game)->player->pov += player_turn * (*game)->player->pov_step;
 
-		float step = player_move * game->player->move_speed;
-		float newX = game->player->x + cos(game->player->pov) * step;
-		float newY = game->player->y + sin(game->player->pov) * step;
+		float step = player_move * (*game)->player->move_speed;
+		float newX = (*game)->player->x + cos((*game)->player->pov) * step;
+		float newY = (*game)->player->y + sin((*game)->player->pov) * step;
 
-		if(game->map->array[(int)(newY / ((float)game->map->scaled_to))][(int)(newX / ((float)game->map->scaled_to))] != 1)
+		if((*game)->map->array[(int)(newY / ((float)(*game)->map->scaled_to))][(int)(newX / ((float)(*game)->map->scaled_to))] != 1)
 		{
-			game->player->x = newX;
-			game->player->y = newY;
+			(*game)->player->x = newX;
+			(*game)->player->y = newY;
 		}
 	}
-	draw_scene(game);
+	draw_scene(*game);
 	return 0;
 }
 
-void	register_mlx_hook_key_pressed(t_game *game)
+int close_event_handler(int keycode, void *p)
 {
-	mlx_hook(game->mlx_my->win, 2, 1L<<0, key_pressed_handler, game);
+	t_game **game = (t_game **)p;
+	keycode += 0;
+
+	printf("f0>%p\n", *game);
+	cub3d_exit("", game);
+	exit(0);
+	return (0);
+}
+
+void	register_mlx_hook_key_pressed(t_game **game)
+{
+	printf("m1>%p\n", *game);
+
+	mlx_hook((*game)->mlx_my->win, 2, 1L<<0, key_pressed_handler, game);
+	mlx_hook((*game)->mlx_my->win, 17, 0L, close_event_handler, game);
 	// mlx_hook(game->mlx_my->win, 3, 1L<<1, key_pressed_handler, game);
 }

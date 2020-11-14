@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 19:04:01 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:14:55 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_answer	return_sprites(int **map, t_sprite ***sprites)
 	return SUCCESS;
 }
 
-void	sprite_calculate(t_game *game, t_sprite *sprite)
+void	calculate(t_game *game, t_sprite *sprite)
 {
 	t_player *player;
 	int x;
@@ -95,6 +95,20 @@ void	sprite_calculate(t_game *game, t_sprite *sprite)
 	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2;
 }
 
+void calculate_sprites(t_game *game)
+{
+	t_sprite *sprite;
+	int s;
+	
+	s = 0;
+	while(game->sprites[s] != NULL)
+	{
+		sprite = game->sprites[s];
+		calculate(game, sprite);
+		s += 1;
+	}
+}
+
 void	sort_sprites(t_game *game, float *depth_buffer)
 {
 	t_sprite *sprite;
@@ -104,7 +118,6 @@ void	sort_sprites(t_game *game, float *depth_buffer)
 	while(game->sprites[s] != NULL)
 	{
 		sprite = game->sprites[s];
-		sprite_calculate(game, sprite);
 		for (int i = 0; i < sprite->sprite_screen_size; i++) 
 		{
 			if (sprite->h_offset + i < 0 || sprite->h_offset + i >= game->map_settings->resolution->width) 
@@ -131,6 +144,7 @@ void	sort_sprites(t_game *game, float *depth_buffer)
 
 void	draw_sprites(t_game *game, float *depth_buffer)
 {
+	depth_buffer += 0;
 	t_sprite *sprite;
 	int s;
 
@@ -148,7 +162,7 @@ void	draw_sprites(t_game *game, float *depth_buffer)
 			for (int j=0; j < sprite->sprite_screen_size; j++) 
 			{
 				if (sprite->v_offset + j < 0 || sprite->v_offset + j >= game->map_settings->resolution->height) 
-					continue;	
+					continue;
 					
 				int texture_x = i * 64 / sprite->sprite_screen_size;
 				int texture_y = j * 64 / sprite->sprite_screen_size;
@@ -164,4 +178,17 @@ void	draw_sprites(t_game *game, float *depth_buffer)
 		}
 		s += 1;
 	}
+}
+
+void free_sprites(t_sprite **sprites)
+{
+	int s;
+
+	s = 0;
+	while(sprites[s] != NULL)
+	{
+		free(sprites[s]);
+		s += 1;
+	}
+	free(sprites);
 }

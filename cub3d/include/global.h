@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/12 11:46:18 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:54:55 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
 # include <mlx.h>
 
 void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_game *game);
+int		cub3d_exit(char *exit_comment, t_game **game);
 
 #endif

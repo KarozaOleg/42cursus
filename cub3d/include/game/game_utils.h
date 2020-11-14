@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:11:16 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:43:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:55:06 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 # include "game_essences.h"
 
 t_answer		return_game(char *settings_file_path, t_game **game);
-void			free_game(t_game *game);
+void			free_game(t_game **game);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 17:47:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:02:53 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
-#include "../../include/map/restrictions.h"
 
 //TODO remove
 #include <stdio.h>
@@ -114,10 +113,8 @@ t_answer	return_map(char *file_name, t_map **map)
 {
 	t_list			*lines;
 	int				**array;
-	t_restriction	***restrictions;
 
 	array = NULL;
-	restrictions = NULL;
 
 	*map = malloc(sizeof(**map));
 	if(*map == NULL)
@@ -135,15 +132,11 @@ t_answer	return_map(char *file_name, t_map **map)
 		ft_lstclear(&lines, free);
 		return (ERROR);
 	}
-	
-	if(return_restrictions(array, &restrictions) == ERROR)
-		return (ERROR);
 
 	(*map)->array = array;
-	(*map)->restrictions = restrictions;
 	(*map)->scaled_to = 32;
 	(*map)->minimap_ratio = 1;
-	
+
 	ft_lstclear(&lines, free);
 	return (SUCCESS);
 }

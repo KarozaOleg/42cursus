@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:39:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:23:15 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 # include "../player/player_essences.h"
 # include "../texture/texture_essence.h"
 # include "../sprite/sprite_essence.h"
-
-typedef struct	s_game
-{
-	t_map			*map;
-	t_map_settings	*map_settings;
-	t_mlx_my		*mlx_my;
-	t_player		*player;
-	t_sprite		**sprites;
-	t_image			**texture_wall;
-	t_image			*texture_sprite;
-}				t_game;
 
 typedef struct	s_ray
 {
@@ -50,4 +39,19 @@ typedef	struct	s_ray_cast_result
 	float		wall_hit_y;
 	int			wall_content;
 }				t_ray_cast_result;
+
+typedef struct	s_game
+{
+	t_map			*map;
+	t_map_settings	*map_settings;
+	t_mlx_my		*mlx_my;
+	t_player		*player;
+	t_sprite		**sprites;
+	t_image			**texture_wall;
+	t_image			*texture_sprite;
+	t_ray			*ray;
+	t_ray_cast_result *cast_result_horisontal;
+	t_ray_cast_result *cast_result_vertical;
+}				t_game;
+
 #endif

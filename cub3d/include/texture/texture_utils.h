@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:16:07 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 18:07:09 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:16:50 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@
 int				return_texture_color(t_image *texture, int x, int y);
 t_answer		return_texture_sprite(void *mlx, char *file_path_sprite, t_image **texture_sprite);
 t_answer		return_texture_wall(void *mlx, t_map_settings *map_settings, t_image ***texture_wall);
+void			free_texture_sprite(t_image *texture_sprite);
+void			free_texture_walls(t_image **texture_wall);
 
 #endif

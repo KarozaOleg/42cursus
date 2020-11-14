@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 19:04:16 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/14 20:59:30 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,12 +274,13 @@ int return_x_amount(int *array)
 	return (amount);
 }
 
-void ray_cast_horisontal(t_game *game, t_ray *ray, t_ray_cast_result *cast_result)
+void ray_cast_horisontal(t_game *game, t_ray *ray)
 {	
 	float xstep;
 	float ystep;
 	float xintercept;
 	float yintercept;
+	t_ray_cast_result *cast_result = game->cast_result_horisontal;
 
 	cast_result->wall_hit_x = 0;
 	cast_result->wall_hit_y = 0;
@@ -336,12 +337,13 @@ void ray_cast_horisontal(t_game *game, t_ray *ray, t_ray_cast_result *cast_resul
     }
 }
 
-void ray_cast_vertical(t_game *game, t_ray *ray, t_ray_cast_result *cast_result)
+void ray_cast_vertical(t_game *game, t_ray *ray)
 {	
 	float xstep;
 	float ystep;
 	float xintercept;
 	float yintercept;
+	t_ray_cast_result *cast_result = game->cast_result_vertical;
 
 	cast_result->wall_hit_x = 0;
 	cast_result->wall_hit_y = 0;
@@ -399,44 +401,32 @@ void ray_cast_vertical(t_game *game, t_ray *ray, t_ray_cast_result *cast_result)
 }
 
 t_answer cast_ray(t_game *game, t_ray *ray) 
-{
-	t_ray_cast_result *cast_result_horisontal;
-	t_ray_cast_result *cast_result_vertical;
-	
-	cast_result_horisontal = malloc(sizeof(*cast_result_horisontal));
-	if(cast_result_horisontal == NULL)
-		return (ERROR);
-
-	ray_cast_horisontal(game, ray, cast_result_horisontal);
-
-	cast_result_vertical = malloc(sizeof(*cast_result_vertical));
-	if(cast_result_vertical == NULL)
-		return (ERROR);	
-		
-	ray_cast_vertical(game, ray, cast_result_vertical);
+{	
+	ray_cast_horisontal(game, ray);		
+	ray_cast_vertical(game, ray);
 	
     // Calculate both horizontal and vertical hit distances and choose the smallest one
-    float horzHitDistance = cast_result_horisontal->wall_hit == TRUE
-        ? distance_between_points(game->player->x, game->player->y,cast_result_horisontal->wall_hit_x, cast_result_horisontal->wall_hit_y)
+    float horzHitDistance = game->cast_result_horisontal->wall_hit == TRUE
+        ? distance_between_points(game->player->x, game->player->y, game->cast_result_horisontal->wall_hit_x, game->cast_result_horisontal->wall_hit_y)
         : 340282346638528859811704183484516925440.0;
-    float vertHitDistance = cast_result_vertical->wall_hit == TRUE
-        ? distance_between_points(game->player->x, game->player->y, cast_result_vertical->wall_hit_x, cast_result_vertical->wall_hit_y)
+    float vertHitDistance = game->cast_result_vertical->wall_hit == TRUE
+        ? distance_between_points(game->player->x, game->player->y, game->cast_result_vertical->wall_hit_x, game->cast_result_vertical->wall_hit_y)
         : 340282346638528859811704183484516925440.0;
 
     if (vertHitDistance < horzHitDistance) 
 	{
 		ray->distance = vertHitDistance;
-		ray->wall_hit_x = cast_result_vertical->wall_hit_x;
-		ray->wall_hit_y = cast_result_vertical->wall_hit_y;
-		ray->wall_hit_content = cast_result_vertical->wall_content;
+		ray->wall_hit_x = game->cast_result_vertical->wall_hit_x;
+		ray->wall_hit_y = game->cast_result_vertical->wall_hit_y;
+		ray->wall_hit_content = game->cast_result_vertical->wall_content;
 		ray->was_hit_vertical = TRUE;
     } 
 	else 
 	{
 		ray->distance = horzHitDistance;
-		ray->wall_hit_x = cast_result_horisontal->wall_hit_x;
-		ray->wall_hit_y = cast_result_horisontal->wall_hit_y;
-		ray->wall_hit_content = cast_result_horisontal->wall_content;
+		ray->wall_hit_x = game->cast_result_horisontal->wall_hit_x;
+		ray->wall_hit_y = game->cast_result_horisontal->wall_hit_y;
+		ray->wall_hit_content = game->cast_result_horisontal->wall_content;
 		ray->was_hit_vertical = FALSE;
     }
 
@@ -446,11 +436,7 @@ t_answer cast_ray(t_game *game, t_ray *ray)
 t_answer	draw_projection_plane_ddp(t_game *game)
 {
 	t_player *player = game->player;
-	t_ray *ray;
-
-	ray = malloc(sizeof(*ray));
-	if(ray == NULL)
-		return ERROR;
+	t_ray *ray = game->ray;
 
 	float depth_buffer[game->player->num_rays];
 
@@ -540,14 +526,10 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		ray_index += 1;
 	}
 
+	calculate_sprites(game);
 	sort_sprites(game, depth_buffer);
 	draw_sprites(game, depth_buffer);
-	// sprite_i = 0;
-	// while(sprite_i < sprite_amount)
-	// {
-	// 	draw_sprite(game, sprite[sprite_i], depth_buffer);		
-	// 	sprite_i += 1;
-	// }	
+	
 	return (SUCCESS);
 }
 
