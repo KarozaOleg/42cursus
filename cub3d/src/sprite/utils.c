@@ -6,11 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 17:47:07 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 18:37:49 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/sprite/sprite_utils.h"
+# include <stdio.h>
 
 int	return_sprites_amount(int **map)
 {
@@ -91,8 +92,8 @@ void	calculate(t_game *game, t_sprite *sprite)
 	sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
-	sprite->h_offset = (sprite->sprite_dir - player->pov)*(game->map_settings->resolution->width)/(float)(player->fov) + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
-	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2;
+	sprite->h_offset = (sprite->sprite_dir - player->pov) * (game->map_settings->resolution->width)/player->fov + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
+	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2.0;
 }
 
 void calculate_sprites(t_game *game)
@@ -156,10 +157,9 @@ void	draw_sprites(t_game *game, float **depth_buffer)
 		{
 			if (sprite->h_offset + i < 0 || sprite->h_offset + i >= game->map_settings->resolution->width) 
 				continue;
-			
+
 			for (int j=0; j < sprite->sprite_screen_size; j++) 
 			{
-
 				if(depth_buffer[sprite->h_offset + i][sprite->v_offset + j] < sprite->sprite_dist)
 					continue;
 				if (sprite->v_offset + j < 0 || sprite->v_offset + j >= game->map_settings->resolution->height) 
@@ -171,7 +171,7 @@ void	draw_sprites(t_game *game, float **depth_buffer)
 				if(color == 0x0)
 					continue;
 				
-				int x = game->map_settings->resolution->width + sprite->h_offset + i;
+				int x = sprite->h_offset + i;
 				int y = sprite->v_offset + j;
 					
 				my_mlx_pixel_put(game->mlx_my->scene, x, y, color);

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 17:53:40 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 18:30:20 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void		free_game(t_game *game)
 	free_texture_sprite(game->texture_sprite);
 	free_texture_walls(game->texture_wall);
 	int i = 0;
+	//TODO: check this
 	while(game->depth_buffer[i] != NULL)
 	{
 		free(game->depth_buffer[i]);
