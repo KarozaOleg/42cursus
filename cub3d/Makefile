@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/14 20:02:14 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/15 15:19:56 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,6 +113,9 @@ all: $(NAME)
 
 $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
 	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
+
+test: $(NAME)
+	@gcc test*.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
 
 %.o: %.c $(INCLUDES)
 	@gcc -Wall -Wextra -Werror -c $< -o $@

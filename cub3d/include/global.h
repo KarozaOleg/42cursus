@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:54:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 14:49:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <mlx.h>
+# include "../minilibx_mms/mlx.h"
 
 void	ft_putstr(char *str);
-int		cub3d_exit(char *exit_comment, t_game **game);
+t_answer		cub3d_exit(char *exit_comment, t_game *game);
 
 #endif

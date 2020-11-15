@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:14:25 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 12:56:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_answer	is_a_player(int value)
 	return (ERROR);
 }
 
-t_answer	return_player(int width, int **map, t_player **player, int scaled_to, float minimap_ratio)
+t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio, t_player **player)
 {
 	width += 0;
 	

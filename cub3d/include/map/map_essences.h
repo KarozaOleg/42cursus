@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:18:08 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:05:28 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 12:47:58 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,7 @@
 # define MAP_PLAYER_S	5
 # define MAP_PLAYER_E	6
 # define MAP_PLAYER_W	7
-
-typedef struct s_restriction
-{
-	t_answer left;
-	t_answer right;
-	t_answer down;
-	t_answer up;
-}				t_restriction;
-
+ 
 typedef struct	s_map
 {
 	int **array;

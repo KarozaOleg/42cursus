@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:14:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 13:23:50 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,8 @@ void	draw_sprites(t_game *game, float *depth_buffer)
 void free_sprites(t_sprite **sprites)
 {
 	int s;
+	if(sprites == NULL)
+		return;
 
 	s = 0;
 	while(sprites[s] != NULL)

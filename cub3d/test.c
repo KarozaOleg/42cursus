@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 21:10:45 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 15:20:38 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,14 @@ int test_leaks()
 	t_game *game = NULL;
 	
 	if(return_game(file_path, &game) == ERROR)
-		return 1;
-	printf("m0>%p\n",game);
-	
-	// print_map(game->map->array);
-	
-	register_mlx_hook_key_pressed(&game);
+		return (ERROR);
+		
+	register_mlx_hook_key_pressed(game);
 	mlx_loop(game->mlx_my->mlx);
-	printf("here2\n\n");
-	return (0);
+	return (SUCCESS);
 }
 
-//gcc test*.c cub3d.a -lmlx -framework OpenGL -framework AppKit
+//gcc test*.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
 //gcc test*.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
 int main()
 {
@@ -43,3 +39,8 @@ int main()
 	sleep(10);
 	return (answer);
 }
+
+//TODO wall is so far, low resolution
+//TODO bus error with collision sprite
+//TODO check is map closed
+//TODO check is more than one player

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:17:38 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:18:23 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 13:23:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void			free_texture_sprite(t_image *texture_sprite)
 void			free_texture_walls(t_image **texture_wall)
 {
 	int i;
+	if(texture_wall == NULL)
+		return;
 
 	i = 0;
 	while(i < 4)
