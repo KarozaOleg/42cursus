@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 15:20:38 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 18:51:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,4 @@ int main()
 //TODO bus error with collision sprite
 //TODO check is map closed
 //TODO check is more than one player
+//TODO R 1200 639

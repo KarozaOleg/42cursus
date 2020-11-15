@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 17:53:13 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 19:22:35 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,13 +308,36 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
 	int y_amount = return_y_amount(game->map->array);
 
     // Increment xstep and ystep until we find a wall
-    while (nextHorzTouchX >= 0 && 
-			nextHorzTouchX <= game->map_settings->resolution->width && 
-			nextHorzTouchY >= 0 && 
-			nextHorzTouchY <= game->map_settings->resolution->height) 
+    // while (nextHorzTouchX >= 0 && 
+	// 		nextHorzTouchX <= game->map_settings->resolution->width && 
+	// 		nextHorzTouchY >= 0 && 
+	// 		nextHorzTouchY <= game->map_settings->resolution->height) 
+	// {
+	 while (1)
 	{
+
         float xToCheck = nextHorzTouchX;
         float yToCheck = nextHorzTouchY + (ray->is_ray_facing_up ? -1 : 0);
+		if(nextHorzTouchX < 0 || 
+			nextHorzTouchX > game->map_settings->resolution->width)
+			{
+				cast_result->wall_hit_x = nextHorzTouchX;
+			cast_result->wall_hit_y = nextHorzTouchY;
+			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
+            cast_result->wall_hit = TRUE;
+				break;
+			}
+		
+		if(nextHorzTouchY < 0 ||
+			nextHorzTouchY > game->map_settings->resolution->height)
+			{
+				cast_result->wall_hit_x = nextHorzTouchX;
+			cast_result->wall_hit_y = nextHorzTouchY;
+			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
+            cast_result->wall_hit = TRUE;
+				break;
+			}
+			
 
 		if((int)floor(yToCheck / game->map->scaled_to) >= y_amount)
 			break;
@@ -438,12 +461,10 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 	t_player *player = game->player;
 	t_ray *ray = game->ray;
 
-
 	float ray_angle = game->player->pov - (game->player->fov / 2.0);
 	int ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
-
 		float dist = ray_index * cos(ray->angle - game->player->pov);
 		for (int dp = 0; dp < game->map_settings->resolution->height; dp++) 
 			game->depth_buffer[ray_index][dp] = dist;
@@ -458,11 +479,9 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		
 		if(cast_ray(game, ray) == ERROR)
 			return (ERROR);
-		
-        
 			
 		float perpDistance = ray->distance * cos(ray->angle - game->player->pov);
-        float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
+		float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
         float projectedWallHeight = (game->map->scaled_to / perpDistance) * distanceProjPlane;
 		
         int wallStripHeight = (int)projectedWallHeight;
