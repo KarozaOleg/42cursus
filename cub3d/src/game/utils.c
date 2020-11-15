@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 13:29:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 17:53:40 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,26 @@ t_answer	return_cast_result_v(t_ray_cast_result **cast_result_v)
 	if(*cast_result_v == NULL)
 		return (ERROR);
 	return (SUCCESS);
+}
+
+t_answer	return_depth_buffer(int rays_amount, int height, float ***depth_buffer)
+{
+	int i;
+
+	(*depth_buffer) = malloc(sizeof(*depth_buffer) * (1 + rays_amount));
+	if((*depth_buffer) == NULL)
+		return (ERROR);
+	(*depth_buffer)[rays_amount] = NULL;
+	
+	 i = 0;
+	 while(i < rays_amount)
+	 {
+		(*depth_buffer)[i] = malloc(sizeof(***depth_buffer) * height);
+		if((*depth_buffer)[i] == NULL)
+			return (ERROR);
+		 i += 1;
+	 }
+	 return (SUCCESS);
 }
 
 t_answer	return_game(char *settings_file_path, t_game **game)
@@ -98,6 +118,9 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	if(return_texture_wall((*game)->mlx_my->mlx, (*game)->map_settings, &((*game)->texture_wall)) == ERROR)
 		return (cub3d_exit("error, load texture wall", *game));
 
+	if(return_depth_buffer((*game)->player->num_rays, (*game)->map_settings->resolution->height, &((*game)->depth_buffer)) == ERROR)
+		return (cub3d_exit("error, create depth biffer", *game));
+
 	return (SUCCESS);
 }
 
@@ -119,5 +142,12 @@ void		free_game(t_game *game)
 	free_sprites(game->sprites);
 	free_texture_sprite(game->texture_sprite);
 	free_texture_walls(game->texture_wall);
+	int i = 0;
+	while(game->depth_buffer[i] != NULL)
+	{
+		free(game->depth_buffer[i]);
+		i += 1;
+	}
+	free(game->depth_buffer);
 	free(game);
 }

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:59:30 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 17:53:13 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,7 +402,7 @@ void ray_cast_vertical(t_game *game, t_ray *ray)
 
 t_answer cast_ray(t_game *game, t_ray *ray) 
 {	
-	ray_cast_horisontal(game, ray);		
+	ray_cast_horisontal(game, ray);
 	ray_cast_vertical(game, ray);
 	
     // Calculate both horizontal and vertical hit distances and choose the smallest one
@@ -438,12 +438,16 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 	t_player *player = game->player;
 	t_ray *ray = game->ray;
 
-	float depth_buffer[game->player->num_rays];
 
 	float ray_angle = game->player->pov - (game->player->fov / 2.0);
 	int ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
+
+		float dist = ray_index * cos(ray->angle - game->player->pov);
+		for (int dp = 0; dp < game->map_settings->resolution->height; dp++) 
+			game->depth_buffer[ray_index][dp] = dist;
+
 		ray->angle = normalize_angle(ray_angle);
 		
 		ray->is_ray_facing_down = ray->angle > 0 && ray->angle < PI;
@@ -455,8 +459,7 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		if(cast_ray(game, ray) == ERROR)
 			return (ERROR);
 		
-		float dist = ray_index*cos(ray->angle - game->player->pov);
-        depth_buffer[ray_index] = dist;
+        
 			
 		float perpDistance = ray->distance * cos(ray->angle - game->player->pov);
         float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
@@ -501,9 +504,9 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		}
 			
         for (int y = wallTopPixel; y < wallBottomPixel; y++) 
-		{			
+		{
 			int distanceFromTop = y + (wallStripHeight / 2) - (game->map_settings->resolution->height / 2);
-			int textureOffsetY = distanceFromTop * ((float)64 / wallStripHeight);			
+			int textureOffsetY = distanceFromTop * ((float)64 / wallStripHeight);
 			
 			draw_square(
 				game->mlx_my->scene,
@@ -527,8 +530,8 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 	}
 
 	calculate_sprites(game);
-	sort_sprites(game, depth_buffer);
-	draw_sprites(game, depth_buffer);
+	sort_sprites(game, game->depth_buffer);
+	draw_sprites(game, game->depth_buffer);
 	
 	return (SUCCESS);
 }

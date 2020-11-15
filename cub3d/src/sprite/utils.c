@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 13:23:50 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/15 17:47:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void calculate_sprites(t_game *game)
 	}
 }
 
-void	sort_sprites(t_game *game, float *depth_buffer)
+void	sort_sprites(t_game *game, float **depth_buffer)
 {
 	t_sprite *sprite;
 	int s;
@@ -134,15 +134,15 @@ void	sort_sprites(t_game *game, float *depth_buffer)
 				if(color == 0x0)
 					continue;
 
-				if(depth_buffer[sprite->h_offset + i] > sprite->sprite_dist)
-					depth_buffer[sprite->h_offset + i] = sprite->sprite_dist;
+				if(depth_buffer[sprite->h_offset + i][sprite->v_offset + j] > sprite->sprite_dist)
+					depth_buffer[sprite->h_offset + i][sprite->v_offset + j] = sprite->sprite_dist;
 			}
 		}
 		s += 1;
 	}
 }
 
-void	draw_sprites(t_game *game, float *depth_buffer)
+void	draw_sprites(t_game *game, float **depth_buffer)
 {
 	depth_buffer += 0;
 	t_sprite *sprite;
@@ -156,11 +156,12 @@ void	draw_sprites(t_game *game, float *depth_buffer)
 		{
 			if (sprite->h_offset + i < 0 || sprite->h_offset + i >= game->map_settings->resolution->width) 
 				continue;
-			if(depth_buffer[sprite->h_offset + i] < sprite->sprite_dist)
-				continue;
 			
 			for (int j=0; j < sprite->sprite_screen_size; j++) 
 			{
+
+				if(depth_buffer[sprite->h_offset + i][sprite->v_offset + j] < sprite->sprite_dist)
+					continue;
 				if (sprite->v_offset + j < 0 || sprite->v_offset + j >= game->map_settings->resolution->height) 
 					continue;
 					
