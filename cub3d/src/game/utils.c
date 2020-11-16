@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 18:30:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/16 22:37:56 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,26 @@ t_answer	return_depth_buffer(int rays_amount, int height, float ***depth_buffer)
 	 return (SUCCESS);
 }
 
+t_answer	return_buffer_color(int rays_amount, int height, int ***buffer_color)
+{
+	int i;
+
+	(*buffer_color) = malloc(sizeof(*buffer_color) * (1 + rays_amount));
+	if((*buffer_color) == NULL)
+		return (ERROR);
+	(*buffer_color)[rays_amount] = NULL;
+	
+	 i = 0;
+	 while(i < rays_amount)
+	 {
+		(*buffer_color)[i] = malloc(sizeof(***buffer_color) * height);
+		if((*buffer_color)[i] == NULL)
+			return (ERROR);
+		 i += 1;
+	 }
+	 return (SUCCESS);
+}
+
 t_answer	return_game(char *settings_file_path, t_game **game)
 {
 	if(create_game(game) == ERROR)
@@ -81,6 +101,8 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	(*game)->sprites = NULL;
 	(*game)->texture_sprite = NULL;
 	(*game)->texture_wall = NULL;
+	(*game)->buffer_color = NULL;
+	(*game)->depth_buffer = NULL;
 
 	if(return_ray(&((*game)->ray)) == ERROR)
 		return (cub3d_exit("error, creating ray", *game));
@@ -119,7 +141,10 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, load texture wall", *game));
 
 	if(return_depth_buffer((*game)->player->num_rays, (*game)->map_settings->resolution->height, &((*game)->depth_buffer)) == ERROR)
-		return (cub3d_exit("error, create depth biffer", *game));
+		return (cub3d_exit("error, create depth buffer", *game));
+
+	if(return_buffer_color((*game)->player->num_rays, (*game)->map_settings->resolution->height, &((*game)->buffer_color)) == ERROR)
+		return (cub3d_exit("error, create buffer color", *game));
 
 	return (SUCCESS);
 }

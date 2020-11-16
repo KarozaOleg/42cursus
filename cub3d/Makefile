@@ -117,6 +117,9 @@ $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
 test: $(NAME)
 	@gcc test*.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
 
+test2: $(NAME)
+	@gcc test*.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
+
 %.o: %.c $(INCLUDES)
 	@gcc -Wall -Wextra -Werror -c $< -o $@
 

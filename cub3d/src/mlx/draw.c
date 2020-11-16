@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 19:22:35 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:01:13 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -450,6 +450,20 @@ t_answer cast_ray(t_game *game, t_ray *ray)
 	return (SUCCESS);
 }
 
+void	draw_square_into_buffer(int **buffer_color, int y1, int y2, int x1, int x2, int color)
+{
+	while(y1 < y2)
+	{
+		int x = x1;
+		while(x < x2)
+		{
+			buffer_color[y1][x] = color;
+			x += 1;
+		}
+		y1 += 1;
+	}
+}
+
 t_answer	draw_projection_plane_ddp(t_game *game)
 {
 	t_player *player = game->player;
@@ -487,8 +501,8 @@ t_answer	draw_projection_plane_ddp(t_game *game)
         int wallBottomPixel = (game->map_settings->resolution->height / 2) + (wallStripHeight / 2);
         wallBottomPixel = wallBottomPixel > game->map_settings->resolution->height ? game->map_settings->resolution->height : wallBottomPixel;
 		
-		draw_square(
-			game->mlx_my->scene,
+		draw_square_into_buffer(
+			game->buffer_color,
 			ray_index,
 			ray_index + 1,
 			0,
@@ -515,16 +529,15 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 				texture_id = 0;	
 			else if(ray->angle > PI && ray->angle < 2*PI)
 				texture_id = 3;
-		}
-			
+		}			
 		
         for (int y = wallTopPixel; y < wallBottomPixel; y++) 
 		{
 			int distanceFromTop = y + (wallStripHeight / 2) - (game->map_settings->resolution->height / 2);
 			int textureOffsetY = distanceFromTop * ((float)64 / wallStripHeight);
 			
-			draw_square(
-				game->mlx_my->scene,
+			draw_square_into_buffer(
+				game->buffer_color,
 				ray_index,
 				ray_index + 1,
 				y,
@@ -532,8 +545,8 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 				return_texture_color(game->texture_wall[texture_id], textureOffsetX, textureOffsetY));
         }
 		
-		draw_square(
-			game->mlx_my->scene,
+		draw_square_into_buffer(
+			game->buffer_color,
 			ray_index,
 			ray_index + 1,
 			wallBottomPixel,
@@ -541,12 +554,11 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 			FLOOR);
 		ray_angle += player->fov / ((float)player->num_rays);
 		ray_index += 1;
-
 	}
 
-	calculate_sprites(game);
-	sort_sprites(game, game->depth_buffer);
-	draw_sprites(game, game->depth_buffer);
+	// calculate_sprites(game);
+	// sort_sprites(game, game->depth_buffer);
+	// draw_sprites(game, game->depth_buffer);
 	return (SUCCESS);
 }
 
@@ -619,9 +631,21 @@ void	draw_projection_plane(t_game *game)
 int		draw_scene(t_game *game)
 {
 	// clear(game->mlx_my->scene, game->map_settings);
-
 	if(draw_projection_plane_ddp(game) == ERROR)
 		return 0;
+
+	int y = 0;
+	while(y < game->player->num_rays)
+	{
+		int x = 0;
+		while(x < game->map_settings->resolution->height)
+		{
+			int color = game->buffer_color[y][x];
+			my_mlx_pixel_put(game->mlx_my->scene, y, x, color);
+			x+=1;
+		}
+		y+=1;
+	}
 	
 	// draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
 	// draw_player(game->mlx_my->scene, game->player);
