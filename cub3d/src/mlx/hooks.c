@@ -19,6 +19,8 @@
 
 t_answer	handle_key_linux(int keycode, int *pov_change, int *player_move)
 {
+	*pov_change = 0;
+	*player_move = 0;
 	if(keycode == 97 || keycode == 119 || keycode == 100 || keycode == 115)
 	{
 		if(keycode == 97)
@@ -77,7 +79,8 @@ int		key_pressed_handler(int keycode, t_game *game)
 	int player_turn;
 	int player_move;
 	
-	if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
+	// if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
+	if(handle_key_linux(keycode, &player_turn, &player_move) == SUCCESS)
 	{
 		game->player->pov += player_turn * game->player->pov_step;
 

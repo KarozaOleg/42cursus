@@ -31,7 +31,7 @@ int test_leaks()
 }
 
 //gcc test*.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
-//gcc test*.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
+//gcc test*.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm -I.
 int main()
 {
 	int answer = test_leaks();
