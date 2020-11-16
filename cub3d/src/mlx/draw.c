@@ -243,7 +243,7 @@ t_bool map_has_wall_at(t_game *game, float x, float y) {
 	
     int map_grid_index_x = (int)floor(x / (float)game->map->scaled_to);
     int map_grid_index_y = (int)floor(y / (float)game->map->scaled_to);
-	
+
     if(game->map->array[map_grid_index_y][map_grid_index_x] == 1)
 	{
 		return (TRUE);
@@ -292,6 +292,7 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
     yintercept += ray->is_ray_facing_down ? game->map->scaled_to : 0;
 
     // Find the x-coordinate of the closest horizontal grid intersection
+
     xintercept = game->player->x + (yintercept - game->player->y) / tan(ray->angle);
 
     // Calculate the increment xstep and ystep
@@ -307,49 +308,42 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
 
 	int y_amount = return_y_amount(game->map->array);
 
-    // Increment xstep and ystep until we find a wall
-    // while (nextHorzTouchX >= 0 && 
-	// 		nextHorzTouchX <= game->map_settings->resolution->width && 
-	// 		nextHorzTouchY >= 0 && 
-	// 		nextHorzTouchY <= game->map_settings->resolution->height) 
-	// {
-	 while (1)
-	{
-
-        float xToCheck = nextHorzTouchX;
-        float yToCheck = nextHorzTouchY + (ray->is_ray_facing_up ? -1 : 0);
-		if(nextHorzTouchX < 0 || 
-			nextHorzTouchX > game->map_settings->resolution->width)
-			{
-				cast_result->wall_hit_x = nextHorzTouchX;
+	float xToCheck;
+	float yToCheck;
+	while (1)
+	{        
+		if(nextHorzTouchX < 0 || nextHorzTouchX > game->map_settings->resolution->width)
+		{
+			cast_result->wall_hit_x = nextHorzTouchX;
 			cast_result->wall_hit_y = nextHorzTouchY;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
-            cast_result->wall_hit = TRUE;
-				break;
-			}
+			cast_result->wall_hit = TRUE;
+			break;
+		}
 		
-		if(nextHorzTouchY < 0 ||
-			nextHorzTouchY > game->map_settings->resolution->height)
-			{
-				cast_result->wall_hit_x = nextHorzTouchX;
+		if(nextHorzTouchY < 0 || nextHorzTouchY > game->map_settings->resolution->height)
+		{
+			cast_result->wall_hit_x = nextHorzTouchX;
 			cast_result->wall_hit_y = nextHorzTouchY;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
-            cast_result->wall_hit = TRUE;
-				break;
-			}
-			
+			cast_result->wall_hit = TRUE;
+			break;
+		}
 
+		xToCheck = nextHorzTouchX;
+    	yToCheck = nextHorzTouchY + (ray->is_ray_facing_up ? -1 : 0);
+			
 		if((int)floor(yToCheck / game->map->scaled_to) >= y_amount)
 			break;
 		if((int)floor(xToCheck / game->map->scaled_to) >= return_x_amount(game->map->array[(int)floor(yToCheck / game->map->scaled_to)]))
-			break;
-
+			break;		
+		
         if (map_has_wall_at(game, xToCheck, yToCheck) == TRUE) 
 		{
 			cast_result->wall_hit_x = nextHorzTouchX;
 			cast_result->wall_hit_y = nextHorzTouchY;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
-            cast_result->wall_hit = TRUE;
+            cast_result->wall_hit = TRUE;			
             break;
         } 
 		else 
@@ -477,6 +471,7 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		ray->is_ray_facing_right = ray->angle < 0.5 * PI || ray->angle > 1.5 * PI;
 		ray->is_ray_facing_left = !ray->is_ray_facing_right;
 		
+		
 		if(cast_ray(game, ray) == ERROR)
 			return (ERROR);
 			
@@ -522,6 +517,7 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 				texture_id = 3;
 		}
 			
+		
         for (int y = wallTopPixel; y < wallBottomPixel; y++) 
 		{
 			int distanceFromTop = y + (wallStripHeight / 2) - (game->map_settings->resolution->height / 2);
@@ -535,7 +531,7 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 				y + 1,
 				return_texture_color(game->texture_wall[texture_id], textureOffsetX, textureOffsetY));
         }
-
+		
 		draw_square(
 			game->mlx_my->scene,
 			ray_index,
@@ -543,15 +539,14 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 			wallBottomPixel,
 			game->map_settings->resolution->height,
 			FLOOR);
-
 		ray_angle += player->fov / ((float)player->num_rays);
 		ray_index += 1;
+
 	}
 
 	calculate_sprites(game);
 	sort_sprites(game, game->depth_buffer);
 	draw_sprites(game, game->depth_buffer);
-	
 	return (SUCCESS);
 }
 
