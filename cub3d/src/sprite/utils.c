@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 23:01:27 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:03:47 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	draw_sprites(t_game *game, float **depth_buffer)
 				int x = sprite->h_offset + i;
 				int y = sprite->v_offset + j;
 				
-				game->buffer_color[y][x] = color;
+				game->buffer_color[x][y] = color;
 				// my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
 			}
 		}

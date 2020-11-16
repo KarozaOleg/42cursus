@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 23:01:13 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/16 23:04:47 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -556,9 +556,9 @@ t_answer	draw_projection_plane_ddp(t_game *game)
 		ray_index += 1;
 	}
 
-	// calculate_sprites(game);
-	// sort_sprites(game, game->depth_buffer);
-	// draw_sprites(game, game->depth_buffer);
+	calculate_sprites(game);
+	sort_sprites(game, game->depth_buffer);
+	draw_sprites(game, game->depth_buffer);
 	return (SUCCESS);
 }
 
@@ -634,17 +634,17 @@ int		draw_scene(t_game *game)
 	if(draw_projection_plane_ddp(game) == ERROR)
 		return 0;
 
-	int y = 0;
-	while(y < game->player->num_rays)
+	int x = 0;
+	while(x < game->player->num_rays)
 	{
-		int x = 0;
-		while(x < game->map_settings->resolution->height)
+		int y = 0;
+		while(y < game->map_settings->resolution->height)
 		{
-			int color = game->buffer_color[y][x];
-			my_mlx_pixel_put(game->mlx_my->scene, y, x, color);
-			x+=1;
+			int color = game->buffer_color[x][y];
+			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
+			y+=1;
 		}
-		y+=1;
+		x+=1;
 	}
 	
 	// draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
