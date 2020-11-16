@@ -89,6 +89,12 @@ void	calculate(t_game *game, t_sprite *sprite)
 
 	sprite->sprite_dir = atan2(y - player->y, x - player->x);	
 	sprite->sprite_dist = sqrt(pow(player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
+
+	while (sprite->sprite_dir - player->pov >  PI) 
+		sprite->sprite_dir -= 2*PI;
+    while (sprite->sprite_dir - player->pov < -PI) 
+		sprite->sprite_dir += 2*PI;
+
 	sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
