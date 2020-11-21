@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 23:04:47 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/21 18:45:03 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,15 +228,14 @@ float	normalize_angle(float angle)
     return angle;
 }
 
-float distance_between_points(float x1, float y1, float x2, float y2) {
+float distance_between_points(float x1, float y1, float x2, float y2) 
+{
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-t_bool map_has_wall_at(t_game *game, float x, float y) {
-    if (x < 0 || 
-		x > game->map_settings->resolution->width || 
-		y < 0 || 
-		y > game->map_settings->resolution->height) 
+t_bool map_has_wall_at(t_game *game, float x, float y) 
+{
+    if (x < 0 || x > game->map_settings->resolution->width || y < 0 || y > game->map_settings->resolution->height)
 	{
         return TRUE;
     }
@@ -292,7 +291,6 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
     yintercept += ray->is_ray_facing_down ? game->map->scaled_to : 0;
 
     // Find the x-coordinate of the closest horizontal grid intersection
-
     xintercept = game->player->x + (yintercept - game->player->y) / tan(ray->angle);
 
     // Calculate the increment xstep and ystep
@@ -311,7 +309,7 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
 	float xToCheck;
 	float yToCheck;
 	while (1)
-	{        
+	{
 		if(nextHorzTouchX < 0 || nextHorzTouchX > game->map_settings->resolution->width)
 		{
 			cast_result->wall_hit_x = nextHorzTouchX;
@@ -336,14 +334,14 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
 		if((int)floor(yToCheck / game->map->scaled_to) >= y_amount)
 			break;
 		if((int)floor(xToCheck / game->map->scaled_to) >= return_x_amount(game->map->array[(int)floor(yToCheck / game->map->scaled_to)]))
-			break;		
+			break;
 		
         if (map_has_wall_at(game, xToCheck, yToCheck) == TRUE) 
 		{
 			cast_result->wall_hit_x = nextHorzTouchX;
 			cast_result->wall_hit_y = nextHorzTouchY;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
-            cast_result->wall_hit = TRUE;			
+            cast_result->wall_hit = TRUE;
             break;
         } 
 		else 
@@ -417,37 +415,46 @@ void ray_cast_vertical(t_game *game, t_ray *ray)
     }
 }
 
-t_answer cast_ray(t_game *game, t_ray *ray) 
-{	
-	ray_cast_horisontal(game, ray);
-	ray_cast_vertical(game, ray);
+void cast_ray(t_game *game, int ray_index, float ray_angle)
+{
+	game->ray->index = ray_index;
+	game->ray->angle = normalize_angle(ray_angle);
+	game->ray->is_ray_facing_down = game->ray->angle > 0 && game->ray->angle < PI;
+	game->ray->is_ray_facing_up = !game->ray->is_ray_facing_down;
+	game->ray->is_ray_facing_right = game->ray->angle < 0.5 * PI || game->ray->angle > 1.5 * PI;
+	game->ray->is_ray_facing_left = !game->ray->is_ray_facing_right;
+		
+	ray_cast_horisontal(game, game->ray);
+	ray_cast_vertical(game, game->ray);
 	
-    // Calculate both horizontal and vertical hit distances and choose the smallest one
-    float horzHitDistance = game->cast_result_horisontal->wall_hit == TRUE
-        ? distance_between_points(game->player->x, game->player->y, game->cast_result_horisontal->wall_hit_x, game->cast_result_horisontal->wall_hit_y)
-        : 340282346638528859811704183484516925440.0;
-    float vertHitDistance = game->cast_result_vertical->wall_hit == TRUE
-        ? distance_between_points(game->player->x, game->player->y, game->cast_result_vertical->wall_hit_x, game->cast_result_vertical->wall_hit_y)
-        : 340282346638528859811704183484516925440.0;
-
-    if (vertHitDistance < horzHitDistance) 
+	// Calculate both horizontal and vertical hit distances and choose the smallest one
+	float horzHitDistance = game->cast_result_horisontal->wall_hit == TRUE
+		? distance_between_points(game->player->x, game->player->y, game->cast_result_horisontal->wall_hit_x, game->cast_result_horisontal->wall_hit_y)
+		: 340282346638528859811704183484516925440.0;
+	float vertHitDistance = game->cast_result_vertical->wall_hit == TRUE
+		? distance_between_points(game->player->x, game->player->y, game->cast_result_vertical->wall_hit_x, game->cast_result_vertical->wall_hit_y)
+		: 340282346638528859811704183484516925440.0;
+		
+	if (vertHitDistance < horzHitDistance) 
 	{
-		ray->distance = vertHitDistance;
-		ray->wall_hit_x = game->cast_result_vertical->wall_hit_x;
-		ray->wall_hit_y = game->cast_result_vertical->wall_hit_y;
-		ray->wall_hit_content = game->cast_result_vertical->wall_content;
-		ray->was_hit_vertical = TRUE;
-    } 
+		if(vertHitDistance == 0)
+			vertHitDistance = 0.1;
+		game->ray->distance = vertHitDistance;
+		game->ray->wall_hit_x = game->cast_result_vertical->wall_hit_x;
+		game->ray->wall_hit_y = game->cast_result_vertical->wall_hit_y;
+		game->ray->wall_hit_content = game->cast_result_vertical->wall_content;
+		game->ray->was_hit_vertical = TRUE;
+	}
 	else 
 	{
-		ray->distance = horzHitDistance;
-		ray->wall_hit_x = game->cast_result_horisontal->wall_hit_x;
-		ray->wall_hit_y = game->cast_result_horisontal->wall_hit_y;
-		ray->wall_hit_content = game->cast_result_horisontal->wall_content;
-		ray->was_hit_vertical = FALSE;
-    }
-
-	return (SUCCESS);
+		if(vertHitDistance == 0)
+			vertHitDistance = 0.1;
+		game->ray->distance = horzHitDistance;
+		game->ray->wall_hit_x = game->cast_result_horisontal->wall_hit_x;
+		game->ray->wall_hit_y = game->cast_result_horisontal->wall_hit_y;
+		game->ray->wall_hit_content = game->cast_result_horisontal->wall_content;
+		game->ray->was_hit_vertical = FALSE;
+	}
 }
 
 void	draw_square_into_buffer(int **buffer_color, int y1, int y2, int x1, int x2, int color)
@@ -464,188 +471,161 @@ void	draw_square_into_buffer(int **buffer_color, int y1, int y2, int x1, int x2,
 	}
 }
 
-t_answer	draw_projection_plane_ddp(t_game *game)
+void	return_wall_spec(t_game *game, int *wall_top, int *wall_bottom, int *wall_height)
 {
-	t_player *player = game->player;
-	t_ray *ray = game->ray;
+	float perpDistance = game->ray->distance * cos(game->ray->angle - game->player->pov);
+	float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
+	float projectedWallHeight = (game->map->scaled_to / perpDistance) * distanceProjPlane;
 
-	float ray_angle = game->player->pov - (game->player->fov / 2.0);
-	int ray_index = 0;
+	*wall_height = (int)projectedWallHeight;
+	*wall_top = (game->map_settings->resolution->height / 2) - (*wall_height / 2);
+	*wall_top = *wall_top < 0 ? 0 : *wall_top;
+
+	*wall_bottom = (game->map_settings->resolution->height / 2) + (*wall_height / 2);
+	*wall_bottom = *wall_bottom > game->map_settings->resolution->height ? game->map_settings->resolution->height : *wall_bottom;
+}
+
+int return_texture_id(t_ray *ray)
+{
+	int id = 0;
+
+	if(ray->was_hit_vertical)
+	{
+		if((ray->angle > PI/2 && ray->angle < PI) || (ray->angle > PI && ray->angle < PI+PI/2))
+			id = 1;
+		else if((ray->angle > 0 && ray->angle < PI/2) || (ray->angle > PI+PI/2 && ray->angle < 2*PI))
+			id = 2;
+	}
+	else
+	{
+		if(ray->angle > 0 && ray->angle < PI)
+			id = 0;	
+		else if(ray->angle > PI && ray->angle < 2*PI)
+			id = 3;
+	}
+	return (id);
+}
+
+int return_texture_offset_x(t_ray *ray)
+{
+	if (ray->was_hit_vertical)
+		return ((int)ray->wall_hit_y % 64);
+	else
+		return ((int)ray->wall_hit_x % 64);
+}
+
+void	init_buffer_depth(t_game *game)
+{
+	float dist;
+	int dp;
+		
+	dist = game->ray->index * cos(game->ray->angle - game->player->pov);
+	dp = 0;
+	while(dp < game->map_settings->resolution->height)
+	{
+		game->depth_buffer[game->ray->index][dp] = dist;
+		dp += 1;
+	}
+}
+
+void fill_buffer_color_ceiling(t_game *game, int x2)
+{
+	int x;
+
+	x = 0;
+	while(x < x2)
+	{
+		game->buffer_color[game->ray->index][x] = CEILING;
+		x += 1;
+	}
+}
+
+void fill_buffer_color_wall(t_game *game, int wall_top, int wall_bottom, int wall_height)
+{
+	int y;
+	int dist_from_top;
+	int tex_offset_y;
+	int tex_offset_x;
+
+	y = wall_top;
+	while(y < wall_bottom)
+	{
+		dist_from_top = y + (wall_height / 2) - (game->map_settings->resolution->height / 2);
+		tex_offset_y = dist_from_top * ((float)64 / wall_height);
+		if (game->ray->was_hit_vertical)
+			tex_offset_x = ((int)game->ray->wall_hit_y % 64);
+		else
+			tex_offset_x = ((int)game->ray->wall_hit_x % 64);
+		game->buffer_color[game->ray->index][y] = return_texture_color(game->texture_wall[return_texture_id(game->ray)], tex_offset_x, tex_offset_y);
+		y += 1;
+	}
+}
+
+void fill_buffer_color_floor(t_game *game, int x1)
+{
+	int x;
+
+	x = x1;
+	while(x < game->map_settings->resolution->height)
+	{
+		game->buffer_color[game->ray->index][x] = FLOOR;
+		x += 1;
+	}
+}
+
+t_answer	draw_projection_plane(t_game *game)
+{
+	float ray_angle;
+	int ray_index;
+	int wall_top;
+	int wall_bottom;
+	int wall_height;
+	
+	ray_angle = game->player->pov - (game->player->fov / 2.0);
+	ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
-		float dist = ray_index * cos(ray->angle - game->player->pov);
-		for (int dp = 0; dp < game->map_settings->resolution->height; dp++) 
-			game->depth_buffer[ray_index][dp] = dist;
-
-		ray->angle = normalize_angle(ray_angle);
-		
-		ray->is_ray_facing_down = ray->angle > 0 && ray->angle < PI;
-		ray->is_ray_facing_up = !ray->is_ray_facing_down;
-
-		ray->is_ray_facing_right = ray->angle < 0.5 * PI || ray->angle > 1.5 * PI;
-		ray->is_ray_facing_left = !ray->is_ray_facing_right;
-		
-		
-		if(cast_ray(game, ray) == ERROR)
-			return (ERROR);
-			
-		float perpDistance = ray->distance * cos(ray->angle - game->player->pov);
-		float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
-        float projectedWallHeight = (game->map->scaled_to / perpDistance) * distanceProjPlane;
-		
-        int wallStripHeight = (int)projectedWallHeight;
-
-        int wallTopPixel = (game->map_settings->resolution->height / 2) - (wallStripHeight / 2);
-        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
-		
-        int wallBottomPixel = (game->map_settings->resolution->height / 2) + (wallStripHeight / 2);
-        wallBottomPixel = wallBottomPixel > game->map_settings->resolution->height ? game->map_settings->resolution->height : wallBottomPixel;
-		
-		draw_square_into_buffer(
-			game->buffer_color,
-			ray_index,
-			ray_index + 1,
-			0,
-			wallTopPixel,
-			CEILING);		
-		
-		int textureOffsetX;
-        if (ray->was_hit_vertical)
-            textureOffsetX = (int)ray->wall_hit_y % 64;
-        else
-            textureOffsetX = (int)ray->wall_hit_x % 64;
-		
-		int texture_id;
-		if(ray->was_hit_vertical)
-		{
-			if((ray->angle > PI/2 && ray->angle < PI) || (ray->angle > PI && ray->angle < PI+PI/2))
-				texture_id = 1;
-			else if((ray->angle > 0 && ray->angle < PI/2) || (ray->angle > PI+PI/2 && ray->angle < 2*PI))
-				texture_id = 2;			
-		}
-		else
-		{
-			if(ray->angle > 0 && ray->angle < PI)
-				texture_id = 0;	
-			else if(ray->angle > PI && ray->angle < 2*PI)
-				texture_id = 3;
-		}			
-		
-        for (int y = wallTopPixel; y < wallBottomPixel; y++) 
-		{
-			int distanceFromTop = y + (wallStripHeight / 2) - (game->map_settings->resolution->height / 2);
-			int textureOffsetY = distanceFromTop * ((float)64 / wallStripHeight);
-			
-			draw_square_into_buffer(
-				game->buffer_color,
-				ray_index,
-				ray_index + 1,
-				y,
-				y + 1,
-				return_texture_color(game->texture_wall[texture_id], textureOffsetX, textureOffsetY));
-        }
-		
-		draw_square_into_buffer(
-			game->buffer_color,
-			ray_index,
-			ray_index + 1,
-			wallBottomPixel,
-			game->map_settings->resolution->height,
-			FLOOR);
-		ray_angle += player->fov / ((float)player->num_rays);
+		init_buffer_depth(game);
+		cast_ray(game, ray_index, ray_angle);
+		return_wall_spec(game, &wall_top, &wall_bottom, &wall_height);
+		fill_buffer_color_ceiling(game, wall_top);
+		fill_buffer_color_wall(game, wall_top, wall_bottom, wall_height);
+		fill_buffer_color_floor(game, wall_bottom);
+		ray_angle += game->player->fov / ((float)game->player->num_rays);
 		ray_index += 1;
 	}
-
 	calculate_sprites(game);
 	sort_sprites(game, game->depth_buffer);
 	draw_sprites(game, game->depth_buffer);
 	return (SUCCESS);
 }
 
-void	draw_projection_plane(t_game *game)
-{	
-	t_map *map = game->map;
-	t_player *player = game->player;
-
-	float ray_angle = game->player->pov - (game->player->fov / 2.0);
-	int ray_index = 0;
+void	draw_buffer_to_scene(t_game *game)
+{
+	int x;
+	int y;
 	
-	while(ray_index < game->player->num_rays)
+	x = 0;
+	while(x < game->player->num_rays)
 	{
-		float x_possible = (float)player->x;
-		float x = (float)player->x;
-		float y_possible = (float)player->y;
-		float y = (float)player->y;
-
-		while(map->array[(int)(y_possible / ((float)map->scaled_to))][(int)(x_possible / ((float)map->scaled_to))] != 1)
+		y = 0;
+		while(y < game->map_settings->resolution->height)
 		{
-			x_possible += cos(ray_angle) / 5;
-			y_possible += sin(ray_angle) / 5;
-			
-			if(map->array[(int)(y_possible / ((float)map->scaled_to))][(int)(x_possible / ((float)map->scaled_to))] != 1)
-			{
-				x = x_possible;
-				y = y_possible;
-			}
+			int color = game->buffer_color[x][y];
+			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
+			y += 1;
 		}
-		
-		float ray_distance = sqrt(pow(((float)player->x) - x, 2) + pow(((float)player->y) - y, 2));
-
-		float distance_proj_plane = ((((float)game->map_settings->resolution->width) / 2.0)) / tan(game->player->fov / 2.0);
-		float wall_height = (((float)map->scaled_to) / ray_distance) * distance_proj_plane;
-		
-		if(wall_height > (float)game->map_settings->resolution->height)
-			wall_height  = (float)game->map_settings->resolution->height;
-		
-		float value = (((float)game->map_settings->resolution->height) / 2.0) - (wall_height / 2.0);
-
-		draw_square(
-			game->mlx_my->scene,
-			ray_index,
-			ray_index + 1,
-			0,
-			value,
-			CEILING);
-			
-		draw_square(
-			game->mlx_my->scene,
-			ray_index,
-			ray_index + 1,
-			value,
-			value + wall_height,
-			WHITE);
-
-		draw_square(
-			game->mlx_my->scene,
-			ray_index,
-			ray_index + 1,
-			value + wall_height,
-			game->map_settings->resolution->height,
-			FLOOR);
-		
-		ray_angle += player->fov / ((float)player->num_rays);
-		ray_index += 1;
+		x += 1;
 	}
 }
 
 int		draw_scene(t_game *game)
 {
 	// clear(game->mlx_my->scene, game->map_settings);
-	if(draw_projection_plane_ddp(game) == ERROR)
+	if(draw_projection_plane(game) == ERROR)
 		return 0;
 
-	int x = 0;
-	while(x < game->player->num_rays)
-	{
-		int y = 0;
-		while(y < game->map_settings->resolution->height)
-		{
-			int color = game->buffer_color[x][y];
-			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
-			y+=1;
-		}
-		x+=1;
-	}
+	draw_buffer_to_scene(game);
 	
 	// draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
 	// draw_player(game->mlx_my->scene, game->player);

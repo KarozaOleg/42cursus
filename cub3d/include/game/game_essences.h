@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 22:36:09 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/21 18:42:55 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct	s_ray
 {
+	int		index;
 	float	distance;
 	float	wall_hit_x;
 	float	wall_hit_y;
