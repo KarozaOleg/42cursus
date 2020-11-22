@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:46:12 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 16:15:47 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,3 +168,5 @@ int main(int argc, char **argv)
 //TODO R 1200 639
 //TODO rename depth_buffer
 //TODO rename num_rays
+//TODO player start view
+//TODO draw at start
