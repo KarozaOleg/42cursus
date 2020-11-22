@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:11:51 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 17:36:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,20 @@ void	fill_buffer_color_wall(t_game *game, t_wall_spec *wall_spec)
 	int dist_from_top;
 	int tex_offset_y;
 	int tex_offset_x;
+	int texture_id;
 
+	texture_id = return_texture_id(game->ray);
 	y = wall_spec->wall_top;
+	if (game->ray->was_hit_vertical)
+		tex_offset_x = ((int)game->ray->wall_hit_y % 64);
+	else
+		tex_offset_x = ((int)game->ray->wall_hit_x % 64);
+		
 	while(y < wall_spec->wall_bottom)
 	{
 		dist_from_top = y + (wall_spec->wall_height / 2) - (game->map_settings->resolution->height / 2);
 		tex_offset_y = dist_from_top * ((float)64 / wall_spec->wall_height);
-		if (game->ray->was_hit_vertical)
-			tex_offset_x = ((int)game->ray->wall_hit_y % 64);
-		else
-			tex_offset_x = ((int)game->ray->wall_hit_x % 64);
-		game->buffer_color[game->ray->index][y] = return_texture_color(game->texture_wall[return_texture_id(game->ray)], tex_offset_x, tex_offset_y);
+		game->buffer_color[game->ray->index][y] = return_texture_color(game->texture_wall[texture_id], tex_offset_x, tex_offset_y);
 		y += 1;
 	}
 }
@@ -114,31 +117,19 @@ void	fill_buffer_color_floor(t_game *game, int x1)
 	}
 }
 
-int		return_y_amount(int **array)
-{
-	int amount;
-	
-	amount = 0;
-	while(array[amount] != NULL)
-		amount++;
-	return (amount);
-}
-
 void	scene_to_buffer(t_game *game)
 {
 	float		ray_angle;
 	int			ray_index;
-	int			y_amount;
 	t_wall_spec	wall_spec;
 
-	y_amount = return_y_amount(game->map->array);
 	ray_angle = game->player->pov - (game->player->fov / 2.0);
 	ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
 		init_buffer_depth(game);
 		init_ray(game->ray, ray_index, ray_angle);
-		ray_casting(game, y_amount);
+		ray_casting(game);
 		return_wall_spec(game, &wall_spec);
 		fill_buffer_color_ceiling(game, wall_spec.wall_top);
 		fill_buffer_color_wall(game, &wall_spec);
@@ -147,8 +138,8 @@ void	scene_to_buffer(t_game *game)
 		ray_index += 1;
 	}
 	calculate_sprites(game);
-	sort_sprites(game, game->depth_buffer);
-	draw_sprites(game, game->depth_buffer);
+	sort_sprites(game, game->sprites, game->depth_buffer);
+	draw_sprites(game, game->sprites, game->depth_buffer);
 }
 
 void	buffer_to_scene(t_game *game)

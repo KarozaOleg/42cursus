@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:25:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:32:47 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 17:34:59 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,18 @@ t_bool	map_has_wall_at(t_game *game, float x, float y)
 		return (FALSE);
 }
 
-void	casting(t_game *game, t_ray_cast_result *cast_result, int y_amount, void (*casting_spec)(t_game *, t_ray_cast_var *), void (*casting_step)(t_ray_cast_var *, t_ray *, float *,float *))
+void	casting(t_game *game, t_ray_cast_result *cast_result, void (*casting_spec)(t_game *, t_ray_cast_var *), void (*casting_step)(t_ray_cast_var *, t_ray *, float *,float *))
 {
 	t_ray_cast_var		cast_var;
 	float				x2check;
 	float				y2check;
 	
 	reset_cast_result(cast_result);
-	// printf("before casting spec hit\n");
 	casting_spec(game, &cast_var);
-	// printf("before casting\n");
-
 	while (cast_var.xintercept >= 0 && cast_var.xintercept <= game->map_settings->resolution->width && cast_var.yintercept >= 0 && cast_var.yintercept <= game->map_settings->resolution->height)
 	{
 		casting_step(&cast_var, game->ray, &x2check, &y2check);
-		if((int)floor(y2check / game->map->scaled_to) >= y_amount)
+		if((int)floor(y2check / game->map->scaled_to) >= game->y_amount)
 			break;
 		if((int)floor(x2check / game->map->scaled_to) >= return_x_amount(game->map->array[(int)floor(y2check / game->map->scaled_to)]))
 			break;
@@ -91,7 +88,7 @@ void	casting(t_game *game, t_ray_cast_result *cast_result, int y_amount, void (*
 			cast_var.xintercept += cast_var.xstep;
 			cast_var.yintercept += cast_var.ystep;
 			continue;
-		}		
+		}
 		cast_result->wall_hit_x = cast_var.xintercept;
 		cast_result->wall_hit_y = cast_var.yintercept;
 		cast_result->wall_content = game->map->array[(int)floor(y2check / game->map->scaled_to)][(int)floor(x2check / game->map->scaled_to)];
@@ -118,34 +115,29 @@ float	return_intersect_dist(t_game *game, t_ray_cast_result *cast_result)
 	return (dist);
 }
 
-void	ray_casting(t_game *game, int y_amount)
+void	ray_casting(t_game *game)
 {
-	t_ray_cast_result	cast_result_horz;
-	float				distance_horz;
-	t_ray_cast_result	cast_result_vert;
-	float				distance_vert;
+	float	distance_horz;
+	float	distance_vert;
 	
-	// printf("ray horz\n");
-	casting(game, &cast_result_horz, y_amount, &return_casting_spec_horisontal, &return_casting_step_horisontal);
-	// printf("ray vert\n");
-	casting(game, &cast_result_vert, y_amount, &return_casting_spec_vertical, &return_casting_step_vertical);
-	
-	distance_horz = return_intersect_dist(game, &cast_result_horz);
-	distance_vert = return_intersect_dist(game, &cast_result_vert);
+	casting(game, game->cast_result_horisontal, &return_casting_spec_horisontal, &return_casting_step_horisontal);
+	casting(game, game->cast_result_vertical, &return_casting_spec_vertical, &return_casting_step_vertical);	
+	distance_horz = return_intersect_dist(game, game->cast_result_horisontal);
+	distance_vert = return_intersect_dist(game, game->cast_result_vertical);
 	if (distance_vert < distance_horz) 
 	{
 		game->ray->distance = distance_vert;
-		game->ray->wall_hit_x = cast_result_vert.wall_hit_x;
-		game->ray->wall_hit_y = cast_result_vert.wall_hit_y;
-		game->ray->wall_hit_content = cast_result_vert.wall_content;
+		game->ray->wall_hit_x = game->cast_result_vertical->wall_hit_x;
+		game->ray->wall_hit_y = game->cast_result_vertical->wall_hit_y;
+		game->ray->wall_hit_content = game->cast_result_vertical->wall_content;
 		game->ray->was_hit_vertical = TRUE;
 	}
 	else 
 	{
 		game->ray->distance = distance_horz;
-		game->ray->wall_hit_x = cast_result_horz.wall_hit_x;
-		game->ray->wall_hit_y = cast_result_horz.wall_hit_y;
-		game->ray->wall_hit_content = cast_result_horz.wall_content;
+		game->ray->wall_hit_x = game->cast_result_horisontal->wall_hit_x;
+		game->ray->wall_hit_y = game->cast_result_horisontal->wall_hit_y;
+		game->ray->wall_hit_content = game->cast_result_horisontal->wall_content;
 		game->ray->was_hit_vertical = FALSE;
 	}
 }

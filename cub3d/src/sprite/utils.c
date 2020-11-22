@@ -6,14 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:11:54 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 17:29:37 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/sprite/sprite_utils.h"
 # include <stdio.h>
 
-int	return_sprites_amount(int **map)
+int			return_sprites_amount(int **map)
 {
 	int amount;
 	int y;
@@ -35,7 +35,7 @@ int	return_sprites_amount(int **map)
 	return (amount);
 }
 
-void	find_sprites_position(int **map, t_sprite **sprites)
+void		find_sprites_position(int **map, t_sprite **sprites)
 {
 	int i;
 	int y;
@@ -77,105 +77,121 @@ t_answer	return_sprites(int **map, t_sprite ***sprites)
 	return SUCCESS;
 }
 
-void	calculate(t_game *game, t_sprite *sprite)
+void		calculate(t_game *game, t_sprite *sprite)
 {
-	t_player *player;
 	int x;
 	int y;
 	
-	player = game->player;
 	x = sprite->x * game->map->scaled_to;
 	y = sprite->y * game->map->scaled_to;
 
-	sprite->sprite_dir = atan2(y - player->y, x - player->x);	
-	sprite->sprite_dist = sqrt(pow(player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
+	sprite->sprite_dir = atan2(y - game->player->y, x - game->player->x);	
+	sprite->sprite_dist = sqrt(pow(game->player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(game->player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
 
-	while (sprite->sprite_dir - player->pov >  PI) 
+	while (sprite->sprite_dir - game->player->pov >  PI) 
 		sprite->sprite_dir -= 2*PI;
-    while (sprite->sprite_dir - player->pov < -PI) 
+    while (sprite->sprite_dir - game->player->pov < -PI) 
 		sprite->sprite_dir += 2*PI;
 
 	sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
-	sprite->h_offset = (sprite->sprite_dir - player->pov) * (game->map_settings->resolution->width)/player->fov + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
+	sprite->h_offset = (sprite->sprite_dir - game->player->pov) * (game->map_settings->resolution->width)/game->player->fov + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
 	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2.0;
 }
 
-void calculate_sprites(t_game *game)
+void		calculate_sprites(t_game *game)
 {
-	t_sprite *sprite;
 	int s;
 	
 	s = 0;
 	while(game->sprites[s] != NULL)
 	{
-		sprite = game->sprites[s];
-		calculate(game, sprite);
+		calculate(game, game->sprites[s]);
 		s += 1;
 	}
 }
 
-void	sort_sprites(t_game *game, float **depth_buffer)
+int			return_texture_color_sprite(t_image *image, int size, int x, int y)
 {
 	int texture_x;
 	int texture_y;
-	int s;
+	int color;
+
+	texture_x = x * 64 / size;
+	texture_y = y * 64 / size;
+
+	color = return_texture_color(image, texture_x, texture_y);
+	return (color);
+}
+
+void		sort_sprites(t_game *game, t_sprite **sprites, float **depth_buffer)
+{
+	int x;
+	int y;
 	int color;
 	
-	s = 0;
-	while(game->sprites[s] != NULL)
+	while(*sprites != NULL)
 	{
-		for (int i = 0; i < game->sprites[s]->sprite_screen_size; i++) 
+		x = 0;
+		while(x < (*sprites)->sprite_screen_size)
 		{
-			if (game->sprites[s]->h_offset + i < 0 || game->sprites[s]->h_offset + i >= game->map_settings->resolution->width) 
-				continue;
-			for (int j = 0; j < game->sprites[s]->sprite_screen_size; j++) 
+			if ((*sprites)->h_offset + x >= 0 && (*sprites)->h_offset + x < game->map_settings->resolution->width) 
 			{
-				if (game->sprites[s]->v_offset + j < 0 || game->sprites[s]->v_offset + j >= game->map_settings->resolution->height) 
-					continue;
-				texture_x = i * 64 / game->sprites[s]->sprite_screen_size;
-				texture_y = j * 64 / game->sprites[s]->sprite_screen_size;
-				color = return_texture_color(game->texture_sprite, texture_x, texture_y);
-				if(color == 0x0)
-					continue;
-				if(depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] > game->sprites[s]->sprite_dist)
-					depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] = game->sprites[s]->sprite_dist;
+				y = 0;
+				while(y < (*sprites)->sprite_screen_size)
+				{
+					if ((*sprites)->v_offset + y >= 0 && (*sprites)->v_offset + y < game->map_settings->resolution->height) 
+					{
+						color = return_texture_color_sprite(game->texture_sprite, (*sprites)->sprite_screen_size, x, y);
+						if(color != 0x0)
+						{
+							if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] > (*sprites)->sprite_dist)
+								depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = (*sprites)->sprite_dist;
+						}
+					}
+					y += 1;
+				}
 			}
+			x += 1;
 		}
-		s += 1;
+		sprites += 1;
 	}
 }
 
-void	draw_sprites(t_game *game, float **depth_buffer)
+void	draw_sprites(t_game *game, t_sprite **sprites, float **depth_buffer)
 {
-	int texture_x;
-	int texture_y;
+	int x;
+	int y;
 	int color;
-	int s;
-
-	s = 0;
-	while(game->sprites[s] != NULL)
+	
+	while(*sprites != NULL)
 	{
-		for (int i=0; i < game->sprites[s]->sprite_screen_size; i++) 
+		x = 0;
+		while(x < (*sprites)->sprite_screen_size)
 		{
-			if (game->sprites[s]->h_offset + i < 0 || game->sprites[s]->h_offset + i >= game->map_settings->resolution->width) 
-				continue;
-			for (int j=0; j < game->sprites[s]->sprite_screen_size; j++) 
+			if ((*sprites)->h_offset + x >= 0 && (*sprites)->h_offset + x < game->map_settings->resolution->width) 
 			{
-				if(depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] < game->sprites[s]->sprite_dist)
-					continue;
-				if (game->sprites[s]->v_offset + j < 0 || game->sprites[s]->v_offset + j >= game->map_settings->resolution->height) 
-					continue;					
-				texture_x = i * 64 / game->sprites[s]->sprite_screen_size;
-				texture_y = j * 64 / game->sprites[s]->sprite_screen_size;
-				color = return_texture_color(game->texture_sprite, texture_x, texture_y);
-				if(color == 0x0)
-					continue;
-				game->buffer_color[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] = color;
+				y = 0;
+				while(y < (*sprites)->sprite_screen_size)
+				{
+					if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] >= (*sprites)->sprite_dist)
+					{					
+						if ((*sprites)->v_offset + y >= 0 && (*sprites)->v_offset + y < game->map_settings->resolution->height) 
+						{
+							color = return_texture_color_sprite(game->texture_sprite, (*sprites)->sprite_screen_size, x, y);
+							if(color != 0x0)
+							{
+								game->buffer_color[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = color;
+							}
+						}
+					}
+					y += 1;
+				}
 			}
+			x += 1;
 		}
-		s += 1;
+		sprites += 1;
 	}
 }
 
