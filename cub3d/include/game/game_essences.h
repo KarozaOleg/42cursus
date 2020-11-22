@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:12:30 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:31:19 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,7 @@
 # include "../player/player_essences.h"
 # include "../texture/texture_essence.h"
 # include "../sprite/sprite_essence.h"
-
-typedef struct	s_ray
-{
-	int		index;
-	float	distance;
-	float	wall_hit_x;
-	float	wall_hit_y;
-	int		wall_hit_content;
-	t_bool	was_hit_vertical;
-	float	angle;
-	int		is_ray_facing_down;
-	int		is_ray_facing_up;
-	int		is_ray_facing_left;
-	int		is_ray_facing_right;
-}				t_ray;
-
-typedef	struct	s_ray_cast_result
-{
-	t_bool	wall_hit;
-	float		wall_hit_x;
-	float		wall_hit_y;
-	int			wall_content;
-}				t_ray_cast_result;
+# include "../ray_casting/ray_casting_essences.h"
 
 typedef struct	s_game
 {

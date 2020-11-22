@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/15 15:19:56 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/22 14:33:45 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,8 @@ SRCS_CUB3D_GAME = src/game/utils.c
 
 SRCS_CUB3D_TEXTURE = src/texture/utils.c
 
+SRCS_CUB3D_RAY_CASTING = src/ray_casting/utils.c
+
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				src/global.c \
@@ -64,7 +66,8 @@ SRCS_CUB3D =	gnl/get_next_line.c \
 				$(SRCS_CUB3D_PLAYER) \
 				$(SRCS_CUB3D_SPRITES) \
 				$(SRCS_CUB3D_GAME) \
-				$(SRCS_CUB3D_TEXTURE)
+				$(SRCS_CUB3D_TEXTURE) \
+				$(SRCS_CUB3D_RAY_CASTING)
 				
 
 # INCLUDES
@@ -93,6 +96,9 @@ INCLUDES_CUB3D_GAME =	include/game/game_essences.h \
 INCLUDES_CUD3B_TEXTURE =	include/texture/texture_essence.h \
 							include/texture/texture_utils.h
 
+INCLUDES_CUB3D_RAY_CASTING = 	include/ray_casting/ray_casting_utils.h \
+								include/ray_casting/ray_casting_essences.h
+
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
 			include/global.h \
@@ -103,7 +109,8 @@ INCLUDES =	libft/libft.h \
 			$(INCLUDES_CUB3D_PLAYER) \
 			$(INCLUDES_CUB3D_SPRITES) \
 			$(INCLUDES_CUB3D_GAME) \
-			$(INCLUDES_CUD3B_TEXTURE)
+			$(INCLUDES_CUD3B_TEXTURE) \
+			$(INCLUDES_CUB3D_RAY_CASTING)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 

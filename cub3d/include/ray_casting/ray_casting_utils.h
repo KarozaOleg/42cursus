@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.h                                        :+:      :+:    :+:   */
+/*   ray_casting_utils.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/30 13:14:10 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:30:37 by mgaston          ###   ########.fr       */
+/*   Created: 2020/11/22 14:26:49 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/22 14:38:06 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_FUNCTIONS_H
-# define MLX_FUNCTIONS_H
-# include "mlx_essences.h"
-# include "../global.h"
-# include "../global_essences.h"
+#ifndef RAY_CASTING_UTILS_H
+# define RAY_CASTING_UTILS_H
 
-t_answer	return_mlx(t_resolution *resolution, t_mlx_my **mlx_my);
-void		free_mlx(t_mlx_my *mlx_my);
-void		my_mlx_pixel_put(t_mlx_img *scene, int x, int y, int color);
+# include "../global.h"
+# include "ray_casting_essences.h"
+#include <math.h>
+
+void	init_ray(t_ray *ray, int ray_index, float ray_angle);
+void	cast_ray(t_game *game, int y_amount);
 
 #endif
