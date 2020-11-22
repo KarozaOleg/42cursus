@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:40:21 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:40:59 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_answer	return_depth_buffer(int rays_amount, int height, float ***depth_buffer)
 	 return (SUCCESS);
 }
 
-t_answer	return_buffer_color(int rays_amount, int height, int ***buffer_color)
+t_answer	return_buffer_color(int rays_amount, int height, float ***buffer_color)
 {
 	int i;
 

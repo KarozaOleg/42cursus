@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:11:19 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:37:52 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ void	scene_to_buffer(t_game *game)
 		ray_index += 1;
 	}
 	calculate_sprites(game);
-	sort_sprites(game, game->sprites, game->depth_buffer);
-	draw_sprites(game, game->sprites, game->depth_buffer);
+	sort_sprites(game, game->sprites);
+	draw_sprites(game, game->sprites);
 }
 
 void	buffer_to_scene(t_game *game)

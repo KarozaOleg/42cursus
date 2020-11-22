@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:39:19 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:40:48 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_game
 	t_ray_cast_result *cast_result_horisontal;
 	t_ray_cast_result *cast_result_vertical;
 	float			**depth_buffer;
-	int				**buffer_color;
+	float				**buffer_color;
 	int				y_amount;
 }				t_game;
 
