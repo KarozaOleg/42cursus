@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:24:31 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:46:12 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	write_buffer_color(int fd, t_game *game)
 	}
 }
 
-t_bool	draw_buffer_to_screenshot(t_game *game)
+t_bool	buffer_to_screenshot(t_game *game)
 {
 	t_screenshot screenshot;
 	int fd;
@@ -139,8 +139,8 @@ int test_leaks(int argc, char **argv)
 	
 	if(is_save_screenshot == TRUE)
 	{
-		draw_projection_plane_to_buffer(game);
-		draw_buffer_to_screenshot(game);
+		scene_to_buffer(game);
+		buffer_to_screenshot(game);
 		exit(0);
 	}
 		

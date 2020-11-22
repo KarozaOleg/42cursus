@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:37:52 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 15:07:32 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 void	init_buffer_depth(t_game *game)
 {
-	float dist;
-	int dp;
+	float	dist;
+	int		dp;
 		
 	dist = game->ray->index * cos(game->ray->angle - game->player->pov);
 	dp = 0;
@@ -29,7 +29,7 @@ void	init_buffer_depth(t_game *game)
 	}
 }
 
-void	return_wall_spec(t_game *game, int *wall_top, int *wall_bottom, int *wall_height)
+void	return_wall_spec(t_game *game, t_wall_spec *wall_spec)
 {
 	float distance;
 	float distance_proj_plane;
@@ -39,12 +39,12 @@ void	return_wall_spec(t_game *game, int *wall_top, int *wall_bottom, int *wall_h
 	distance_proj_plane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
 	projected_wall_height = (game->map->scaled_to / distance) * distance_proj_plane;
 	
-	*wall_height = (int)projected_wall_height;
-	*wall_top = (game->map_settings->resolution->height / 2) - (*wall_height / 2);
-	*wall_top = *wall_top < 0 ? 0 : *wall_top;
+	wall_spec->wall_height = (int)projected_wall_height;
+	wall_spec->wall_top = (game->map_settings->resolution->height / 2) - (wall_spec->wall_height / 2);
+	wall_spec->wall_top = wall_spec->wall_top < 0 ? 0 : wall_spec->wall_top;
 
-	*wall_bottom = (game->map_settings->resolution->height / 2) + (*wall_height / 2);
-	*wall_bottom = *wall_bottom > game->map_settings->resolution->height ? game->map_settings->resolution->height : *wall_bottom;
+	wall_spec->wall_bottom = (game->map_settings->resolution->height / 2) + (wall_spec->wall_height / 2);
+	wall_spec->wall_bottom = wall_spec->wall_bottom > game->map_settings->resolution->height ? game->map_settings->resolution->height : wall_spec->wall_bottom;
 }
 
 void	fill_buffer_color_ceiling(t_game *game, int x2)
@@ -81,18 +81,18 @@ int		return_texture_id(t_ray *ray)
 	return (id);
 }
 
-void	fill_buffer_color_wall(t_game *game, int wall_top, int wall_bottom, int wall_height)
+void	fill_buffer_color_wall(t_game *game, t_wall_spec *wall_spec)
 {
 	int y;
 	int dist_from_top;
 	int tex_offset_y;
 	int tex_offset_x;
 
-	y = wall_top;
-	while(y < wall_bottom)
+	y = wall_spec->wall_top;
+	while(y < wall_spec->wall_bottom)
 	{
-		dist_from_top = y + (wall_height / 2) - (game->map_settings->resolution->height / 2);
-		tex_offset_y = dist_from_top * ((float)64 / wall_height);
+		dist_from_top = y + (wall_spec->wall_height / 2) - (game->map_settings->resolution->height / 2);
+		tex_offset_y = dist_from_top * ((float)64 / wall_spec->wall_height);
 		if (game->ray->was_hit_vertical)
 			tex_offset_x = ((int)game->ray->wall_hit_y % 64);
 		else
@@ -124,14 +124,12 @@ int		return_y_amount(int **array)
 	return (amount);
 }
 
-void	draw_projection_plane_to_buffer(t_game *game)
+void	scene_to_buffer(t_game *game)
 {
-	float ray_angle;
-	int ray_index;
-	int wall_top;
-	int wall_bottom;
-	int wall_height;
-	int y_amount;
+	float		ray_angle;
+	int			ray_index;
+	int			y_amount;
+	t_wall_spec	wall_spec;
 
 	y_amount = return_y_amount(game->map->array);
 	ray_angle = game->player->pov - (game->player->fov / 2.0);
@@ -140,11 +138,11 @@ void	draw_projection_plane_to_buffer(t_game *game)
 	{
 		init_buffer_depth(game);
 		init_ray(game->ray, ray_index, ray_angle);
-		cast_ray(game, y_amount);
-		return_wall_spec(game, &wall_top, &wall_bottom, &wall_height);
-		fill_buffer_color_ceiling(game, wall_top);
-		fill_buffer_color_wall(game, wall_top, wall_bottom, wall_height);
-		fill_buffer_color_floor(game, wall_bottom);
+		ray_casting(game, y_amount);
+		return_wall_spec(game, &wall_spec);
+		fill_buffer_color_ceiling(game, wall_spec.wall_top);
+		fill_buffer_color_wall(game, &wall_spec);
+		fill_buffer_color_floor(game, wall_spec.wall_bottom);
 		ray_angle += game->player->fov / ((float)game->player->num_rays);
 		ray_index += 1;
 	}
@@ -153,10 +151,11 @@ void	draw_projection_plane_to_buffer(t_game *game)
 	draw_sprites(game, game->depth_buffer);
 }
 
-void	draw_buffer_to_scene(t_game *game)
+void	buffer_to_scene(t_game *game)
 {
 	int x;
 	int y;
+	int color;
 	
 	x = 0;
 	while(x < game->player->num_rays)
@@ -164,7 +163,7 @@ void	draw_buffer_to_scene(t_game *game)
 		y = 0;
 		while(y < game->map_settings->resolution->height)
 		{
-			int color = game->buffer_color[x][y];
+			color = game->buffer_color[x][y];
 			my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
 			y += 1;
 		}
@@ -174,8 +173,7 @@ void	draw_buffer_to_scene(t_game *game)
 
 int		draw_scene(t_game *game)
 {
-	draw_projection_plane_to_buffer(game);
-	draw_buffer_to_scene(game);
-		
+	scene_to_buffer(game);
+	buffer_to_scene(game);
 	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }

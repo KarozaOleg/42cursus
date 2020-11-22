@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:26:49 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:38:06 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 15:26:01 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 #include <math.h>
 
 void	init_ray(t_ray *ray, int ray_index, float ray_angle);
-void	cast_ray(t_game *game, int y_amount);
+void	ray_casting(t_game *game, int y_amount);
+void	return_casting_spec_vertical(t_game *game, t_ray_cast_var *cast_var);
+void	return_casting_step_vertical(t_ray_cast_var *cast_var, t_ray *ray, float *x2check, float *y2check);
+void	return_casting_spec_horisontal(t_game *game, t_ray_cast_var *cast_var);
+void	return_casting_step_horisontal(t_ray_cast_var *cast_var, t_ray *ray, float *x2check, float *y2check);
 
 #endif

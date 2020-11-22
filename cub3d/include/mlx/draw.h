@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:11:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:30:15 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:45:58 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int		draw_scene(t_game *game);
 void	draw_line(t_mlx_img *scene, int x1, int x2, int y1, int y2, int color);
-void	draw_projection_plane_to_buffer(t_game *game);
+void	scene_to_buffer(t_game *game);
 
 #endif
 

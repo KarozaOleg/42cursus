@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 23:03:00 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 15:01:37 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ t_answer	return_ray(t_ray **ray)
 	*ray = malloc(sizeof(**ray));
 	if(*ray == NULL)
 		return ERROR;
-	return (SUCCESS);
-}
-
-t_answer	return_cast_result_h(t_ray_cast_result **cast_result_h)
-{
-	*cast_result_h = malloc(sizeof(**cast_result_h));
-	if(*cast_result_h == NULL)
-		return (ERROR);
-	return (SUCCESS);
-}
-
-t_answer	return_cast_result_v(t_ray_cast_result **cast_result_v)
-{
-	*cast_result_v = malloc(sizeof(**cast_result_v));
-	if(*cast_result_v == NULL)
-		return (ERROR);
 	return (SUCCESS);
 }
 
@@ -92,8 +76,6 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, creating game", *game));
 		
 	(*game)->ray = NULL;
-	(*game)->cast_result_horisontal = NULL;
-	(*game)->cast_result_vertical = NULL;
 	(*game)->map = NULL;
 	(*game)->map_settings = NULL;
 	(*game)->mlx_my = NULL;
@@ -106,12 +88,6 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 
 	if(return_ray(&((*game)->ray)) == ERROR)
 		return (cub3d_exit("error, creating ray", *game));
-
-	if(return_cast_result_h(&((*game)->cast_result_horisontal)) == ERROR)
-		return (cub3d_exit("error, creating cast result h", *game));
-
-	if(return_cast_result_v(&(*game)->cast_result_vertical) == ERROR)
-		return (cub3d_exit("error, creating cast result v", *game));
 		
 	if(return_map(settings_file_path, &((*game)->map)) == ERROR)
 		return (cub3d_exit("error, parsing map", *game));	
@@ -156,10 +132,6 @@ void		free_game(t_game *game)
 		return ;
 	if(game->ray != NULL)
 		free(game->ray);
-	if(game->cast_result_horisontal != NULL)
-		free(game->cast_result_horisontal);
-	if(game->cast_result_vertical != NULL)
-		free(game->cast_result_vertical);
 	free_map(game->map);
 	free_map_settings(game->map_settings);
 	free_mlx(game->mlx_my);

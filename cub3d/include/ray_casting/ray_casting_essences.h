@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:29:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:31:36 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:58:25 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct	s_ray_cast_var
 
 typedef	struct	s_ray_cast_result
 {
-	t_bool	wall_hit;
+	t_bool		wall_hit;
 	float		wall_hit_x;
 	float		wall_hit_y;
 	int			wall_content;

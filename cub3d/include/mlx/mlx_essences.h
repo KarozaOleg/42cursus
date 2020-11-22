@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_essences.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgaston <mgaston@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 12:33:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/14 21:22:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:41:06 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_ESSENCES_H
 # define MLX_ESSENCES_H
+
+typedef struct	s_wall_spec
+{	
+	int wall_top;
+	int wall_bottom;
+	int wall_height;
+}				t_wall_spec;
 
 typedef struct	s_rgb
 {
