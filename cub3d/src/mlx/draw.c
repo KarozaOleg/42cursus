@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/21 18:45:03 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:22:15 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,251 +16,61 @@
 //TODO remove
 #include <stdio.h>
 
-void	draw_scaled_point(t_mlx_img *scene, int x_shifted, int y_shifted, int scaled_to, int color)
+typedef struct	s_ray_cast_var
 {
-	int y = y_shifted;
-	int y_amount = 0;
-	while(y_amount < scaled_to)
-	{
-		int x = x_shifted;
-		int x_amount = 0;
-		while(x_amount < scaled_to)
-		{
-			my_mlx_pixel_put(scene, x, y, color);
-			x_amount += 1;
-			x += 1;
-		}
-		y_amount += 1;
-		y += 1;
-	}
-}
+	float xstep;
+	float ystep;
+	float xintercept;
+	float yintercept;
+}				t_ray_cast_var;
 
-void	draw_line(t_mlx_img *scene, int x1, int x2, int y1, int y2, int color)
+void	init_buffer_depth(t_game *game)
 {
-	int x;
-	int y;
-	int dx;
-	int dy;
-	int dx1;
-	int dy1;
-	int px;
-	int py;
-	int xe;
-	int ye;
-	int i;
- 	dx=x2-x1;
-	dy=y2-y1;
-	dx1=abs(dx);
-	dy1=abs(dy);
-	px=2*dy1-dx1;
-	py=2*dx1-dy1;
-	if(dy1<=dx1)
+	float dist;
+	int dp;
+		
+	dist = game->ray->index * cos(game->ray->angle - game->player->pov);
+	dp = 0;
+	while(dp < game->map_settings->resolution->height)
 	{
-		if(dx>=0)
-		{
-			x=x1;
-			y=y1;
-			xe=x2;
-		}
-		else
-		{
-			x=x2;
-			y=y2;
-			xe=x1;
-		}
-
-		my_mlx_pixel_put(scene, x, y, color);
-		for(i=0;x<xe;i++)
-		{
-			x=x+1;
-			if(px<0)
-			{
-				px=px+2*dy1;
-			}
-			else
-			{
-				if((dx<0 && dy<0) || (dx>0 && dy>0))
-				{
-					y=y+1;
-				}
-				else
-				{
-					y=y-1;
-				}
-				px=px+2*(dy1-dx1);
-			}
-			my_mlx_pixel_put(scene, x, y, color);
-		}
+		game->depth_buffer[game->ray->index][dp] = dist;
+		dp += 1;
 	}
-	else
-	{
-		if(dy>=0)
-		{
-			x=x1;
-			y=y1;
-			ye=y2;
-		}
-		else
-		{
-			x=x2;
-			y=y2;
-			ye=y1;
-		}		
-		my_mlx_pixel_put(scene, x, y, color);
-		for(i=0;y<ye;i++)
-		{
-			y=y+1;
-			if(py<=0)
-			{
-				py=py+2*dx1;
-			}
-			else
-			{
-				if((dx<0 && dy<0) || (dx>0 && dy>0))
-				{
-					x=x+1;
-				}
-				else
-				{
-					x=x-1;
-				}
-				py=py+2*(dx1-dy1);
-			}
-			my_mlx_pixel_put(scene, x, y, color);
-		}
-	}
-}
-
-void	draw_rays(int **map, t_mlx_img *scene, t_player *player, int scaled_to)
-{	
-	int i_ray = 0;
-	float ray_angle = player->pov - (player->fov / 2.0);
-	while(i_ray < player->num_rays)
-	{
-		float x2 = player->x;
-		float y2 = player->y;
-		float x2_possible = player->x;
-		float y2_possible = player->y;
-		while(map[(int)(y2_possible / ((float)scaled_to))][(int)(x2_possible / ((float)scaled_to))] != 1)
-		{
-			x2_possible += cos(ray_angle);
-			y2_possible += sin(ray_angle);
-			
-			if(map[(int)(y2_possible / ((float)scaled_to))][(int)(x2_possible / ((float)scaled_to))] != 1)
-			{				
-				x2 += cos(ray_angle);
-				y2 += sin(ray_angle);
-			}
-		}
-				
-		draw_line(scene, player->x, x2, player->y, y2, return_yellow());		
-		i_ray += 1;
-		ray_angle += player->fov / (float)player->num_rays;
-	}
-}
-
-void	draw_player(t_mlx_img *scene, t_player *player)
-{
-	my_mlx_pixel_put(scene, player->x, player->y, player->color);
-}
-
-void	draw_map(t_mlx_img *scene, int **map, int scaled_to)
-{		
-	int y = 0;
-	while(map[y] != NULL)
-	{
-		int x = 0;
-		while(map[y][x] > -1)
-		{
-			if(map[y][x] == 1)
-				// my_mlx_pixel_put(scene, x, y, return_white());
-				draw_scaled_point(scene, x * scaled_to, y * scaled_to, scaled_to, return_white());
-			else
-				// my_mlx_pixel_put(scene, x, y, return_black());
-				draw_scaled_point(scene, x * scaled_to, y * scaled_to, scaled_to, return_black());
-			x += 1;
-		}
-		y += 1;
-	}
-}
-
-int		abs(int value)
-{
-	if(value < 1)
-		value *= -1;
-	return value;
-}
-
-void	clear(t_mlx_img *scene, t_map_settings *map_settings)
-{		
-	int y = 0;
-	while(y < map_settings->resolution->height)
-	{
-		int x = 0;
-		while(x < map_settings->resolution->width)
-		{
-			my_mlx_pixel_put(scene, x, y, return_black());
-			x += 1;
-		}
-		y += 1;
-	}
-}
-
-void	draw_square(t_mlx_img *scene, int x1, int x2, int y1, int y2, int color)
-{
-	while(x1 < x2)
-	{
-		while(y1 < y2)
-		{			
-			my_mlx_pixel_put(scene, x1, y1, color);
-			y1 += 1;
-		}
-		x1 += 1;
-	}	
 }
 
 float	normalize_angle(float angle) 
 {
-   angle = remainder(angle, PI * 2);
-    if (angle < 0) {
-        angle = PI * 2 + angle;
-    }
-    return angle;
+	angle = remainder(angle, PI * 2);
+	if (angle < 0) 
+		angle = PI * 2 + angle;
+	return (angle);
 }
 
-float distance_between_points(float x1, float y1, float x2, float y2) 
+void	init_ray(t_ray *ray, int ray_index, float ray_angle)
 {
-	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	ray->index = ray_index;
+	ray->angle = normalize_angle(ray_angle);
+	ray->is_ray_facing_down = ray->angle > 0 && ray->angle < PI;
+	ray->is_ray_facing_up = !ray->is_ray_facing_down;
+	ray->is_ray_facing_right = ray->angle < 0.5 * PI || ray->angle > 1.5 * PI;
+	ray->is_ray_facing_left = !ray->is_ray_facing_right;
 }
 
 t_bool map_has_wall_at(t_game *game, float x, float y) 
 {
-    if (x < 0 || x > game->map_settings->resolution->width || y < 0 || y > game->map_settings->resolution->height)
-	{
-        return TRUE;
-    }
-	
-    int map_grid_index_x = (int)floor(x / (float)game->map->scaled_to);
-    int map_grid_index_y = (int)floor(y / (float)game->map->scaled_to);
+	int map_grid_index_x;
+	int map_grid_index_y;
 
-    if(game->map->array[map_grid_index_y][map_grid_index_x] == 1)
-	{
+	if (x < 0 || x > game->map_settings->resolution->width || y < 0 || y > game->map_settings->resolution->height)	
+		return TRUE;
+
+	map_grid_index_x = (int)floor(x / (float)game->map->scaled_to);
+	map_grid_index_y = (int)floor(y / (float)game->map->scaled_to);
+
+	if(game->map->array[map_grid_index_y][map_grid_index_x] == 1)
 		return (TRUE);
-	}
 	else
-	{
 		return (FALSE);
-	}
-}
-
-int	return_y_amount(int **array)
-{
-	int amount;
-	
-	amount = 0;
-	while(array[amount] != NULL)
-		amount++;
-	return (amount);
 }
 
 int return_x_amount(int *array)
@@ -273,63 +83,53 @@ int return_x_amount(int *array)
 	return (amount);
 }
 
-void ray_cast_horisontal(t_game *game, t_ray *ray)
-{	
-	float xstep;
-	float ystep;
-	float xintercept;
-	float yintercept;
-	t_ray_cast_result *cast_result = game->cast_result_horisontal;
-
+void	reset_cast_result(t_ray_cast_result *cast_result)
+{
 	cast_result->wall_hit_x = 0;
 	cast_result->wall_hit_y = 0;
 	cast_result->wall_content = 0;
 	cast_result->wall_hit = FALSE;
-	
-    // Find the y-coordinate of the closest horizontal grid intersection
-    yintercept = floor(game->player->y / game->map->scaled_to) * game->map->scaled_to;
-    yintercept += ray->is_ray_facing_down ? game->map->scaled_to : 0;
+}
 
-    // Find the x-coordinate of the closest horizontal grid intersection
-    xintercept = game->player->x + (yintercept - game->player->y) / tan(ray->angle);
+void	return_cast_horisontal_spec(t_game *game, t_ray_cast_var *cast_var)
+{
+	cast_var->yintercept = floor(game->player->y / game->map->scaled_to) * game->map->scaled_to;
+    cast_var->yintercept += game->ray->is_ray_facing_down ? game->map->scaled_to : 0;
 
-    // Calculate the increment xstep and ystep
-    ystep = game->map->scaled_to;
-    ystep *= ray->is_ray_facing_up ? -1 : 1;
+    cast_var->xintercept = game->player->x + (cast_var->yintercept - game->player->y) / tan(game->ray->angle);
 
-    xstep = game->map->scaled_to / tan(ray->angle);
-    xstep *= (ray->is_ray_facing_left && xstep > 0) ? -1 : 1;
-    xstep *= (ray->is_ray_facing_right && xstep < 0) ? -1 : 1;
+    cast_var->ystep = game->map->scaled_to;
+    cast_var->ystep *= game->ray->is_ray_facing_up ? -1 : 1;
 
-    float nextHorzTouchX = xintercept;
-    float nextHorzTouchY = yintercept;
+    cast_var->xstep = game->map->scaled_to / tan(game->ray->angle);
+    cast_var->xstep *= (game->ray->is_ray_facing_left && cast_var->xstep > 0) ? -1 : 1;
+    cast_var->xstep *= (game->ray->is_ray_facing_right && cast_var->xstep < 0) ? -1 : 1;
+}
 
-	int y_amount = return_y_amount(game->map->array);
-
+void	ray_cast_horisontal(t_game *game, t_ray *ray, int y_amount)
+{	
+	t_ray_cast_var cast_var;
+	t_ray_cast_result *cast_result;
 	float xToCheck;
 	float yToCheck;
+	
+	cast_result = game->cast_result_horisontal;
+	reset_cast_result(cast_result);
+	return_cast_horisontal_spec(game, &cast_var);
+
 	while (1)
 	{
-		if(nextHorzTouchX < 0 || nextHorzTouchX > game->map_settings->resolution->width)
+		if((cast_var.xintercept < 0 || cast_var.xintercept > game->map_settings->resolution->width) || (cast_var.yintercept < 0 || cast_var.yintercept > game->map_settings->resolution->height))
 		{
-			cast_result->wall_hit_x = nextHorzTouchX;
-			cast_result->wall_hit_y = nextHorzTouchY;
-			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
-			cast_result->wall_hit = TRUE;
-			break;
-		}
-		
-		if(nextHorzTouchY < 0 || nextHorzTouchY > game->map_settings->resolution->height)
-		{
-			cast_result->wall_hit_x = nextHorzTouchX;
-			cast_result->wall_hit_y = nextHorzTouchY;
+			cast_result->wall_hit_x = cast_var.xintercept;
+			cast_result->wall_hit_y = cast_var.yintercept;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
 			cast_result->wall_hit = TRUE;
 			break;
 		}
 
-		xToCheck = nextHorzTouchX;
-    	yToCheck = nextHorzTouchY + (ray->is_ray_facing_up ? -1 : 0);
+		xToCheck = cast_var.xintercept;
+    	yToCheck = cast_var.yintercept + (ray->is_ray_facing_up ? -1 : 0);
 			
 		if((int)floor(yToCheck / game->map->scaled_to) >= y_amount)
 			break;
@@ -338,61 +138,50 @@ void ray_cast_horisontal(t_game *game, t_ray *ray)
 		
         if (map_has_wall_at(game, xToCheck, yToCheck) == TRUE) 
 		{
-			cast_result->wall_hit_x = nextHorzTouchX;
-			cast_result->wall_hit_y = nextHorzTouchY;
+			cast_result->wall_hit_x = cast_var.xintercept;
+			cast_result->wall_hit_y = cast_var.yintercept;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
             cast_result->wall_hit = TRUE;
             break;
         } 
 		else 
 		{
-            nextHorzTouchX += xstep;
-            nextHorzTouchY += ystep;
+            cast_var.xintercept += cast_var.xstep;
+            cast_var.yintercept += cast_var.ystep;
         }
     }
 }
 
-void ray_cast_vertical(t_game *game, t_ray *ray)
+void	return_cast_vertical_spec(t_game *game, t_ray_cast_var *cast_var)
+{
+	cast_var->xintercept = floor(game->player->x / game->map->scaled_to) * game->map->scaled_to;
+    cast_var->xintercept += game->ray->is_ray_facing_right ? game->map->scaled_to : 0;
+
+    cast_var->yintercept = game->player->y + (cast_var->xintercept - game->player->x) * tan(game->ray->angle);
+
+    cast_var->xstep = game->map->scaled_to;
+    cast_var->xstep *= game->ray->is_ray_facing_left ? -1 : 1;
+
+    cast_var->ystep = game->map->scaled_to * tan(game->ray->angle);
+    cast_var->ystep *= (game->ray->is_ray_facing_up && cast_var->ystep > 0) ? -1 : 1;
+    cast_var->ystep *= (game->ray->is_ray_facing_down && cast_var->ystep < 0) ? -1 : 1;
+}
+
+void	ray_cast_vertical(t_game *game, t_ray *ray, int y_amount)
 {	
-	float xstep;
-	float ystep;
-	float xintercept;
-	float yintercept;
-	t_ray_cast_result *cast_result = game->cast_result_vertical;
+	t_ray_cast_var cast_var;
+	t_ray_cast_result *cast_result;
+	float xToCheck;
+	float yToCheck;
 
-	cast_result->wall_hit_x = 0;
-	cast_result->wall_hit_y = 0;
-	cast_result->wall_content = 0;
-	cast_result->wall_hit = FALSE;
+	cast_result = game->cast_result_vertical;
+	reset_cast_result(cast_result);
+	return_cast_vertical_spec(game, &cast_var);
 
-    // Find the x-coordinate of the closest vertical grid intersection
-    xintercept = floor(game->player->x / game->map->scaled_to) * game->map->scaled_to;
-    xintercept += ray->is_ray_facing_right ? game->map->scaled_to : 0;
-
-    // Find the y-coordinate of the closest vertical grid intersection
-    yintercept = game->player->y + (xintercept - game->player->x) * tan(ray->angle);
-
-    // Calculate the increment xstep and ystep
-    xstep = game->map->scaled_to;
-    xstep *= ray->is_ray_facing_left ? -1 : 1;
-
-    ystep = game->map->scaled_to * tan(ray->angle);
-    ystep *= (ray->is_ray_facing_up && ystep > 0) ? -1 : 1;
-    ystep *= (ray->is_ray_facing_down && ystep < 0) ? -1 : 1;
-
-    float nextVertTouchX = xintercept;
-    float nextVertTouchY = yintercept;
-
-	int y_amount = return_y_amount(game->map->array);
-
-    // Increment xstep and ystep until we find a wall
-    while (nextVertTouchX >= 0 && 
-			nextVertTouchX <= game->map_settings->resolution->width &&
-			nextVertTouchY >= 0 && 
-			nextVertTouchY <= game->map_settings->resolution->height) 
+    while (cast_var.xintercept >= 0 && cast_var.xintercept <= game->map_settings->resolution->width && cast_var.yintercept >= 0 && cast_var.yintercept <= game->map_settings->resolution->height) 
 	{
-        float xToCheck = nextVertTouchX + (ray->is_ray_facing_left ? -1 : 0);
-        float yToCheck = nextVertTouchY;
+        xToCheck = cast_var.xintercept + (ray->is_ray_facing_left ? -1 : 0);
+        yToCheck = cast_var.yintercept;
 
 		if((int)floor(yToCheck / game->map->scaled_to) >= y_amount)
 			break;
@@ -401,45 +190,47 @@ void ray_cast_vertical(t_game *game, t_ray *ray)
 
         if (map_has_wall_at(game, xToCheck, yToCheck) == TRUE) 
 		{
-			cast_result->wall_hit_x = nextVertTouchX;
-			cast_result->wall_hit_y = nextVertTouchY;
+			cast_result->wall_hit_x = cast_var.xintercept;
+			cast_result->wall_hit_y = cast_var.yintercept;
 			cast_result->wall_content = game->map->array[(int)floor(yToCheck / game->map->scaled_to)][(int)floor(xToCheck / game->map->scaled_to)];
 			cast_result->wall_hit = TRUE;
             break;
         } 
 		else 
 		{
-            nextVertTouchX += xstep;
-            nextVertTouchY += ystep;
+            cast_var.xintercept += cast_var.xstep;
+            cast_var.yintercept += cast_var.ystep;
         }
     }
 }
 
-void cast_ray(t_game *game, int ray_index, float ray_angle)
+float	distance_between_points(float x1, float y1, float x2, float y2) 
 {
-	game->ray->index = ray_index;
-	game->ray->angle = normalize_angle(ray_angle);
-	game->ray->is_ray_facing_down = game->ray->angle > 0 && game->ray->angle < PI;
-	game->ray->is_ray_facing_up = !game->ray->is_ray_facing_down;
-	game->ray->is_ray_facing_right = game->ray->angle < 0.5 * PI || game->ray->angle > 1.5 * PI;
-	game->ray->is_ray_facing_left = !game->ray->is_ray_facing_right;
-		
-	ray_cast_horisontal(game, game->ray);
-	ray_cast_vertical(game, game->ray);
+	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+void	cast_ray(t_game *game, int y_amount)
+{
+	float horz_distance;
+	float vert_distance;
+	ray_cast_horisontal(game, game->ray, y_amount);
+	ray_cast_vertical(game, game->ray, y_amount);
 	
-	// Calculate both horizontal and vertical hit distances and choose the smallest one
-	float horzHitDistance = game->cast_result_horisontal->wall_hit == TRUE
-		? distance_between_points(game->player->x, game->player->y, game->cast_result_horisontal->wall_hit_x, game->cast_result_horisontal->wall_hit_y)
-		: 340282346638528859811704183484516925440.0;
-	float vertHitDistance = game->cast_result_vertical->wall_hit == TRUE
-		? distance_between_points(game->player->x, game->player->y, game->cast_result_vertical->wall_hit_x, game->cast_result_vertical->wall_hit_y)
-		: 340282346638528859811704183484516925440.0;
+	if(game->cast_result_horisontal->wall_hit == TRUE)
+		horz_distance = distance_between_points(game->player->x, game->player->y, game->cast_result_horisontal->wall_hit_x, game->cast_result_horisontal->wall_hit_y);	
+	else
+		horz_distance = 340282346638528859811704183484516925440.0;	
+
+	if(game->cast_result_vertical->wall_hit == TRUE)
+		vert_distance = distance_between_points(game->player->x, game->player->y, game->cast_result_vertical->wall_hit_x, game->cast_result_vertical->wall_hit_y);	
+	else
+		vert_distance = 340282346638528859811704183484516925440.0;
 		
-	if (vertHitDistance < horzHitDistance) 
+	if (vert_distance < horz_distance) 
 	{
-		if(vertHitDistance == 0)
-			vertHitDistance = 0.1;
-		game->ray->distance = vertHitDistance;
+		if(vert_distance == 0)
+			vert_distance = 0.1;
+		game->ray->distance = vert_distance;
 		game->ray->wall_hit_x = game->cast_result_vertical->wall_hit_x;
 		game->ray->wall_hit_y = game->cast_result_vertical->wall_hit_y;
 		game->ray->wall_hit_content = game->cast_result_vertical->wall_content;
@@ -447,9 +238,9 @@ void cast_ray(t_game *game, int ray_index, float ray_angle)
 	}
 	else 
 	{
-		if(vertHitDistance == 0)
-			vertHitDistance = 0.1;
-		game->ray->distance = horzHitDistance;
+		if(horz_distance == 0)
+			horz_distance = 0.1;
+		game->ray->distance = horz_distance;
 		game->ray->wall_hit_x = game->cast_result_horisontal->wall_hit_x;
 		game->ray->wall_hit_y = game->cast_result_horisontal->wall_hit_y;
 		game->ray->wall_hit_content = game->cast_result_horisontal->wall_content;
@@ -457,27 +248,17 @@ void cast_ray(t_game *game, int ray_index, float ray_angle)
 	}
 }
 
-void	draw_square_into_buffer(int **buffer_color, int y1, int y2, int x1, int x2, int color)
-{
-	while(y1 < y2)
-	{
-		int x = x1;
-		while(x < x2)
-		{
-			buffer_color[y1][x] = color;
-			x += 1;
-		}
-		y1 += 1;
-	}
-}
-
 void	return_wall_spec(t_game *game, int *wall_top, int *wall_bottom, int *wall_height)
 {
-	float perpDistance = game->ray->distance * cos(game->ray->angle - game->player->pov);
-	float distanceProjPlane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
-	float projectedWallHeight = (game->map->scaled_to / perpDistance) * distanceProjPlane;
+	float distance;
+	float distance_proj_plane;
+	float projected_wall_height;
 
-	*wall_height = (int)projectedWallHeight;
+	distance = game->ray->distance * cos(game->ray->angle - game->player->pov);
+	distance_proj_plane = (game->map_settings->resolution->width / 2) / tan(game->player->fov / 2);
+	projected_wall_height = (game->map->scaled_to / distance) * distance_proj_plane;
+	
+	*wall_height = (int)projected_wall_height;
 	*wall_top = (game->map_settings->resolution->height / 2) - (*wall_height / 2);
 	*wall_top = *wall_top < 0 ? 0 : *wall_top;
 
@@ -485,10 +266,23 @@ void	return_wall_spec(t_game *game, int *wall_top, int *wall_bottom, int *wall_h
 	*wall_bottom = *wall_bottom > game->map_settings->resolution->height ? game->map_settings->resolution->height : *wall_bottom;
 }
 
-int return_texture_id(t_ray *ray)
+void	fill_buffer_color_ceiling(t_game *game, int x2)
 {
-	int id = 0;
+	int x;
 
+	x = 0;
+	while(x < x2)
+	{
+		game->buffer_color[game->ray->index][x] = CEILING;
+		x += 1;
+	}
+}
+
+int		return_texture_id(t_ray *ray)
+{
+	int id;
+
+	id = 0;
 	if(ray->was_hit_vertical)
 	{
 		if((ray->angle > PI/2 && ray->angle < PI) || (ray->angle > PI && ray->angle < PI+PI/2))
@@ -506,41 +300,7 @@ int return_texture_id(t_ray *ray)
 	return (id);
 }
 
-int return_texture_offset_x(t_ray *ray)
-{
-	if (ray->was_hit_vertical)
-		return ((int)ray->wall_hit_y % 64);
-	else
-		return ((int)ray->wall_hit_x % 64);
-}
-
-void	init_buffer_depth(t_game *game)
-{
-	float dist;
-	int dp;
-		
-	dist = game->ray->index * cos(game->ray->angle - game->player->pov);
-	dp = 0;
-	while(dp < game->map_settings->resolution->height)
-	{
-		game->depth_buffer[game->ray->index][dp] = dist;
-		dp += 1;
-	}
-}
-
-void fill_buffer_color_ceiling(t_game *game, int x2)
-{
-	int x;
-
-	x = 0;
-	while(x < x2)
-	{
-		game->buffer_color[game->ray->index][x] = CEILING;
-		x += 1;
-	}
-}
-
-void fill_buffer_color_wall(t_game *game, int wall_top, int wall_bottom, int wall_height)
+void	fill_buffer_color_wall(t_game *game, int wall_top, int wall_bottom, int wall_height)
 {
 	int y;
 	int dist_from_top;
@@ -561,7 +321,7 @@ void fill_buffer_color_wall(t_game *game, int wall_top, int wall_bottom, int wal
 	}
 }
 
-void fill_buffer_color_floor(t_game *game, int x1)
+void	fill_buffer_color_floor(t_game *game, int x1)
 {
 	int x;
 
@@ -573,20 +333,33 @@ void fill_buffer_color_floor(t_game *game, int x1)
 	}
 }
 
-t_answer	draw_projection_plane(t_game *game)
+int		return_y_amount(int **array)
+{
+	int amount;
+	
+	amount = 0;
+	while(array[amount] != NULL)
+		amount++;
+	return (amount);
+}
+
+void	draw_projection_plane_to_buffer(t_game *game)
 {
 	float ray_angle;
 	int ray_index;
 	int wall_top;
 	int wall_bottom;
 	int wall_height;
-	
+	int y_amount;
+
+	y_amount = return_y_amount(game->map->array);
 	ray_angle = game->player->pov - (game->player->fov / 2.0);
 	ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
 		init_buffer_depth(game);
-		cast_ray(game, ray_index, ray_angle);
+		init_ray(game->ray, ray_index, ray_angle);
+		cast_ray(game, y_amount);
 		return_wall_spec(game, &wall_top, &wall_bottom, &wall_height);
 		fill_buffer_color_ceiling(game, wall_top);
 		fill_buffer_color_wall(game, wall_top, wall_bottom, wall_height);
@@ -597,7 +370,6 @@ t_answer	draw_projection_plane(t_game *game)
 	calculate_sprites(game);
 	sort_sprites(game, game->depth_buffer);
 	draw_sprites(game, game->depth_buffer);
-	return (SUCCESS);
 }
 
 void	draw_buffer_to_scene(t_game *game)
@@ -621,17 +393,8 @@ void	draw_buffer_to_scene(t_game *game)
 
 int		draw_scene(t_game *game)
 {
-	// clear(game->mlx_my->scene, game->map_settings);
-	if(draw_projection_plane(game) == ERROR)
-		return 0;
-
+	draw_projection_plane_to_buffer(game);
 	draw_buffer_to_scene(game);
-	
-	// draw_map(game->mlx_my->scene, game->map->array, game->map->scaled_to * game->map->minimap_ratio);
-	// draw_player(game->mlx_my->scene, game->player);
-	// draw_rays(game->map->array, game->mlx_my->scene, game->player, game->map->scaled_to * game->map->minimap_ratio);
-
-	// draw_projection_plane(game);
 		
 	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }

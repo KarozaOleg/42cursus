@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/16 23:03:47 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 14:11:54 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,31 +118,29 @@ void calculate_sprites(t_game *game)
 
 void	sort_sprites(t_game *game, float **depth_buffer)
 {
-	t_sprite *sprite;
+	int texture_x;
+	int texture_y;
 	int s;
+	int color;
 	
 	s = 0;
 	while(game->sprites[s] != NULL)
 	{
-		sprite = game->sprites[s];
-		for (int i = 0; i < sprite->sprite_screen_size; i++) 
+		for (int i = 0; i < game->sprites[s]->sprite_screen_size; i++) 
 		{
-			if (sprite->h_offset + i < 0 || sprite->h_offset + i >= game->map_settings->resolution->width) 
+			if (game->sprites[s]->h_offset + i < 0 || game->sprites[s]->h_offset + i >= game->map_settings->resolution->width) 
 				continue;
-				
-			for (int j = 0; j < sprite->sprite_screen_size; j++) 
+			for (int j = 0; j < game->sprites[s]->sprite_screen_size; j++) 
 			{
-				if (sprite->v_offset + j < 0 || sprite->v_offset + j >= game->map_settings->resolution->height) 
+				if (game->sprites[s]->v_offset + j < 0 || game->sprites[s]->v_offset + j >= game->map_settings->resolution->height) 
 					continue;
-
-				int texture_x = i * 64 / sprite->sprite_screen_size;
-				int texture_y = j * 64 / sprite->sprite_screen_size;
-				int color = return_texture_color(game->texture_sprite, texture_x, texture_y);
+				texture_x = i * 64 / game->sprites[s]->sprite_screen_size;
+				texture_y = j * 64 / game->sprites[s]->sprite_screen_size;
+				color = return_texture_color(game->texture_sprite, texture_x, texture_y);
 				if(color == 0x0)
 					continue;
-
-				if(depth_buffer[sprite->h_offset + i][sprite->v_offset + j] > sprite->sprite_dist)
-					depth_buffer[sprite->h_offset + i][sprite->v_offset + j] = sprite->sprite_dist;
+				if(depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] > game->sprites[s]->sprite_dist)
+					depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] = game->sprites[s]->sprite_dist;
 			}
 		}
 		s += 1;
@@ -151,37 +149,30 @@ void	sort_sprites(t_game *game, float **depth_buffer)
 
 void	draw_sprites(t_game *game, float **depth_buffer)
 {
-	depth_buffer += 0;
-	t_sprite *sprite;
+	int texture_x;
+	int texture_y;
+	int color;
 	int s;
 
 	s = 0;
 	while(game->sprites[s] != NULL)
 	{
-		sprite = game->sprites[s];
-		for (int i=0; i < sprite->sprite_screen_size; i++) 
+		for (int i=0; i < game->sprites[s]->sprite_screen_size; i++) 
 		{
-			if (sprite->h_offset + i < 0 || sprite->h_offset + i >= game->map_settings->resolution->width) 
+			if (game->sprites[s]->h_offset + i < 0 || game->sprites[s]->h_offset + i >= game->map_settings->resolution->width) 
 				continue;
-
-			for (int j=0; j < sprite->sprite_screen_size; j++) 
+			for (int j=0; j < game->sprites[s]->sprite_screen_size; j++) 
 			{
-				if(depth_buffer[sprite->h_offset + i][sprite->v_offset + j] < sprite->sprite_dist)
+				if(depth_buffer[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] < game->sprites[s]->sprite_dist)
 					continue;
-				if (sprite->v_offset + j < 0 || sprite->v_offset + j >= game->map_settings->resolution->height) 
-					continue;
-					
-				int texture_x = i * 64 / sprite->sprite_screen_size;
-				int texture_y = j * 64 / sprite->sprite_screen_size;
-				int color = return_texture_color(game->texture_sprite, texture_x, texture_y);
+				if (game->sprites[s]->v_offset + j < 0 || game->sprites[s]->v_offset + j >= game->map_settings->resolution->height) 
+					continue;					
+				texture_x = i * 64 / game->sprites[s]->sprite_screen_size;
+				texture_y = j * 64 / game->sprites[s]->sprite_screen_size;
+				color = return_texture_color(game->texture_sprite, texture_x, texture_y);
 				if(color == 0x0)
 					continue;
-				
-				int x = sprite->h_offset + i;
-				int y = sprite->v_offset + j;
-				
-				game->buffer_color[x][y] = color;
-				// my_mlx_pixel_put(game->mlx_my->scene, x, y, color);
+				game->buffer_color[game->sprites[s]->h_offset + i][game->sprites[s]->v_offset + j] = color;
 			}
 		}
 		s += 1;
