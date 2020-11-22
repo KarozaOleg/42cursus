@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 17:29:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:06:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,22 @@ void		calculate(t_game *game, t_sprite *sprite)
 	y = sprite->y * game->map->scaled_to;
 
 	sprite->sprite_dir = atan2(y - game->player->y, x - game->player->x);	
-	sprite->sprite_dist = sqrt(pow(game->player->x/game->map->scaled_to - x/game->map->scaled_to, 2) + pow(game->player->y/game->map->scaled_to - y/game->map->scaled_to, 2));
+	sprite->sprite_dist = distance_between_points(
+		game->player->x/game->map->scaled_to, 
+		game->player->y/game->map->scaled_to, 
+		x/game->map->scaled_to, 
+		y/game->map->scaled_to);
 
 	while (sprite->sprite_dir - game->player->pov >  PI) 
 		sprite->sprite_dir -= 2*PI;
-    while (sprite->sprite_dir - game->player->pov < -PI) 
+	while (sprite->sprite_dir - game->player->pov < -PI) 
 		sprite->sprite_dir += 2*PI;
 
 	sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
-	sprite->h_offset = (sprite->sprite_dir - game->player->pov) * (game->map_settings->resolution->width)/game->player->fov + game->map_settings->resolution->width/2 - sprite->sprite_screen_size/2;
-	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2.0;
+	sprite->h_offset = (sprite->sprite_dir - game->player->pov) * game->map_settings->resolution->width / game->player->fov + (game->map_settings->resolution->width/2) - sprite->sprite_screen_size;
+	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/4;
 }
 
 void		calculate_sprites(t_game *game)
@@ -146,8 +150,8 @@ void		sort_sprites(t_game *game, t_sprite **sprites, float **depth_buffer)
 						color = return_texture_color_sprite(game->texture_sprite, (*sprites)->sprite_screen_size, x, y);
 						if(color != 0x0)
 						{
-							if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] > (*sprites)->sprite_dist)
-								depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = (*sprites)->sprite_dist;
+							if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] > (*sprites)->sprite_dist * game->map->scaled_to)
+								depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = (*sprites)->sprite_dist * game->map->scaled_to;
 						}
 					}
 					y += 1;
@@ -175,15 +179,13 @@ void	draw_sprites(t_game *game, t_sprite **sprites, float **depth_buffer)
 				y = 0;
 				while(y < (*sprites)->sprite_screen_size)
 				{
-					if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] >= (*sprites)->sprite_dist)
-					{					
+					if(depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] >= (*sprites)->sprite_dist * game->map->scaled_to)
+					{
 						if ((*sprites)->v_offset + y >= 0 && (*sprites)->v_offset + y < game->map_settings->resolution->height) 
 						{
 							color = return_texture_color_sprite(game->texture_sprite, (*sprites)->sprite_screen_size, x, y);
 							if(color != 0x0)
-							{
 								game->buffer_color[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = color;
-							}
 						}
 					}
 					y += 1;

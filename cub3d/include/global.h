@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 13:08:44 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 14:49:44 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 18:38:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@
 
 void	ft_putstr(char *str);
 t_answer		cub3d_exit(char *exit_comment, t_game *game);
+float	distance_between_points(float x1, float y1, float x2, float y2);
 
 #endif

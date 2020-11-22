@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 17:36:28 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:11:19 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 //TODO remove
 #include <stdio.h>
 
-void	init_buffer_depth(t_game *game)
+void	init_buffer_depth(t_game *game, int x)
 {
-	float	dist;
-	int		dp;
+	int		y;
 		
-	dist = game->ray->index * cos(game->ray->angle - game->player->pov);
-	dp = 0;
-	while(dp < game->map_settings->resolution->height)
+	y = 0;
+	while(y < game->map_settings->resolution->height)
 	{
-		game->depth_buffer[game->ray->index][dp] = dist;
-		dp += 1;
+		game->depth_buffer[x][y] = game->ray->distance;
+		y += 1;
 	}
 }
 
@@ -101,6 +99,7 @@ void	fill_buffer_color_wall(t_game *game, t_wall_spec *wall_spec)
 		dist_from_top = y + (wall_spec->wall_height / 2) - (game->map_settings->resolution->height / 2);
 		tex_offset_y = dist_from_top * ((float)64 / wall_spec->wall_height);
 		game->buffer_color[game->ray->index][y] = return_texture_color(game->texture_wall[texture_id], tex_offset_x, tex_offset_y);
+		game->depth_buffer[game->ray->index][y] = game->ray->distance;
 		y += 1;
 	}
 }
@@ -127,9 +126,9 @@ void	scene_to_buffer(t_game *game)
 	ray_index = 0;
 	while(ray_index < game->player->num_rays)
 	{
-		init_buffer_depth(game);
 		init_ray(game->ray, ray_index, ray_angle);
 		ray_casting(game);
+		init_buffer_depth(game, ray_index);
 		return_wall_spec(game, &wall_spec);
 		fill_buffer_color_ceiling(game, wall_spec.wall_top);
 		fill_buffer_color_wall(game, &wall_spec);

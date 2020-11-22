@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:25:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 17:34:59 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 18:40:36 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	casting(t_game *game, t_ray_cast_result *cast_result, void (*casting_spec)(
 
 float	distance_between_points(float x1, float y1, float x2, float y2) 
 {
-	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 float	return_intersect_dist(t_game *game, t_ray_cast_result *cast_result)
