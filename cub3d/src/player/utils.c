@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 12:56:44 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:18:07 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,11 @@ t_answer	is_a_player(int value)
 	return (ERROR);
 }
 
-t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio, t_player **player)
+t_answer	init_player(t_player **player, int width)
 {
-	width += 0;
-	
 	*player = malloc(sizeof(**player));
 	if(*player == NULL)
 		return (ERROR);
-
 	(*player)->start_position = -1;
 	(*player)->x = -1;
 	(*player)->y = -1;
@@ -40,13 +37,22 @@ t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio,
 	(*player)->pov = PI / 2;
 	(*player)->pov_step = 2.0 * (PI / 180);
 	(*player)->num_rays = width;
+	return (SUCCESS);
+}
+
+t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio, t_player **player)
+{
+	int y;
+	int x;
 	
-	int y = 0;
+	if(init_player(player, width) == ERROR)
+		return (ERROR);
+	y = 0;
 	while(map[y] != NULL)
 	{
-		int x = 0;
+		x = 0;
 		while(map[y][x] > -1)
-		{			
+		{
 			if(is_a_player(map[y][x]) == SUCCESS)
 			{
 				(*player)->start_position = map[y][x];
@@ -57,7 +63,7 @@ t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio,
 			x += 1;
 		}
 		if((*player)->start_position > -1)
-				break;
+			break;
 		y += 1;
 	}
 	return (SUCCESS);

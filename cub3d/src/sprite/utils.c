@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:11:43 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:20:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,27 @@ t_answer	return_sprites(int **map, t_sprite ***sprites)
 	sprites_amount = return_sprites_amount(map);
 	*sprites = malloc(sizeof(*sprites) * (sprites_amount + 1));
 	if(*sprites == NULL)
-		return ERROR;
+		return (ERROR);
 	(*sprites)[sprites_amount] = NULL;
-
 	while(--sprites_amount >= 0)
-		(*sprites)[sprites_amount] = malloc(sizeof(*((*sprites)[sprites_amount])));
-	
+		(*sprites)[sprites_amount] = malloc(sizeof(*((*sprites)[sprites_amount])));	
 	find_sprites_position(map, *sprites);
-	return SUCCESS;
+	return (SUCCESS);
 }
 
-void		calculate(t_game *game, t_sprite *sprite)
+void	calculate(t_game *game, t_sprite *sprite)
 {
 	int x;
 	int y;
 	
 	x = sprite->x * game->map->scaled_to;
 	y = sprite->y * game->map->scaled_to;
-
 	sprite->sprite_dir = atan2(y - game->player->y, x - game->player->x);	
 	sprite->sprite_dist = distance_between_points(game->player->x/game->map->scaled_to, game->player->y/game->map->scaled_to, x/game->map->scaled_to, y/game->map->scaled_to);
-
 	while (sprite->sprite_dir - game->player->pov >  PI) 
 		sprite->sprite_dir -= 2*PI;
 	while (sprite->sprite_dir - game->player->pov < -PI) 
 		sprite->sprite_dir += 2*PI;
-
 	sprite->sprite_screen_size = game->map_settings->resolution->height/sprite->sprite_dist;
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
@@ -100,7 +95,7 @@ void		calculate(t_game *game, t_sprite *sprite)
 	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/4;
 }
 
-void		calculate_sprites(t_game *game)
+void	calculate_sprites(t_game *game)
 {
 	int s;
 	
@@ -112,7 +107,7 @@ void		calculate_sprites(t_game *game)
 	}
 }
 
-int			return_texture_color_sprite(t_image *image, int size, int x, int y)
+int		return_texture_color_sprite(t_image *image, int size, int x, int y)
 {
 	int texture_x;
 	int texture_y;
@@ -120,7 +115,6 @@ int			return_texture_color_sprite(t_image *image, int size, int x, int y)
 
 	texture_x = x * 64 / size;
 	texture_y = y * 64 / size;
-
 	color = return_texture_color(image, texture_x, texture_y);
 	return (color);
 }

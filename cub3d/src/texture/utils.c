@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:17:38 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:47:51 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:22:38 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 //TODO remove
 #include <stdio.h>
 
-int return_texture_color(t_image *texture, int x, int y)
+int			return_texture_color(t_image *texture, int x, int y)
 {
 	char	*dst;
 	int		color;
 		
 	dst = texture->addr + (y * texture->sl + x * (texture->bpp / 8));
 	color = *(unsigned int*)dst;
-
 	return (color);
 }
 
@@ -32,14 +31,13 @@ t_answer	return_texture_sprite(void *mlx, char *file_path_sprite, t_image **text
 	
 	*texture_sprite = malloc(sizeof(**texture_sprite));
 	if(*texture_sprite == NULL)
-		return ERROR;
-
+		return (ERROR);
 	(*texture_sprite)->img = mlx_xpm_file_to_image(mlx, file_path_sprite, &width, &height);
 	(*texture_sprite)->addr = (char *)mlx_get_data_addr((*texture_sprite)->img, &((*texture_sprite)->bpp), &((*texture_sprite)->sl), &((*texture_sprite)->endl));
-	return SUCCESS;
+	return (SUCCESS);
 }
 
-t_answer return_texture_wall_file_path(int i, t_map_settings *map_settings, char **file_path)
+t_answer	return_texture_wall_file_path(int i, t_map_settings *map_settings, char **file_path)
 {
 	if(i == 0)
 		*file_path = map_settings->texture_no;
@@ -50,49 +48,47 @@ t_answer return_texture_wall_file_path(int i, t_map_settings *map_settings, char
 	else if(i == 3)
 		*file_path = map_settings->texture_ea;
 	else
-		return ERROR;
-	return SUCCESS;
+		return (ERROR);
+	return (SUCCESS);
 }
 
-t_answer return_texture_wall(void *mlx, t_map_settings *map_settings, t_image ***texture_wall)
-{	
-	*texture_wall = malloc(sizeof(*texture_wall) * 4);
-	if(*texture_wall == NULL)
-		return ERROR;
-	
+t_answer	return_texture_wall(void *mlx, t_map_settings *map_settings, t_image ***texture_wall)
+{
 	int width;
 	int height;
-		
-	int i = 0;
+	int i;
+	char *file_path_texture;
+
+	*texture_wall = malloc(sizeof(*texture_wall) * 4);
+	if(*texture_wall == NULL)
+		return (ERROR);
+	i = 0;
 	while(i < 4)
 	{
-		char *file_path_texture = NULL;
 		if(return_texture_wall_file_path(i, map_settings, &file_path_texture) == ERROR)
-			return ERROR;
-
+			return (ERROR);
 		(*texture_wall)[i] = malloc(sizeof(*((*texture_wall)[i])));
 		if((*texture_wall)[i] == NULL)
-			return ERROR;
-			
+			return (ERROR);
 		(*texture_wall)[i]->img = mlx_xpm_file_to_image(mlx, file_path_texture, &width, &height);
 		(*texture_wall)[i]->addr = (char *)mlx_get_data_addr((*texture_wall)[i]->img, &((*texture_wall)[i]->bpp), &((*texture_wall)[i]->sl), &((*texture_wall)[i]->endl));
-
 		i += 1;
 	}
-	return SUCCESS;
+	return (SUCCESS);
 }
 
-void			free_texture_sprite(t_image *texture_sprite)
+void		free_texture_sprite(t_image *texture_sprite)
 {
-	free(texture_sprite);
+	if(texture_sprite != NULL)
+		free(texture_sprite);
 }
 
-void			free_texture_walls(t_image **texture_wall)
+void		free_texture_walls(t_image **texture_wall)
 {
 	int i;
+
 	if(texture_wall == NULL)
 		return;
-
 	i = 0;
 	while(i < 4)
 	{

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:15:40 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 20:05:18 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:13:27 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,29 @@ t_parse_answer	return_char2int_for_map(int value, int *converted)
 
 	if(value == 48)
 		*converted = MAP_EMPTY;
-		
 	if(value == 49)
 		*converted = MAP_WALL;
-
 	if(value == 50)
 		*converted = MAP_SPRITE;
-
 	if(value == 32)
 		*converted = MAP_UNIVERSE;
-		
 	if(value == 78)
 		*converted = MAP_PLAYER_N;
-		
 	if(value == 83)
 		*converted = MAP_PLAYER_S;
-
 	if(value == 69)
 		*converted = MAP_PLAYER_E;
-
 	if(value == 87)
 		*converted = MAP_PLAYER_W;
-
 	return (*converted > -1) ? FOUND : NOT_FOUND;
 }
 
 t_answer	is_a_map_line(char *line)
 {	
 	int	i;
+	
 	if(line == NULL)
 		return (ERROR);
-
 	i = 0;
 	while(line[i] != '\0')
 	{
@@ -72,7 +64,6 @@ void	free_map(t_map *map)
 
 	if(map == NULL)
 		return;
-	
 	if(map->array != NULL)
 	{
 		i = 0;

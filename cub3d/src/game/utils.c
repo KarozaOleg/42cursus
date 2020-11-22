@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:12:04 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:23:12 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_answer	return_cast_result_v(t_ray_cast_result **cast_result_v)
 	return (SUCCESS);
 }
 
-int		return_y_amount(int **array)
+int			return_y_amount(int **array)
 {
 	int amount;
 	
@@ -96,7 +96,7 @@ int		return_y_amount(int **array)
 	return (amount);
 }
 
-void	reset_game(t_game *game)
+void		reset_game(t_game *game)
 {
 	game->ray = NULL;
 	game->map = NULL;
@@ -150,9 +150,10 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	return (SUCCESS);
 }
 
-//TODO fix it
 void		free_game(t_game *game)
 {	
+	int i;
+
 	if(game == NULL)
 		return ;
 	if(game->ray != NULL)
@@ -168,7 +169,7 @@ void		free_game(t_game *game)
 	free_sprites(game->sprites);
 	free_texture_sprite(game->texture_sprite);
 	free_texture_walls(game->texture_wall);
-	int i = 0;
+	i = 0;
 	//TODO: check this
 	while(game->buffer_depth[i] != NULL)
 	{
