@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:37:52 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:11:36 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_buffer_depth(t_game *game, int x)
 	y = 0;
 	while(y < game->map_settings->resolution->height)
 	{
-		game->depth_buffer[x][y] = game->ray->distance;
+		game->buffer_depth[x][y] = game->ray->distance;
 		y += 1;
 	}
 }
@@ -99,7 +99,7 @@ void	fill_buffer_color_wall(t_game *game, t_wall_spec *wall_spec)
 		dist_from_top = y + (wall_spec->wall_height / 2) - (game->map_settings->resolution->height / 2);
 		tex_offset_y = dist_from_top * ((float)64 / wall_spec->wall_height);
 		game->buffer_color[game->ray->index][y] = return_texture_color(game->texture_wall[texture_id], tex_offset_x, tex_offset_y);
-		game->depth_buffer[game->ray->index][y] = game->ray->distance;
+		game->buffer_depth[game->ray->index][y] = game->ray->distance;
 		y += 1;
 	}
 }
@@ -141,7 +141,7 @@ void	scene_to_buffer(t_game *game)
 	draw_sprites(game, game->sprites);
 }
 
-void	buffer_to_scene(t_game *game)
+void	draw_buffer(t_game *game)
 {
 	int x;
 	int y;
@@ -164,6 +164,6 @@ void	buffer_to_scene(t_game *game)
 int		draw_scene(t_game *game)
 {
 	scene_to_buffer(game);
-	buffer_to_scene(game);
+	draw_buffer(game);
 	return (mlx_put_image_to_window(game->mlx_my->mlx, game->mlx_my->win, game->mlx_my->scene->img, 0, 0));
 }

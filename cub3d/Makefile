@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/22 15:27:41 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/22 19:56:31 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ SRCS_CUB3D_RAY_CASTING = src/ray_casting/utils.c \
 							src/ray_casting/ray_casting_horisontal.c \
 							src/ray_casting/ray_casting_vertical.c
 
+SRCS_CUB3D_SCREENSHOT =	src/screenshot/utils.c
+
 SRCS_CUB3D =	gnl/get_next_line.c \
 				gnl/get_next_line_utils.c \
 				src/global.c \
@@ -69,7 +71,8 @@ SRCS_CUB3D =	gnl/get_next_line.c \
 				$(SRCS_CUB3D_SPRITES) \
 				$(SRCS_CUB3D_GAME) \
 				$(SRCS_CUB3D_TEXTURE) \
-				$(SRCS_CUB3D_RAY_CASTING)
+				$(SRCS_CUB3D_RAY_CASTING) \
+				$(SRCS_CUB3D_SCREENSHOT)
 				
 
 # INCLUDES
@@ -101,6 +104,9 @@ INCLUDES_CUD3B_TEXTURE =	include/texture/texture_essence.h \
 INCLUDES_CUB3D_RAY_CASTING = 	include/ray_casting/ray_casting_utils.h \
 								include/ray_casting/ray_casting_essences.h
 
+INCLUDES_CUB3D_SCREENSHOT =		include/screenshot/screenshot_utils.h \
+								include/screenshot/screenshot_essences.h
+
 INCLUDES =	libft/libft.h \
 			gnl/get_next_line.h \
 			include/global.h \
@@ -112,7 +118,8 @@ INCLUDES =	libft/libft.h \
 			$(INCLUDES_CUB3D_SPRITES) \
 			$(INCLUDES_CUB3D_GAME) \
 			$(INCLUDES_CUD3B_TEXTURE) \
-			$(INCLUDES_CUB3D_RAY_CASTING)
+			$(INCLUDES_CUB3D_RAY_CASTING) \
+			$(INCLUDES_CUB3D_SCREENSHOT)
 
 OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 

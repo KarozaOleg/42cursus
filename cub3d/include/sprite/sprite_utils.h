@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:39:19 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:33:31 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:49:35 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 # include "../texture/texture_utils.h"
 # include "../mlx/mlx_utils.h"
 
-void calculate_sprites(t_game *game);
-void	sort_sprites(t_game *game, t_sprite **sprites);
-void	draw_sprites(t_game *game, t_sprite **sprites);
-void	free_sprites(t_sprite **sprites);
+void		calculate_sprites(t_game *game);
+void		sort_sprites(t_game *game, t_sprite **sprites);
+void		draw_sprites(t_game *game, t_sprite **sprites);
 t_answer	return_sprites(int **map, t_sprite ***sprites);
+void		free_sprites(t_sprite **sprites);
 
 #endif

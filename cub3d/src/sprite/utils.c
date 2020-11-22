@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:47:47 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:11:43 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	sprites_iterate(t_game *game, t_sprite **sprites, float **buffer, float(*ac
 					if ((*sprites)->v_offset + y >= 0 && (*sprites)->v_offset + y < game->map_settings->resolution->height)
 					{
 						if(return_texture_color_sprite(game->texture_sprite, (*sprites)->sprite_screen_size, x, y) != 0x0)
-							if(game->depth_buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] >= (*sprites)->sprite_dist * game->map->scaled_to)
+							if(game->buffer_depth[(*sprites)->h_offset + x][(*sprites)->v_offset + y] >= (*sprites)->sprite_dist * game->map->scaled_to)
 								buffer[(*sprites)->h_offset + x][(*sprites)->v_offset + y] = action(game, (*sprites), x, y);
 					}
 					y += 1;
@@ -169,7 +169,7 @@ void	sprites_iterate(t_game *game, t_sprite **sprites, float **buffer, float(*ac
 
 void	sort_sprites(t_game *game, t_sprite **sprites)
 {
-	sprites_iterate(game, sprites, game->depth_buffer, sort);
+	sprites_iterate(game, sprites, game->buffer_depth, sort);
 }
 
 void	draw_sprites(t_game *game, t_sprite **sprites)

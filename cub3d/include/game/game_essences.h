@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:17:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:40:48 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/22 20:11:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 
 typedef struct	s_game
 {
-	t_map			*map;
-	t_map_settings	*map_settings;
-	t_mlx_my		*mlx_my;
-	t_player		*player;
-	t_sprite		**sprites;
-	t_image			**texture_wall;
-	t_image			*texture_sprite;
-	t_ray			*ray;
-	t_ray_cast_result *cast_result_horisontal;
-	t_ray_cast_result *cast_result_vertical;
-	float			**depth_buffer;
+	t_map				*map;
+	t_map_settings		*map_settings;
+	t_mlx_my			*mlx_my;
+	t_player			*player;
+	t_sprite			**sprites;
+	t_image				**texture_wall;
+	t_image				*texture_sprite;
+	t_ray				*ray;
+	t_ray_cast_result	*cast_result_horisontal;
+	t_ray_cast_result	*cast_result_vertical;
+	float				**buffer_depth;
 	float				**buffer_color;
-	int				y_amount;
+	int					y_amount;
 }				t_game;
 
 #endif
