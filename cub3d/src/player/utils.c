@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:18:07 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:03:34 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 //TODO remove
 #include <stdio.h>
 
-t_answer	is_a_player(int value)
+t_bool	is_a_player(int value)
 {
 	if(value == MAP_PLAYER_N || value == MAP_PLAYER_S || value == MAP_PLAYER_E || value == MAP_PLAYER_W)
-		return (SUCCESS);
-	return (ERROR);
+		return (TRUE);
+	return (FALSE);
 }
 
 t_answer	init_player(t_player **player, int width)
@@ -40,6 +40,20 @@ t_answer	init_player(t_player **player, int width)
 	return (SUCCESS);
 }
 
+t_answer	return_player_start_pov(int type, float *pov)
+{
+	if(type == MAP_PLAYER_N)
+		*pov = PI + PI / 2;
+	else if(type == MAP_PLAYER_S)
+		*pov = PI / 2;
+	else if(type == MAP_PLAYER_E)
+		*pov = PI;
+	else if(type == MAP_PLAYER_W)
+		*pov = PI * 2;
+
+	return ((*pov != 0) ? SUCCESS : ERROR);
+}
+
 t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio, t_player **player)
 {
 	int y;
@@ -53,8 +67,10 @@ t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio,
 		x = 0;
 		while(map[y][x] > -1)
 		{
-			if(is_a_player(map[y][x]) == SUCCESS)
+			if(is_a_player(map[y][x]) == TRUE)
 			{
+				if(return_player_start_pov(map[y][x], &((*player)->pov)) == ERROR)
+					return (ERROR);
 				(*player)->start_position = map[y][x];
 				(*player)->x = x * (scaled_to * minimap_ratio);
 				(*player)->y = y * (scaled_to * minimap_ratio);

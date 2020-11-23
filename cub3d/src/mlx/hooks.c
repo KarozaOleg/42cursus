@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/21 13:49:14 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 20:27:51 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ int		key_pressed_handler(int keycode, t_game *game)
 	int player_turn;
 	int player_move;
 	
-	if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
-	// if(handle_key_linux(keycode, &player_turn, &player_move) == SUCCESS)
+	// if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
+	if(handle_key_linux(keycode, &player_turn, &player_move) == SUCCESS)
 	{
 		game->player->pov += player_turn * game->player->pov_step;
 
