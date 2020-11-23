@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 21:03:34 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:18:17 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ t_answer	return_player(int width, int **map, int scaled_to, float minimap_ratio,
 		{
 			if(is_a_player(map[y][x]) == TRUE)
 			{
+				if((*player)->start_position > -1)
+					return (ERROR);
 				if(return_player_start_pov(map[y][x], &((*player)->pov)) == ERROR)
 					return (ERROR);
 				(*player)->start_position = map[y][x];
 				(*player)->x = x * (scaled_to * minimap_ratio);
 				(*player)->y = y * (scaled_to * minimap_ratio);
-				break;
 			}
 			x += 1;
 		}
-		if((*player)->start_position > -1)
-			break;
 		y += 1;
 	}
 	return (SUCCESS);

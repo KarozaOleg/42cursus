@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:23:24 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:15:39 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int test_leaks(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	int answer = test_leaks(argc, argv);
-	printf("exited\n");
-	sleep(10);
+	// printf("exited\n");
+	// sleep(10);
 	return (answer);
 }
 

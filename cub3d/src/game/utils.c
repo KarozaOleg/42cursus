@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:23:12 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:18:53 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,10 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, parsing settings", *game));
 	if(is_map_settings_valid((*game)->map_settings) == ERROR)
 		return (cub3d_exit("error, settings is invalid", *game));
+	if(return_player((*game)->map_settings->resolution->width, (*game)->map->array, (*game)->map->scaled_to, (*game)->map->minimap_ratio, &((*game)->player)) == ERROR)
+		return (cub3d_exit("error, initialize player", *game));	
 	if(return_mlx((*game)->map_settings->resolution, &((*game)->mlx_my)) == ERROR)
 		return (cub3d_exit("error, initialize mlx", *game));
-	if(return_player((*game)->map_settings->resolution->width, (*game)->map->array, (*game)->map->scaled_to, (*game)->map->minimap_ratio, &((*game)->player)) == ERROR)
-		return (cub3d_exit("error, initialize player", *game));
 	if(return_sprites((*game)->map->array, &((*game)->sprites)) == ERROR)
 		return (cub3d_exit("error, find sprites", *game));
 	if(return_texture_sprite((*game)->mlx_my->mlx, (*game)->map_settings->texture_s, &((*game)->texture_sprite)) == ERROR)
@@ -169,13 +169,13 @@ void		free_game(t_game *game)
 	free_sprites(game->sprites);
 	free_texture_sprite(game->texture_sprite);
 	free_texture_walls(game->texture_wall);
+
 	i = 0;
-	//TODO: check this
-	while(game->buffer_depth[i] != NULL)
+	if(game->buffer_depth != NULL)
 	{
-		free(game->buffer_depth[i]);
-		i += 1;
+		while(game->buffer_depth[i] != NULL)
+			free(game->buffer_depth[i++]);
+		free(game->buffer_depth);
 	}
-	free(game->buffer_depth);
 	free(game);
 }
