@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:20:16 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:10:52 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ t_answer	return_sprites(int **map, t_sprite ***sprites)
 		return (ERROR);
 	(*sprites)[sprites_amount] = NULL;
 	while(--sprites_amount >= 0)
-		(*sprites)[sprites_amount] = malloc(sizeof(*((*sprites)[sprites_amount])));	
+	{
+		(*sprites)[sprites_amount] = malloc(sizeof(*((*sprites)[sprites_amount])));
+		if((*sprites)[sprites_amount] == NULL)
+			return (ERROR);
+	}
 	find_sprites_position(map, *sprites);
 	return (SUCCESS);
 }

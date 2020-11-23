@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:54:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:14:38 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/23 21:06:24 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ t_answer return_mlx(t_resolution *resolution, t_mlx_my **mlx_my)
 	(*mlx_my)->mlx = mlx_init();
 	validate_resolution((*mlx_my)->mlx, resolution);
 	(*mlx_my)->win = mlx_new_window((*mlx_my)->mlx, resolution->width, resolution->height, "There is no spoon");
+	if((*mlx_my)->win == NULL)
+		return (ERROR);
 	(*mlx_my)->scene->img = mlx_new_image((*mlx_my)->mlx, resolution->width, resolution->height);
+	if((*mlx_my)->scene->img == NULL)
+		return (ERROR);
 	(*mlx_my)->scene->addr = mlx_get_data_addr((*mlx_my)->scene->img, &((*mlx_my)->scene)->bits_per_pixel, &((*mlx_my)->scene)->line_length, &((*mlx_my)->scene)->endian);
 	return (SUCCESS);
 }
