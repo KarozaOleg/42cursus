@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/22 19:56:31 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/24 21:21:34 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,12 @@ SRCS_LIBFT =	libft/ft_atoi.c libft/ft_isalnum.c libft/ft_isascii.c libft/ft_ispr
 				libft/ft_lstclear.c libft/ft_lstiter.c libft/ft_lstmap.c
 
 OBJECTS_LIBFT = $(SRCS_LIBFT:.c=.o)
+
+# GNL
+SRCS_GNL =	gnl/get_next_line.c \
+			gnl/get_next_line_utils.c
+
+OBJECTS_GNL = $(SRCS_GNL:.c=.o)
 
 # SRCS
 SRCS_CUB3D_PARSE = src/parse/parser_base.c
@@ -60,9 +66,8 @@ SRCS_CUB3D_RAY_CASTING = src/ray_casting/utils.c \
 
 SRCS_CUB3D_SCREENSHOT =	src/screenshot/utils.c
 
-SRCS_CUB3D =	gnl/get_next_line.c \
-				gnl/get_next_line_utils.c \
-				src/global.c \
+SRCS_CUB3D =	src/global.c \
+				$(SRCS_GNL) \
 				$(SRCS_CUB3D_PARSE) \
 				$(SRCS_CUB3D_SETTINGS) \
 				$(SRCS_CUB3D_MAP) \
@@ -87,7 +92,8 @@ INCLUDES_CUB3D_MLX =	include/mlx/mlx_essences.h \
 						include/mlx/mlx_utils.h \
 						include/mlx/draw.h \
 						include/mlx/colors.h \
-						include/mlx/hooks.h
+						include/mlx/hooks.h \
+						include/mlx/keys.h
 
 INCLUDES_CUB3D_PLAYER =	include/player/player_essences.h \
 						include/player/player_utils.h
@@ -128,21 +134,27 @@ OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
-	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
+	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)	
 
-test: $(NAME)
-	@gcc test*.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
+macos: $(NAME)
+	$(MAKE) -C minilibx_mms
+	mv minilibx_mms/libmlx.dylib .
+	@gcc main.c src/mlx/keys_macos.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
+	@./a.out ./maps/map_corridor.cub
 
-test2: $(NAME)
-	@gcc test*.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
+linux: $(NAME)
+	$(MAKE) -C minilibx-linux
+	mv minilibx-linux/libmlx_Linux.a .
+	@gcc main.c src/mlx/keys_linux.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
+	@./a.out ./maps/map_corridor.cub
 
 %.o: %.c $(INCLUDES)
 	@gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean:
-	@/bin/rm -f $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
+	@/bin/rm -f $(OBJECTS_LIBFT) $(OBJECTS_GNL) $(OBJECTS_CUB3D)  minilibx_mms/*.o minilibx-linux/*.o
 
 fclean: clean
-	@/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME) a.out *.a minilibx_mms/*.a minilibx_mms/*.dylib minilibx-linux/*.o minilibx-linux/*.a
 
 re: fclean all

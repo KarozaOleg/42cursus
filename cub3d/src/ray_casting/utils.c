@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:25:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:50:44 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 20:33:36 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ void	reset_cast_result(t_ray_cast_result *cast_result)
 	cast_result->wall_hit_y = 0;
 	cast_result->wall_content = 0;
 	cast_result->wall_hit = FALSE;
-}
-
-int		return_x_amount(int *array)
-{
-	int amount;
-	
-	amount = 0;
-	while(array[amount] > -1)
-		amount++;
-	return (amount);
 }
 
 t_bool	map_has_wall_at(t_game *game, float x, float y) 

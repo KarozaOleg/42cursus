@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:26:49 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 16:40:34 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 20:38:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../global.h"
 # include "ray_casting_essences.h"
-#include <math.h>
+# include <math.h>
 
 void	init_ray(t_ray *ray, int ray_index, float ray_angle);
 void	ray_casting(t_game *game);

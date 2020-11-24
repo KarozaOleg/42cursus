@@ -6,11 +6,13 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 16:07:26 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 20:48:28 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
+//TODO remove
+#include <stdio.h>
 
 t_parse_answer	is_a_player_value(int value)
 {
@@ -63,5 +65,108 @@ t_answer is_map_valid(t_map *map)
 	if(is_player_found == NOT_FOUND)
 		return (ERROR);
 		
+	return (SUCCESS);
+}
+
+t_bool is_closed_from_up(int **array, int y, int x)
+{
+	int i;
+
+	i = x;
+	while(i >= 0)
+	{
+		if(array[y][i] == 1)
+			return (TRUE);
+		i -= 1;
+	}
+	return (FALSE);
+}
+
+t_bool is_closed_from_left(int **array, int y, int x)
+{
+	int i;
+
+	i = y;
+	while(i >= 0)
+	{
+		if(array[i][x] == 1)
+			return (TRUE);
+		i -= 1;
+	}
+	return (FALSE);
+}
+
+t_bool is_closed_from_right(int **array, int y, int x)
+{
+	int i;
+	int x_total;
+
+	x_total = return_x_amount(array[y]);
+	i = x;
+	while(i < x_total)
+	{
+		if(array[y][i] == 1)
+			return (TRUE);
+		i += 1;
+	}
+	return (FALSE);
+}
+
+t_bool is_closed_from_down(int **array, int y, int x)
+{
+	int i;
+	int y_total;
+
+	y_total = return_y_amount(array);
+	i = y;
+	while(i < y_total)
+	{
+		if(array[i][x] == 1)
+			return (TRUE);
+		i += 1;
+	}
+	return (FALSE);
+}
+
+t_answer is_map_closed(t_map *map)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while(map->array[y] != NULL)
+	{
+		x = 0;
+		while(map->array[y][x] != -1)
+		{
+			if(map->array[y][x] == 1)
+			{
+				x += 1;
+				continue;
+			}
+			if(is_closed_from_left(map->array, y, x) == FALSE)
+			{
+				printf("y:%d, x:%d\n", y, x);
+				return (ERROR);
+			}
+			if(is_closed_from_up(map->array, y, x) == FALSE)
+			{
+				printf("y:%d, x:%d\n", y, x);
+				return (ERROR);
+			}
+			if(is_closed_from_right(map->array, y, x) == FALSE)
+			{
+				printf("y:%d, x:%d\n", y, x);
+				return (ERROR);
+			}
+			if(is_closed_from_down(map->array, y, x) == FALSE)
+			{
+				printf("y:%d, x:%d\n", y, x);
+				return (ERROR);
+			}
+			x += 1;
+		}
+		y += 1;
+	}
 	return (SUCCESS);
 }

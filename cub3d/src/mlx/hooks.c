@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 20:27:51 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:02:01 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,6 @@
 //TODO remove
 #include <stdio.h>
 #include <math.h>
-
-t_answer	handle_key_linux(int keycode, int *pov_change, int *player_move)
-{
-	*pov_change = 0;
-	*player_move = 0;
-	if(keycode == 97 || keycode == 119 || keycode == 100 || keycode == 115)
-	{
-		if(keycode == 97)
-		 	*pov_change = -1;
-		else if(keycode == 100)
-			*pov_change = 1;
-		else if(keycode == 115)
-			*player_move = -1;
-		else if(keycode == 119)
-			*player_move = 1;
-		else
-			return (ERROR);
-		return (SUCCESS);
-	}
-	return (ERROR);
-}
-
-t_answer	handle_key_macos(int keycode, int *pov_change, int *player_move)
-{
-	*pov_change = 0;
-	*player_move = 0;
-	if((keycode >= 0 && keycode <= 2) || keycode == 13)
-	{
-		if(keycode == 0)
-		 	*pov_change = -1;
-		else if(keycode == 2)
-			*pov_change = 1;
-		else if(keycode == 1)
-			*player_move = -1;
-		else if(keycode == 13)
-			*player_move = 1;
-		else
-			return (ERROR);
-		return (SUCCESS);
-	}
-	return (ERROR);
-}
-
-t_answer	handle_key_close(int keycode)
-{
-	if(keycode != 53)
-		return ERROR;
-	return SUCCESS;
-}
 
 int close_event_handler(int keycode, t_game *game)
 {
@@ -79,8 +30,7 @@ int		key_pressed_handler(int keycode, t_game *game)
 	int player_turn;
 	int player_move;
 	
-	// if(handle_key_macos(keycode, &player_turn, &player_move) == SUCCESS)
-	if(handle_key_linux(keycode, &player_turn, &player_move) == SUCCESS)
+	if(handle_key(keycode, &player_turn, &player_move) == SUCCESS)
 	{
 		game->player->pov += player_turn * game->player->pov_step;
 

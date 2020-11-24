@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 21:18:53 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 20:42:23 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,6 @@ t_answer	return_cast_result_v(t_ray_cast_result **cast_result_v)
 	return (SUCCESS);
 }
 
-int			return_y_amount(int **array)
-{
-	int amount;
-	
-	amount = 0;
-	while(array[amount] != NULL)
-		amount++;
-	return (amount);
-}
 
 void		reset_game(t_game *game)
 {
@@ -128,6 +119,8 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, creating cast result v", *game));
 	if(is_map_valid((*game)->map) == ERROR)
 		return (cub3d_exit("error, map is invalid", *game));
+	if(is_map_closed((*game)->map) == ERROR)
+		return (cub3d_exit("error, map is not closed", *game));
 	if(return_map_settings(settings_file_path, &((*game)->map_settings)) == ERROR)
 		return (cub3d_exit("error, parsing settings", *game));
 	if(is_map_settings_valid((*game)->map_settings) == ERROR)
@@ -176,6 +169,13 @@ void		free_game(t_game *game)
 		while(game->buffer_depth[i] != NULL)
 			free(game->buffer_depth[i++]);
 		free(game->buffer_depth);
+	}
+	i = 0;
+	if(game->buffer_color != NULL)
+	{
+		while(game->buffer_color[i] != NULL)
+			free(game->buffer_color[i++]);
+		free(game->buffer_color);
 	}
 	free(game);
 }

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:17:38 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:22:38 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 20:12:13 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void		free_texture_walls(t_image **texture_wall)
 		free(texture_wall[i]);
 		i += 1;
 	}
+	free(texture_wall);
 }
