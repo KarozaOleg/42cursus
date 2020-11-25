@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:35:18 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:18:30 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_answer	return_cast_result_v(t_ray_cast_result **cast_result_v)
 		return (ERROR);
 	return (SUCCESS);
 }
-
 
 void		reset_game(t_game *game)
 {

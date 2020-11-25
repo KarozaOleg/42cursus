@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:25:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:35:43 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:19:57 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,6 @@ void	casting(t_game *game, t_ray_cast_result *cast_result, void (*casting_spec)(
 		cast_result->wall_hit = TRUE;
 		break;
 	}
-}
-
-float	distance_between_points(float x1, float y1, float x2, float y2) 
-{
-	return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 float	return_intersect_dist(t_game *game, t_ray_cast_result *cast_result)

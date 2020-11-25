@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 17:42:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 20:38:33 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:19:17 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ int			return_y_amount(int **array)
 	while(array[amount] != NULL)
 		amount++;
 	return (amount);
+}
+
+float	distance_between_points(float x1, float y1, float x2, float y2) 
+{
+	return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 t_answer	cub3d_exit(char *exit_comment, t_game *game)
