@@ -6,14 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:11:36 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/draw.h"
-
-//TODO remove
-#include <stdio.h>
 
 void	init_buffer_depth(t_game *game, int x)
 {

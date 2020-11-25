@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 12:33:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:41:06 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:42:27 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MLX_ESSENCES_H
 
 typedef struct	s_wall_spec
-{	
+{
 	int wall_top;
 	int wall_bottom;
 	int wall_height;
@@ -43,11 +43,10 @@ typedef struct	s_mlx_img
 }				t_mlx_img;
 
 typedef struct	s_mlx_my
-{ 
+{
 	void		*mlx;
 	void		*win;
 	t_mlx_img	*scene;
-	
 }				t_mlx_my;
 
 #endif

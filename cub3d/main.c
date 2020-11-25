@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/10 15:36:37 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:33:08 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:47 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "include/global.h"
 #include "include/mlx/draw.h"
 #include "include/screenshot/screenshot_utils.h"
-#include <stdio.h>
-
 t_bool is_save_flag_exist(int argc, char **argv)
 {
 	char *str;

@@ -6,15 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 21:18:17 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/colors.h"
 #include "../../include/player/player_utils.h"
-
-//TODO remove
-#include <stdio.h>
 
 t_bool	is_a_player(int value)
 {

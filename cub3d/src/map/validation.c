@@ -6,13 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 20:48:28 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:36:57 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
-//TODO remove
-#include <stdio.h>
 
 t_parse_answer	is_a_player_value(int value)
 {
@@ -145,25 +143,13 @@ t_answer is_map_closed(t_map *map)
 				continue;
 			}
 			if(is_closed_from_left(map->array, y, x) == FALSE)
-			{
-				printf("y:%d, x:%d\n", y, x);
 				return (ERROR);
-			}
 			if(is_closed_from_up(map->array, y, x) == FALSE)
-			{
-				printf("y:%d, x:%d\n", y, x);
 				return (ERROR);
-			}
 			if(is_closed_from_right(map->array, y, x) == FALSE)
-			{
-				printf("y:%d, x:%d\n", y, x);
 				return (ERROR);
-			}
 			if(is_closed_from_down(map->array, y, x) == FALSE)
-			{
-				printf("y:%d, x:%d\n", y, x);
 				return (ERROR);
-			}
 			x += 1;
 		}
 		y += 1;

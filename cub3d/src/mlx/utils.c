@@ -6,14 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:54:24 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 21:06:24 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:45 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/mlx_utils.h"
-
-//TODO remove
-#include <stdio.h>
 
 void	my_mlx_pixel_put(t_mlx_img *scene, int x, int y, int color)
 {

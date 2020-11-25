@@ -6,18 +6,18 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:39:19 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 19:49:35 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:10:01 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPRITE_UTILS_H
 # define SPRITE_UTILS_H
 
-#include <math.h>
+# include <math.h>
 # include "../global.h"
 # include "../global_essences.h"
-#include "sprite_essence.h"
-#include "../game/game_essences.h"
+# include "sprite_essence.h"
+# include "../game/game_essences.h"
 # include "../texture/texture_utils.h"
 # include "../mlx/mlx_utils.h"
 

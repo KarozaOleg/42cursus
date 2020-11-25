@@ -6,12 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:14:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/14 17:20:39 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:13:09 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEXTURE_ESSENCES_H
-# define TEXTURE_ESSENCES_H
+#ifndef TEXTURE_ESSENCE_H
+# define TEXTURE_ESSENCE_H
 
 typedef struct	s_image
 {

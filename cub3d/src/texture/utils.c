@@ -6,13 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:17:38 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 20:12:13 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:40 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/texture/texture_utils.h"
-//TODO remove
-#include <stdio.h>
 
 int			return_texture_color(t_image *texture, int x, int y)
 {

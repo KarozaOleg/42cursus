@@ -6,12 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/23 21:10:52 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:41 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/sprite/sprite_utils.h"
-# include <stdio.h>
 
 int			return_sprites_amount(int **map)
 {

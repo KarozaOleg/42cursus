@@ -6,23 +6,23 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 17:52:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 13:07:43 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:14:17 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBAL_ESSENCES_H
 # define GLOBAL_ESSENCES_H
 
-typedef enum	s_answer
+typedef enum	e_answer
 {
 	SUCCESS,
 	ERROR
 }				t_answer;
 
-typedef enum	s_bool
+typedef enum	e_bool
 {
 	FALSE,
-	TRUE	
+	TRUE
 }				t_bool;
 
 #endif

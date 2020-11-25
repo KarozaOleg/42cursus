@@ -6,13 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 20:42:23 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:18 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/game/game_utils.h"
-//TODO remove
-#include <stdio.h>
 
 t_answer	create_game(t_game **game)
 {

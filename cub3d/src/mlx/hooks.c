@@ -6,16 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:02:01 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:36:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/hooks.h"
 #include "../../include/mlx/draw.h"
-
-//TODO remove
-#include <stdio.h>
-#include <math.h>
 
 int close_event_handler(int keycode, t_game *game)
 {

@@ -6,12 +6,12 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/30 13:14:10 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 14:30:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:42:54 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_FUNCTIONS_H
-# define MLX_FUNCTIONS_H
+#ifndef MLX_UTILS_H
+# define MLX_UTILS_H
 # include "mlx_essences.h"
 # include "../global.h"
 # include "../global_essences.h"

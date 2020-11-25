@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 13:22:53 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 12:56:42 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:47:11 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include "../global_essences.h"
 # include "player_essences.h"
 
-t_answer		return_player(int width, int **map, int scaled_to, float minimap_ratio, t_player **player);
-void			free_player(t_player *player);
+t_answer	return_player(int width, int **map, int scaled_to,
+float minimap_ratio, t_player **player);
+void		free_player(t_player *player);
 
 #endif

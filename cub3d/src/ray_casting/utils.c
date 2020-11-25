@@ -6,14 +6,11 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:25:46 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 20:33:36 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/24 21:35:43 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray_casting/ray_casting_utils.h"
-
-//TODO remove
-#include <stdio.h>
 
 float	normalize_angle(float angle) 
 {
