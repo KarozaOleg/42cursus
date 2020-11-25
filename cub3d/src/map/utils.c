@@ -6,70 +6,69 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 12:15:40 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/22 20:13:27 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 22:06:33 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/map/map_utils.h"
 
-t_parse_answer	is_a_map_item(int value)
+t_parse_answer		is_a_map_item(int value)
 {
 	int converted;
-	
+
 	return (return_char2int_for_map(value, &converted));
 }
 
-t_parse_answer	return_char2int_for_map(int value, int *converted)
+t_parse_answer		return_char2int_for_map(int value, int *converted)
 {
 	*converted = -1;
-
-	if(value == 48)
+	if (value == 48)
 		*converted = MAP_EMPTY;
-	if(value == 49)
+	if (value == 49)
 		*converted = MAP_WALL;
-	if(value == 50)
+	if (value == 50)
 		*converted = MAP_SPRITE;
-	if(value == 32)
+	if (value == 32)
 		*converted = MAP_UNIVERSE;
-	if(value == 78)
+	if (value == 78)
 		*converted = MAP_PLAYER_N;
-	if(value == 83)
+	if (value == 83)
 		*converted = MAP_PLAYER_S;
-	if(value == 69)
+	if (value == 69)
 		*converted = MAP_PLAYER_E;
-	if(value == 87)
+	if (value == 87)
 		*converted = MAP_PLAYER_W;
-	return (*converted > -1) ? FOUND : NOT_FOUND;
+	return ((*converted > -1) ? FOUND : NOT_FOUND);
 }
 
-t_answer	is_a_map_line(char *line)
-{	
+t_answer			is_a_map_line(char *line)
+{
 	int	i;
-	
-	if(line == NULL)
+
+	if (line == NULL)
 		return (ERROR);
 	i = 0;
-	while(line[i] != '\0')
+	while (line[i] != '\0')
 	{
-		if(is_a_map_item(line[i]) == NOT_FOUND)
+		if (is_a_map_item(line[i]) == NOT_FOUND)
 			return (ERROR);
 		++i;
 	}
-	return (i == 0) ? ERROR : SUCCESS;
+	return ((i == 0) ? ERROR : SUCCESS);
 }
 
-void	free_map(t_map *map)
+void				free_map(t_map *map)
 {
 	int i;
 
-	if(map == NULL)
-		return;
-	if(map->array != NULL)
+	if (map == NULL)
+		return ;
+	if (map->array != NULL)
 	{
 		i = 0;
-		while(map->array[i] != NULL)
+		while (map->array[i] != NULL)
 			free(map->array[i++]);
 		free(map->array);
-	}	
+	}
 	free(map);
 }
