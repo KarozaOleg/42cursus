@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/25 22:10:44 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/25 22:19:25 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,8 @@ SRCS_CUB3D_MAP =	src/map/parser.c \
 					src/map/validation2.c
 
 SRCS_CUB3D_MLX =	src/mlx/utils.c \
-					src/mlx/colors.c \
 					src/mlx/draw.c \
+					src/mlx/draw2.c \
 					src/mlx/hooks.c
 
 SRCS_CUB3D_PLAYER = src/player/utils.c

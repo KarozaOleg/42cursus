@@ -6,14 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:36:44 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 22:21:55 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/mlx/hooks.h"
 #include "../../include/mlx/draw.h"
 
-int close_event_handler(int keycode, t_game *game)
+int		close_event_handler(int keycode, t_game *game)
 {
 	keycode += 0;
 	game += 0;
@@ -23,29 +23,31 @@ int close_event_handler(int keycode, t_game *game)
 
 int		key_pressed_handler(int keycode, t_game *game)
 {
-	int player_turn;
-	int player_move;
-	
-	if(handle_key(keycode, &player_turn, &player_move) == SUCCESS)
+	int		player_turn;
+	int		player_move;
+	float	step;
+	float	new_x;
+	float	new_y;
+
+	if (handle_key(keycode, &player_turn, &player_move) == SUCCESS)
 	{
 		game->player->pov += player_turn * game->player->pov_step;
-
-		float step = player_move * game->player->move_speed;
-		float newX = game->player->x + cos(game->player->pov) * step;
-		float newY = game->player->y + sin(game->player->pov) * step;
-
-		if(game->map->array[(int)(newY / ((float)game->map->scaled_to))][(int)(newX / ((float)game->map->scaled_to))] != 1)
+		step = player_move * game->player->move_speed;
+		new_x = game->player->x + cos(game->player->pov) * step;
+		new_y = game->player->y + sin(game->player->pov) * step;
+		if (game->map->array[(int)(new_y / ((float)game->map->scaled_to))][
+(int)(new_x / ((float)game->map->scaled_to))] != 1)
 		{
-			game->player->x = newX;
-			game->player->y = newY;
+			game->player->x = new_x;
+			game->player->y = new_y;
 		}
 	}
-	else if(handle_key_close(keycode) == SUCCESS)
-	{		
+	else if (handle_key_close(keycode) == SUCCESS)
+	{
 		close_event_handler(keycode, game);
 	}
 	draw_scene(game);
-	return 0;
+	return (0);
 }
 
 void	register_mlx_hook_key_pressed(t_game *game)
