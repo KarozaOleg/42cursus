@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/24 21:21:34 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/25 21:54:36 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,10 @@ SRCS_CUB3D_PLAYER = src/player/utils.c
 
 SRCS_CUB3D_SPRITES = src/sprite/utils.c
 
-SRCS_CUB3D_GAME = src/game/utils.c
+SRCS_CUB3D_GAME = src/game/utils.c \
+					src/game/utils2.c \
+					src/game/utils3.c \
+					src/game/utils4.c \
 
 SRCS_CUB3D_TEXTURE = src/texture/utils.c
 
