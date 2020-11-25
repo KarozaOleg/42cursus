@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:02:20 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 22:42:34 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ void		reset_game(t_game *game)
 	game->buffer_color = NULL;
 	game->buffer_depth = NULL;
 	game->y_amount = 0;
+}
+
+t_answer	return_game3(t_game **game)
+{
+	if (return_depth_buffer((*game)->player->num_rays,
+	(*game)->map_settings->resolution->height,
+	&((*game)->buffer_depth)) == ERROR)
+		return (cub3d_exit("error, create depth buffer", *game));
+	if (return_buffer_color((*game)->player->num_rays,
+	(*game)->map_settings->resolution->height,
+	&((*game)->buffer_color)) == ERROR)
+		return (cub3d_exit("error, create buffer color", *game));
+	(*game)->y_amount = return_y_amount((*game)->map->array);
+	return (SUCCESS);
 }
 
 t_answer	return_game2(t_game **game)
@@ -85,9 +99,7 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, parsing settings", *game));
 	if (is_map_settings_valid((*game)->map_settings) == ERROR)
 		return (cub3d_exit("error, settings is invalid", *game));
-	if (return_player((*game)->map_settings->resolution->width,
-	(*game)->map->array, (*game)->map->scaled_to,
-	(*game)->map->minimap_ratio, &((*game)->player)) == ERROR)
+	if (return_player((*game), &((*game)->player)) == ERROR)
 		return (cub3d_exit("error, initialize player", *game));
 	return (return_game2(game));
 }
