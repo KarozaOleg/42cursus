@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 14:26:49 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:48:00 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/25 23:02:29 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ void	return_casting_spec_horisontal(t_game *game,
 t_ray_cast_var *cast_var);
 void	return_casting_step_horisontal(t_ray_cast_var *cast_var,
 t_ray *ray, float *x2check, float *y2check);
+t_bool	map_has_wall_at(t_game *game, float x, float y);
+void	reset_cast_result(t_ray_cast_result *cast_result);
+float	return_intersect_dist(t_game *game, t_ray_cast_result *cast_result);
 
 #endif
