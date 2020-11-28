@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/28 16:39:31 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/28 16:50:32 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -147,6 +147,8 @@ $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
 	$(MAKE) -C minilibx_mms
 	mv minilibx_mms/libmlx.dylib .
 	@gcc main.c src/mlx/keys_macos.c -g cub3d.a -framework OpenGL -framework AppKit -Lminilibx_mms -lmlx -Iminilibx_mms libmlx.dylib
+
+play: $(NAME)
 	@./a.out ./maps/map_corridor.cub
 
 linux: $(NAME)
