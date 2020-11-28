@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 12:11:28 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:28:37 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 13:39:44 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	scene_to_buffer(t_game *game);
 void	fill_buffer_color_wall(t_game *game, t_wall_spec *wall_spec);
 void	fill_buffer_color_floor(t_game *game, int x1);
 void	draw_buffer(t_game *game);
+int		return_int_from_trgb(int t, t_rgb *rgb);
 
 #endif

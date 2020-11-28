@@ -3,3 +3,6 @@
 **/*.dylib
 **/*.o
 *.bmp
+*.dSYM
+*.swiftdoc
+*.swiftmodule

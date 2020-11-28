@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 18:16:29 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:35:41 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 14:06:46 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	calculate(t_game *game, t_sprite *sprite)
 	if (sprite->sprite_screen_size > game->map_settings->resolution->height * 2)
 		sprite->sprite_screen_size = game->map_settings->resolution->height * 2;
 	sprite->h_offset = (sprite->sprite_dir - game->player->pov) * game->map_settings->resolution->width / game->player->fov + (game->map_settings->resolution->width/2) - sprite->sprite_screen_size;
-	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/4;
+	sprite->v_offset = game->map_settings->resolution->height/2.0 - sprite->sprite_screen_size/2.0;
 }
 
 void	calculate_sprites(t_game *game)

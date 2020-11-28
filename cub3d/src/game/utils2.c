@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:42:34 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 13:40:42 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 	if (return_map_settings(settings_file_path,
 	&((*game)->map_settings)) == ERROR)
 		return (cub3d_exit("error, parsing settings", *game));
+	if (is_colors_valid((*game)->map_settings) == ERROR)
+		return (cub3d_exit("error, colors is invalid", *game));
 	if (is_map_settings_valid((*game)->map_settings) == ERROR)
 		return (cub3d_exit("error, settings is invalid", *game));
 	if (return_player((*game), &((*game)->player)) == ERROR)

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/23 14:39:02 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:08:38 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 13:40:33 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,26 @@ t_answer		is_all_integers_valid(int *arr, t_parse_answer *is_player_found)
 		}
 		++i;
 	}
+	return (SUCCESS);
+}
+
+t_answer	is_color_valid(t_rgb *color)
+{
+	if(color->blue < 0 || color->blue > 255)
+		return (ERROR);
+	if(color->red < 0 || color->red > 255)
+		return (ERROR);
+	if(color->green < 0 || color->green > 255)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+t_answer		is_colors_valid(t_map_settings *map_settings)
+{		
+	if(is_color_valid(map_settings->color_ceiling) == ERROR)
+		return (ERROR);
+	if(is_color_valid(map_settings->color_floor) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
 

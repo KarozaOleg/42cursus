@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 18:04:52 by mgaston           #+#    #+#             */
-/*   Updated: 2020/09/06 13:08:56 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 13:39:13 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ t_parse_answer	parse_line_color(char *line, t_map_settings *settings)
 {	
 	if(parser_base(line, "F", parser_color, (void *)(&(settings->color_floor))) == FOUND)
 		return (FOUND);
-
 	if(parser_base(line, "C", parser_color, (void *)(&(settings->color_ceiling))) == FOUND)
 		return (FOUND);
-	
 	return (NOT_FOUND);
 }

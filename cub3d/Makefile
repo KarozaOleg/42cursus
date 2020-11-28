@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/25 23:00:42 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/28 13:11:01 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -160,6 +160,6 @@ clean:
 	@/bin/rm -f $(OBJECTS_LIBFT) $(OBJECTS_GNL) $(OBJECTS_CUB3D)  minilibx_mms/*.o minilibx-linux/*.o
 
 fclean: clean
-	@/bin/rm -f $(NAME) a.out *.a minilibx_mms/*.a minilibx_mms/*.dylib minilibx-linux/*.o minilibx-linux/*.a
+	@/bin/rm -f $(NAME) a.out *.a *.dylib minilibx_mms/*.a minilibx_mms/*.dylib minilibx-linux/*.o minilibx-linux/*.a
 
 re: fclean all

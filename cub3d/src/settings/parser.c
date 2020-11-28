@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/22 12:30:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/15 15:05:27 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 13:18:38 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,16 @@ t_answer	parser_map_settings_line(char *line, t_map_settings *map_settings)
 {
 	if (line == NULL)
 		return (ERROR);
-		
 	if (ft_strlen(line) < 1)
 		return (SUCCESS);
-
 	if (is_a_settings_line(line) == NOT_FOUND)
-		return (SUCCESS);	
-
+		return (SUCCESS);
 	if (parse_line_resolution(line, map_settings) == FOUND)
 		return (SUCCESS);
-
 	if (parse_line_texture(line, map_settings) == FOUND)
 		return (SUCCESS);
-
 	if (parse_line_color(line, map_settings) == FOUND)
 		return (SUCCESS);
-
 	return (ERROR);
 }
 
