@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/28 13:11:01 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/28 14:22:37 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,5 +161,6 @@ clean:
 
 fclean: clean
 	@/bin/rm -f $(NAME) a.out *.a *.dylib minilibx_mms/*.a minilibx_mms/*.dylib minilibx-linux/*.o minilibx-linux/*.a
+	@/bin/rm -rfd *.dSYM
 
 re: fclean all
