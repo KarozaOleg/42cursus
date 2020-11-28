@@ -1,4 +1,4 @@
-R 1800 900
+R 1600 900
 
 NO ./textures/wall_0.xpm
 SO ./textures/wall_1.xpm

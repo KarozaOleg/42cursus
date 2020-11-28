@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 15:13:54 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/28 13:40:42 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 23:08:32 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_answer	return_game2(t_game **game)
 	if (return_mlx((*game)->map_settings->resolution,
 	&((*game)->mlx_my)) == ERROR)
 		return (cub3d_exit("error, initialize mlx", *game));
+	if (return_player((*game), &((*game)->player)) == ERROR)
+		return (cub3d_exit("error, initialize player", *game));
 	if (return_sprites((*game)->map->array, &((*game)->sprites)) == ERROR)
 		return (cub3d_exit("error, find sprites", *game));
 	if (return_texture_sprite((*game)->mlx_my->mlx,
@@ -101,7 +103,5 @@ t_answer	return_game(char *settings_file_path, t_game **game)
 		return (cub3d_exit("error, colors is invalid", *game));
 	if (is_map_settings_valid((*game)->map_settings) == ERROR)
 		return (cub3d_exit("error, settings is invalid", *game));
-	if (return_player((*game), &((*game)->player)) == ERROR)
-		return (cub3d_exit("error, initialize player", *game));
 	return (return_game2(game));
 }
