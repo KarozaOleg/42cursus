@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/14 17:39:19 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 21:10:01 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 14:52:15 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ void		sort_sprites(t_game *game, t_sprite **sprites);
 void		draw_sprites(t_game *game, t_sprite **sprites);
 t_answer	return_sprites(int **map, t_sprite ***sprites);
 void		free_sprites(t_sprite **sprites);
+void		sprites_iterate(t_game *game, t_sprite **sprites, float **buffer, float(*action)(t_game *, t_sprite *, int, int));
+float		draw(t_game *game, t_sprite *sprite, int x, int y);
+int			return_texture_color_sprite(t_image *image, int size, int x, int y);
 
 #endif
