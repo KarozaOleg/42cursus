@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/28 13:39:55 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 14:25:16 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	fill_buffer_color_ceiling(t_game *game, int x2)
 	x = 0;
 	while (x < x2)
 	{
-		game->buffer_color[game->ray->index][x] = return_int_from_trgb(0, game->map_settings->color_ceiling);
+		game->buffer_color[game->ray->index][x] =
+return_int_from_trgb(0, game->map_settings->color_ceiling);
 		x += 1;
 	}
 }

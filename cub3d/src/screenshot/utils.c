@@ -6,13 +6,14 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 19:51:27 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/24 21:35:43 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 14:27:33 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/screenshot/screenshot_utils.h"
 
-void	return_screenshot_spec(t_resolution *resolution, t_screenshot *screenshot)
+void		return_screenshot_spec(t_resolution *resolution,
+t_screenshot *screenshot)
 {
 	screenshot->signature[0] = 'B';
 	screenshot->signature[1] = 'M';
@@ -32,7 +33,7 @@ void	return_screenshot_spec(t_resolution *resolution, t_screenshot *screenshot)
 	screenshot->impcolor = 0;
 }
 
-void	write_screenshot_spec(int fd, t_screenshot *screenshot)
+void		write_screenshot_spec(int fd, t_screenshot *screenshot)
 {
 	write(fd, (char*)screenshot->signature, sizeof(screenshot->signature));
 	write(fd, (char*)&screenshot->filesize, sizeof(screenshot->filesize));
@@ -49,18 +50,19 @@ void	write_screenshot_spec(int fd, t_screenshot *screenshot)
 	write(fd, (char*)&screenshot->impcolor, sizeof(screenshot->impcolor));
 }
 
-void	write_buffer_color(int fd, t_game *game)
+void		write_buffer_color(int fd, t_game *game)
 {
 	int x;
 	int y;
+	int color;
 
 	y = game->map_settings->resolution->height;
-	while(y >= 0)
+	while (y >= 0)
 	{
 		x = 0;
-		while(x < game->player->num_rays)
+		while (x < game->player->num_rays)
 		{
-			int color = game->buffer_color[x][y];
+			color = game->buffer_color[x][y];
 			write(fd, (char *)&color, sizeof(color));
 			x += 1;
 		}
@@ -72,9 +74,9 @@ t_answer	buffer_to_screenshot(t_game *game)
 {
 	t_screenshot	screenshot;
 	int				fd;
-	
+
 	fd = open("screenshot.bmp", O_WRONLY | O_CREAT, 0644);
-	if(fd < 0)
+	if (fd < 0)
 		return (ERROR);
 	return_screenshot_spec(game->map_settings->resolution, &screenshot);
 	write_screenshot_spec(fd, &screenshot);

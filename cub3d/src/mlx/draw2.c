@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/05 14:20:22 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/28 13:40:11 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 14:25:49 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	fill_buffer_color_floor(t_game *game, int x1)
 	x = x1;
 	while (x < game->map_settings->resolution->height)
 	{
-		game->buffer_color[game->ray->index][x] = return_int_from_trgb(0, game->map_settings->color_floor);;
+		game->buffer_color[game->ray->index][x] =
+return_int_from_trgb(0, game->map_settings->color_floor);
 		x += 1;
 	}
 }
@@ -97,5 +98,5 @@ void	draw_buffer(t_game *game)
 
 int		return_int_from_trgb(int t, t_rgb *rgb)
 {
-	return(t << 24 | rgb->red << 16 | rgb->green << 8 | rgb->blue);
+	return (t << 24 | rgb->red << 16 | rgb->green << 8 | rgb->blue);
 }
