@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 16:27:23 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:05:12 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 16:35:40 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,16 @@ t_parse_answer *is_map_started)
 	return (answer);
 }
 
-t_answer	return_lines_from_file(char *file_name, t_list **lines)
+t_answer	return_lines_from_file(int fd, t_list **lines)
 {
 	t_parse_answer	is_map_started;
 	int				answer;
 	char			*line;
-	int				fd;
 
 	is_map_started = NOT_FOUND;
 	answer = 0;
-	fd = open(file_name, 0);
 	line = NULL;
+	*lines = NULL;
 	while ((answer = get_next_line(fd, &line)) > 0)
 		if (handle_line(line, lines, &is_map_started) == ERROR)
 			return (ERROR);
@@ -100,15 +99,17 @@ t_answer	return_lines_from_file(char *file_name, t_list **lines)
 
 t_answer	return_map(char *file_name, t_map **map)
 {
-	t_list			*lines;
-	int				**array;
+	t_list	*lines;
+	int		**array;
+	int		fd;
 
-	array = NULL;
 	*map = malloc(sizeof(**map));
 	if (*map == NULL)
 		return (ERROR);
-	lines = NULL;
-	if (return_lines_from_file(file_name, &lines) == ERROR)
+	(*map)->array = NULL;
+	if ((fd = open(file_name, 0)) < 0)
+		return (ERROR);
+	if (return_lines_from_file(fd, &lines) == ERROR)
 	{
 		ft_lstclear(&lines, free);
 		return (ERROR);

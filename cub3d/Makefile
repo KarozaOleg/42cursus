@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/28 15:50:48 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/28 16:20:04 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,7 @@ OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
-	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)	
+	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
 
 macos: $(NAME)
 	$(MAKE) -C minilibx_mms
