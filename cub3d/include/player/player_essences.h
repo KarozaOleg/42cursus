@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:32:13 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/25 22:12:17 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 17:18:20 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef enum	e_player_move
 {
+	UNDEFINED,
 	LEFT,
 	RIGHT,
 	BACK,

@@ -6,7 +6,7 @@
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/06 11:35:39 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/28 13:42:22 by mgaston          ###   ########.fr       */
+/*   Updated: 2020/11/28 17:55:59 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_answer		init_player(t_player **player, int width)
 	(*player)->start_position = -1;
 	(*player)->x = -1;
 	(*player)->y = -1;
-	(*player)->move_speed = 4.0;
+	(*player)->move_speed = 8.0;
 	(*player)->fov = 60.0 * (PI / 180);
 	(*player)->pov = PI / 2;
-	(*player)->pov_step = 3.5 * (PI / 180);
+	(*player)->pov_step = 6 * (PI / 180);
 	(*player)->num_rays = width;
 	return (SUCCESS);
 }

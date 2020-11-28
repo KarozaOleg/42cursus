@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   hooks2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/06 14:48:51 by mgaston           #+#    #+#             */
-/*   Updated: 2020/11/28 18:11:16 by mgaston          ###   ########.fr       */
+/*   Created: 2020/09/06 14:49:41 by mgaston           #+#    #+#             */
+/*   Updated: 2020/11/28 18:06:20 by mgaston          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
-# include "../global_essences.h"
-# include "../global.h"
-# include "mlx_essences.h"
-# include "keys.h"
-# include "draw.h"
-# include "../player/player_essences.h"
+#include "../../include/mlx/hooks.h"
 
-void	register_mlx_hook_key_pressed(t_game *game);
-int		close_event_handler(int keycode, t_game *game);
-
-#endif
+int		close_event_handler(int keycode, t_game *game)
+{
+	keycode += 0;
+	game += 0;
+	exit(0);
+	return (0);
+}
