@@ -6,7 +6,7 @@
 #    By: mgaston <mgaston@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 16:13:02 by mgaston           #+#    #+#              #
-#    Updated: 2020/11/28 18:06:57 by mgaston          ###   ########.fr        #
+#    Updated: 2020/11/28 23:00:34 by mgaston          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,6 +143,9 @@ OBJECTS_CUB3D=$(SRCS_CUB3D:.c=.o)
 
 all: $(NAME)
 
+compile: $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
+	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
+
 $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
 	@ar rc $(NAME) $(OBJECTS_LIBFT) $(OBJECTS_CUB3D)
 	$(MAKE) -C minilibx_mms
@@ -152,7 +155,7 @@ $(NAME): $(OBJECTS_LIBFT) $(OBJECTS_CUB3D) $(INCLUDES)
 play: $(NAME)
 	@./a.out ./maps/map_corridor.cub
 
-linux: $(NAME)
+linux: compile
 	$(MAKE) -C minilibx-linux
 	mv minilibx-linux/libmlx_Linux.a .
 	@gcc main.c src/mlx/keys_linux.c cub3d.a libmlx_Linux.a -lXext -lX11 -lm
